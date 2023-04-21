@@ -42,14 +42,14 @@
 
                 <ul class="menu-links">
                     <li class="nav-link">
-                        <a href="#">
+                        <a href="{% url 'buglist:coming_home' %}">
                             <i class='bx bx-home-alt icon' ></i>
                             <span class="text nav-text">Inicio</span>
                         </a>
                     </li>
 
                     <li class="nav-link">
-                        <a href="{% url 'home:buglist' %}">
+                        <a href="#">
                             <i class='bx bx-list-ul icon' ></i>
                             <span class="text nav-text">Lista de bugs</span>
                         </a>
@@ -112,37 +112,37 @@
     </nav>
 
     <section class="home">
-        <div class="text">Inicio</div>
+        <div class="text">Lista de bugs</div>
+        {% if latest_bug_list %}
         <table class="table">
+            
             <thead>
                 <tr>
-                  <th>Rank</th>
-                  <th>Name</th>
-                  <th>Points</th>
-                  <th>Team</th>
+                  <th>Nombre</th>
+                  <th>Fecha</th>
+                  <th>Categoria</th>
+                  <th>Prioridad</th>
                 </tr>
-              </thead>
-              <tbody>
+            </thead>
+            <tbody>
+                {% for Bug in latest_bug_list %}
                 <tr>
-                  <td>1</td>
-                  <td>Domenic</td>
-                  <td>88,110</td>
-                  <td>dcode</td>
+                  <td>{{ Bug.nombre }}</td>
+
+                  <td>{{ Bug.fecha }}</td>
+
+                  <td>{{ Bug.categoria }}</td>
+
+                  <td>{{ Bug.prioridad }}</td>
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Sally</td>
-                  <td>72,400</td>
-                  <td>Students</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Nick</td>
-                  <td>52,300</td>
-                  <td>dcode</td>
-                </tr>
+
+                {%endfor%}
               </tbody>
         </table>
+        {% else %}
+        <div class="text">No hay bugs disponibles</div>
+        {% endif %}
+
 
 
     </section>
