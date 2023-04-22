@@ -118,22 +118,25 @@
             
             <thead>
                 <tr>
-                  <th>Nombre</th>
-                  <th>Fecha</th>
-                  <th>Categoria</th>
+                  <th>ID</th>
+                  <th>Descripción</th>
                   <th>Prioridad</th>
+                  <th>Estado</th>
+                  <th>Proyecto</th>
                 </tr>
             </thead>
             <tbody>
                 {% for Bug in latest_bug_list %}
                 <tr>
-                  <td>{{ Bug.nombre }}</td>
+                  <td>{{ Bug.id_bug }}</td>
 
-                  <td>{{ Bug.fecha }}</td>
-
-                  <td>{{ Bug.categoria }}</td>
+                  <td>{{ Bug.descripcion }}</td>
 
                   <td>{{ Bug.prioridad }}</td>
+
+                  <td>{{ Bug.estado }}</td>
+
+                  <td>{{ Bug.proyecto }}</td>
                 </tr>
 
                 {%endfor%}
