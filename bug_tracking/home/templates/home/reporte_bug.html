@@ -5,7 +5,8 @@
   <form method="post">
     <!-- csrf es para proteccion contra crost site request forgeries -->
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form_bug.as_p }}
+    {{ form_usuario.as_p }}
     
     <button type="submit">Enviar reporte</button>
   </form>

@@ -109,9 +109,8 @@
             </div>
         </div>
     </nav>
-    <main>
-        {% block content %}{% endblock %}
-        <script src="{%static "js/script.js"%}"></script>
-    </main>
+    <script src="{%static "js/script.js"%}"></script>
+    {% block content %}{% endblock %}
+    
     </body>
 </html>
