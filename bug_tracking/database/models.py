@@ -29,7 +29,7 @@ class ReporteBug(models.Model):
     id_reporte = models.AutoField(primary_key=True)
     reporte = models.TextField()
     fecha_reporte = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de reporte')
-    usuario = models.ForeignKey(Usuario, null=False, on_delete=models.CASCADE, related_name='reportes')
+    correo_usuario = models.ForeignKey(Usuario, null=False, on_delete=models.CASCADE, related_name='reportes')
 
 
 
