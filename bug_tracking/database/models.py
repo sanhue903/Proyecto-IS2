@@ -18,6 +18,9 @@ class Programador(models.Model):
     def __str__(self):
         return self.nombre_programador
     
+    class Meta:
+        verbose_name_plural = "Programadores"
+    
 
 class Proyecto(models.Model):
     id_proyecto     = models.AutoField(primary_key=True)
@@ -29,8 +32,8 @@ class Proyecto(models.Model):
         return self.nombre_proyecto
 
 class Cargo(models.Model):
-    programador = models.ForeignKey(Programador, null=False, on_delete=models.CASCADE)
-    proyecto    = models.ForeignKey(Proyecto, null=False, on_delete=models.CASCADE)
+    id_programador = models.ForeignKey(Programador, null=False, on_delete=models.CASCADE)
+    id_proyecto    = models.ForeignKey(Proyecto, null=False, on_delete=models.CASCADE)
     
     cargo          = models.CharField(max_length=255, null=False, verbose_name='Cargo en el proyecto')
 
@@ -49,13 +52,15 @@ class Bug(models.Model):
         ('solucionado', 'Solucionado'),
     )
     
-    id_bug      = models.AutoField(primary_key=True)
-    descripcion = models.TextField(null=False, verbose_name='Descripción')
-    prioridad   = models.CharField(max_length=20, choices=PRIORIDADES_CHOICES, verbose_name='Prioridad')
-    estado      = models.CharField(max_length=20, choices=ESTADOS_CHOICES, verbose_name='Estado')
+    id_bug         = models.AutoField(primary_key=True)
+    titulo         = models.CharField(max_length=255, null=False, verbose_name='Titulo del bug')
+    descripcion    = models.TextField(null=False, verbose_name='Descripción')
+    prioridad      = models.CharField(max_length=20, choices=PRIORIDADES_CHOICES, verbose_name='Prioridad')
+    estado         = models.CharField(max_length=20, choices=ESTADOS_CHOICES, verbose_name='Estado')
+    fecha_reporte  = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de reporte')
     
-    proyecto    = models.ForeignKey(Proyecto, null=False, on_delete=models.CASCADE, verbose_name='Proyecto')
-    programador = models.ForeignKey(Programador, null=False, on_delete=models.CASCADE, verbose_name='Programador')
+    id_proyecto    = models.ForeignKey(Proyecto, null=False, on_delete=models.CASCADE, verbose_name='Proyecto')
+    id_programador = models.ForeignKey(Programador, null=False, on_delete=models.CASCADE, verbose_name='Programador')
     
     def __str__(self):
         return str(self.id_bug)
@@ -68,7 +73,7 @@ class ReporteBug(models.Model):
     fecha_reporte  = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de reporte')
     
     correo_usuario = models.ForeignKey(Usuario, null=False, on_delete=models.CASCADE, related_name='reportes')
-    bug         = models.ForeignKey(Bug, blank=True, null=True, on_delete=models.CASCADE, verbose_name='Bug')
+    id_bug         = models.ForeignKey(Bug, blank=True, null=True, on_delete=models.CASCADE, verbose_name='Bug')
 
     def __str__(self):
         return self.titulo
