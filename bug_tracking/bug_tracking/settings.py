@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'home',
     'database',
     'buglist',
+    'bug_report',
 ]
 
 MIDDLEWARE = [
