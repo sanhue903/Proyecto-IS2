@@ -1,153 +1,257 @@
-
-{%load static%}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="Inicio" content="width=device-width, initial-scale=1.0">
-    
     <!----======== CSS ======== -->
-    <link rel="stylesheet" href='{%static "css/style.css"%}'>
-    
+    <link rel="stylesheet" href='{% static "css/style.css" %}'>
+    <link rel="stylesheet" href='{% static "css/index.css" %}'>
     <!----===== Boxicons CSS ===== -->
-    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-    
-    <title>Inicio</title> 
-</head>
-<body>
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css'
+          rel='stylesheet'>
+    <title>Inicio</title>
+  </head>
+  <body>
     <nav class="sidebar close">
-        <header>
-            <div class="image-text">
-                <span class="image">
-                    <img src={%static "images/logo.png"%} alt="">
-                </span>
-
-                <div class="text logo-text">
-                    <span class="name">NombreUsuario</span>
-                    <span class="profession">Bugtracking</span>
-                </div>
-            </div>
-
-            <i class='bx bx-chevron-right toggle'></i>
-        </header>
-
-        <div class="menu-bar">
-            <div class="menu">
-
-                <!-- <li class="search-box">
+      <header>
+        <div class="image-text">
+          <span class="image">
+            <img src={% static "images/logo.png" %} alt="">
+          </span>
+          <div class="text logo-text">
+            <span class="name">NombreUsuario</span>
+            <span class="profession">Bugtracking</span>
+          </div>
+        </div>
+        <i class='bx bx-chevron-right toggle'></i>
+      </header>
+      <div class="menu-bar">
+        <div class="menu">
+          <!-- <li class="search-box">
                     <i class='bx bx-search icon'></i>
                     <input type="text" placeholder="Search...">
-                </li> -->
-
-                <ul class="menu-links">
-                    <li class="nav-link">
+</li> -->
+          <ul class="menu-links">
+            <li class="nav-link">
+              <a href="#">
+                <i class='bx bx-home-alt icon'></i>
+                <span class="text nav-text">Inicio</span>
+              </a>
+            </li>
+            <li class="nav-link">
+              <a href="{% url 'home:buglist' %}">
+                <i class='bx bx-list-ul icon'></i>
+                <span class="text nav-text">Lista de bugs</span>
+              </a>
+            </li>
+            <li class="nav-link">
+              <a href="#">
+                <i class='bx bx-bell icon'></i>
+                <span class="text nav-text">Reportar bug</span>
+              </a>
+            </li>
+            <!-- <li class="nav-link">
                         <a href="#">
-                            <i class='bx bx-home-alt icon' ></i>
-                            <span class="text nav-text">Inicio</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-link">
-                        <a href="{% url 'home:buglist' %}">
-                            <i class='bx bx-list-ul icon' ></i>
-                            <span class="text nav-text">Lista de bugs</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-link">
-                        <a href="#">
-                            <i class='bx bx-bell icon'></i>
-                            <span class="text nav-text">Reportar bug</span>
-                        </a>
-                    </li>
-
-                    <!-- <li class="nav-link">
-                        <a href="#">
-                            <i class='bx bx-pie-chart-alt icon' ></i>
+                            <i class='bx bx-pie-chart-alt icon'></i>
                             <span class="text nav-text">Analytics</span>
                         </a>
-                    </li> -->
-
-                    <!-- <li class="nav-link">
+</li> -->
+            <!-- <li class="nav-link">
                         <a href="#">
-                            <i class='bx bx-heart icon' ></i>
+                            <i class='bx bx-heart icon'></i>
                             <span class="text nav-text">Likes</span>
                         </a>
-                    </li> -->
-
-                    <!-- <li class="nav-link">
+</li> -->
+            <!-- <li class="nav-link">
                         <a href="#">
-                            <i class='bx bx-wallet icon' ></i>
+                            <i class='bx bx-wallet icon'></i>
                             <span class="text nav-text">Wallets</span>
                         </a>
-                    </li> -->
-
-                </ul>
-            </div>
-
-            <div class="bottom-content">
-                <li class="">
-                    <a href="#">
-                        <i class='bx bx-log-out icon' ></i>
-                        <span class="text nav-text">Cerrar sesión</span>
-                    </a>
-                </li>
-
-                <li class="mode">
-                    <div class="sun-moon">
-                        <i class='bx bx-moon icon moon'></i>
-                        <i class='bx bx-sun icon sun'></i>
-                    </div>
-                    <span class="mode-text text">Modo oscuro</span>
-
-                    <div class="toggle-switch">
-                        <span class="switch"></span>
-                    </div>
-                </li>
-                
-            </div>
+</li> -->
+          </ul>
         </div>
-
+        <div class="bottom-content">
+          <li class="">
+            <a href="#">
+              <i class='bx bx-log-out icon'></i>
+              <span class="text nav-text">Cerrar sesión</span>
+            </a>
+          </li>
+          <li class="mode">
+            <div class="sun-moon">
+              <i class='bx bx-moon icon moon'></i>
+              <i class='bx bx-sun icon sun'></i>
+            </div>
+            <span class="mode-text text">Modo oscuro</span>
+            <div class="toggle-switch">
+              <span class="switch"></span>
+            </div>
+          </li>
+        </div>
+      </div>
     </nav>
 
+
     <section class="home">
-        <div class="text">Inicio</div>
-        <table class="table">
+      <!--Título-->
+      <div class="text">Inicio</div>
+      <div class="row">
+        <div class =  "column"></div>
+        <div class = "column"></div>
+      </div>
+
+
+
+      <div class = "grid_container">
+        <!--Tabla últimos reportes-->
+        <div class= "elemento">
+          <label for = "table_Reportes">Últimos Reportes</label>
+          {% if listar_reportes %}
+          <table class= "uno sombra">
             <thead>
-                <tr>
-                  <th>Rank</th>
-                  <th>Name</th>
-                  <th>Points</th>
-                  <th>Team</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Domenic</td>
-                  <td>88,110</td>
-                  <td>dcode</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Sally</td>
-                  <td>72,400</td>
-                  <td>Students</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Nick</td>
-                  <td>52,300</td>
-                  <td>dcode</td>
-                </tr>
-              </tbody>
-        </table>
+              <tr>
+                <th style= "width: 3%">ID</th>
+                <th style= "width: 20%">Reporte</th>
+                <th style= "width: 8%">Fecha</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!--<tr>
+                <td>1</td>
+                <td>Reporte 1</td>
+                <td>27-04-2023</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Reporte 1</td>
+                <td>27-04-2023</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Reporte 1</td>
+                <td>27-04-2023</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Reporte 1</td>
+                <td>27-04-2023</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Reporte 1</td>
+                <td>27-04-2023</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Reporte 1</td>
+                <td>27-04-2023</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Reporte 1</td>
+                <td>27-04-2023</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Reporte 1</td>
+                <td>27-04-2023</td>
+              </tr>-->
 
+              {% for ReporteBug in listar_reportes %}
+                <tr>
+                  <td>{{ ReporteBug.id_reporte }}</td>
 
+                  <td>{{ ReporteBug.reporte }}</td>
+
+                  <td>{{ ReporteBug.fecha_reporte }}</td>
+
+                </tr>
+
+                {%endfor%}
+            </tbody>
+          </table>
+          {% else %}
+          <table class= "sombra" id = "table_Bugs">
+            <thead>
+              <tr>
+                <th style= "width: 3%">ID</th>
+                <th style= "width: 20%">Reporte</th>
+                <th style= "width: 8%">Fecha</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colspan="4" style="text-align: center">No hay Reportes disponibles</td>
+              </tr>
+            </tbody>
+          </table>
+          {% endif %}
+        </div>
+        
+        <div class= "elemento dos">
+          <label for = "grafico">Cantidad de Reportes Diarios</label>
+          <img class= "img_Grafico sombra"src= {% static "images/imagengrafico.png" %} alt="">
+        </div>
+
+        <label for = "table_Bugs">Últimos Bugs</label>
+        <div class= "elemento tres">
+          <!--Tabla de Últimos Bugs-->
+          {% if listar_bug %}
+          <table class= "sombra" id = "table_Bugs">
+            <thead>
+              <tr>
+                <th style= "width: 3%">ID</th>
+                <th style= "width: 8%">Nombre</th>
+                <th style= "width: 20%">Descripción</th>
+                <th style= "width: 5%">Fecha</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for Bug in  listar_bug%}
+                <tr>
+                  <td>{{ Bug.id_bug }}</td>
+
+                  <td>{{ Bug.titutlo }}</td>
+
+                  <td>{{ Bug.descripcion }}</td>
+
+                  <td>{{ Bug.fecha_reporte }}</td>
+
+                </tr>
+
+              {%endfor%}
+            </tbody>
+          </table>
+          {% else %}
+          <table class= "sombra" id = "table_Bugs">
+            <thead>
+              <tr>
+                <th style= "width: 3%">ID</th>
+                <th style= "width: 8%">Nombre</th>
+                <th style= "width: 20%">Descripción</th>
+                <th style= "width: 5%">Fecha</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colspan="4" style="text-align: center">No hay Bugs disponibles</td>
+              </tr>
+            </tbody>
+          </table>
+          {% endif %}
+        </div>
+        
+        
+        <div class = "elemento cuatro sombra">
+          <form action= "{% url 'home:buglist' %}">
+            <input class= "mi-boton" type= "submit" value= "Reportar Bug">
+          </form>
+          
+        </div>
+      </div>
     </section>
-
     <script src="{%static "js/script.js"%}"></script>
-
-</body>
+  </body>
 </html>
