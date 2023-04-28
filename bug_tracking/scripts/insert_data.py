@@ -1,8 +1,12 @@
 
 
 # Importar los modelos
-from bug_tracking.models import Usuario, Programador, Proyecto, Cargo, Bug, ReporteBug
+#from django.contrib.auth.models import User
+from database.models import Usuario, Programador, Proyecto, Cargo, Bug, ReporteBug
 from datetime import datetime
+
+# Crear un usuario
+#user = User.objects.create(username='Manuel_Astroza', email='mastroza@udec.cl', password='micontraseña')
 
 # Insertar un usuario
 usuario = Usuario.objects.create(correo_usuario='mreyes@cocacola')
