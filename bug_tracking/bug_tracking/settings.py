@@ -126,7 +126,6 @@ STATICFILES_DIRS = [
     BASE_DIR / "buglist" / "static",
     BASE_DIR / "home" / "static",
     BASE_DIR / "bug_report" / "static",
-    BASE_DIR /"staticfiles"
 ]
 
 # Default primary key field type
