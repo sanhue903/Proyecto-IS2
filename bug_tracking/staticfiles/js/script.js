@@ -4,15 +4,13 @@ const toggle = body.querySelector(".toggle");
 const modeSwitch = body.querySelector(".toggle-switch");
 const modeText = body.querySelector(".mode-text");
 
-let isDarkMode = localStorage.getItem("isDarkMode");
+const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
 
-if (isDarkMode === null) {
-  isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
-} else {
-  isDarkMode = isDarkMode === "true";
+if (prefersDarkScheme.matches) {
+    document.body.classList.toggle("dark", localStorage.getItem('darkmode') === 'true');
+    modeText.innerText = "Modo claro";
 }
 
-setMode(isDarkMode);
 
 /* searchBtn.addEventListener("click" , () =>{
     sidebar.classList.remove("close");
