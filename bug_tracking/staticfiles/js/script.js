@@ -9,7 +9,7 @@ const body = document.querySelector('body'),
 const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
 
 if (prefersDarkScheme.matches) {
-    body.classList.toggle("dark");
+    document.body.classList.toggle("dark", localStorage.getItem('darkmode') === 'true');
     modeText.innerText = "Modo claro";
 }
 
