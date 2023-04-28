@@ -71,9 +71,10 @@ class ReporteBug(models.Model):
     titulo         = models.CharField(max_length=255, null=False, verbose_name='titulo del reporte')
     reporte        = models.TextField(null=False)
     fecha_reporte  = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de reporte')
-    
+
     correo_usuario = models.ForeignKey(Usuario, null=False, on_delete=models.CASCADE, related_name='reportes')
     id_bug         = models.ForeignKey(Bug, blank=True, null=True, on_delete=models.CASCADE, verbose_name='Bug')
+    id_proyecto    = models.ForeignKey(Proyecto, null=False, on_delete=models.CASCADE, verbose_name='Proyecto')
 
     def __str__(self):
         return self.titulo
