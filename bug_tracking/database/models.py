@@ -74,7 +74,7 @@ class ReporteBug(models.Model):
 
     correo_usuario = models.ForeignKey(Usuario, null=False, on_delete=models.CASCADE, related_name='reportes')
     id_bug         = models.ForeignKey(Bug, blank=True, null=True, on_delete=models.CASCADE, verbose_name='Bug')
-    id_proyecto    = models.ForeignKey(Proyecto, null=False, on_delete=models.CASCADE, verbose_name='Proyecto')
+    id_proyecto    = models.ForeignKey(Proyecto, null=False, on_delete=models.CASCADE, verbose_name='Proyecto', db_column='id_proyecto')
 
     def __str__(self):
         return self.titulo
