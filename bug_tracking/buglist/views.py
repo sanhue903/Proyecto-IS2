@@ -11,8 +11,10 @@ def index(request):
     context = {"latest_bug_list": latest_bug_list}
     return render(request, "buglist/index.html", context)
 
-# def buglist_home(request):
-#     return redirect('home:principal')
+
+def buglist_home(request):
+    return redirect('home:principal')
+
 
 def refresh(request):
     return redirect('buglist:index')
