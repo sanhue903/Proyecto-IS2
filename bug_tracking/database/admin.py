@@ -55,3 +55,7 @@ class ReporteBugAdmin(admin.ModelAdmin):
         return False
     
     
+admin.site.register(ReporteBug)
+# admin.site.register(Prioridad)
+# admin.site.register(Estado)
+admin.site.register(Bug)
