@@ -1,10 +1,8 @@
-
-const body = document.querySelector('body'),
-      sidebar = body.querySelector('nav'),
-      toggle = body.querySelector(".toggle"),
-      /* searchBtn = body.querySelector(".search-box"), */
-      modeSwitch = body.querySelector(".toggle-switch"),
-      modeText = body.querySelector(".mode-text");
+const body = document.querySelector('body');
+const sidebar = body.querySelector('nav');
+const toggle = body.querySelector(".toggle");
+const modeSwitch = body.querySelector(".toggle-switch");
+const modeText = body.querySelector(".mode-text");
 
 const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -13,9 +11,6 @@ if (prefersDarkScheme.matches) {
     modeText.innerText = "Modo claro";
 }
 
-toggle.addEventListener("click" , () =>{
-    sidebar.classList.toggle("close");
-})
 
 /* searchBtn.addEventListener("click" , () =>{
     sidebar.classList.remove("close");

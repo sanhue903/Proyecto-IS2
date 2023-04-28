@@ -1,11 +1,13 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.template import loader
+from django.contrib import messages
 # Create your views here.
 
 def home(request):
-    
-    return render(request,'home/index.html')
+    return render(request,'home/base.html')
 
-def home_buglist(request):
-    return redirect('buglist:bugs_list')
+
+
+
+
