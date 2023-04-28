@@ -47,8 +47,8 @@ class ReporteBugAdmin(admin.ModelAdmin):
 
 @admin.register(ReporteBug)
 class ReporteBugAdmin(admin.ModelAdmin):
-    list_display = ('titulo','fecha_reporte','id_bug')
-    list_filter = ('estado',)
+    list_display = ('titulo','fecha_reporte','id_proyecto','id_bug')
+    list_filter = ('estado','id_proyecto')
     #exclude      = ('id_reporte','titulo','reporte','fecha_reporte','correo_usuario')
     
     def has_add_permission(self, request):

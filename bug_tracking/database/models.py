@@ -81,6 +81,7 @@ class ReporteBug(models.Model):
     estado         = models.CharField(max_length=20, default='Pendiente', choices=ESTADOS_CHOICES, verbose_name='Estado')
     
     correo_usuario = models.ForeignKey(Usuario, null=False, on_delete=models.CASCADE, verbose_name='Usuario', related_name='reportes')
+    id_proyecto    = models.ForeignKey(Proyecto, null=False, on_delete=models.CASCADE, verbose_name='Proyecto')
     id_bug         = models.ForeignKey(Bug, blank=True, null=True, on_delete=models.CASCADE, verbose_name='Bug')
 
     def __str__(self):
