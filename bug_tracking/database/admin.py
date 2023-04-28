@@ -15,11 +15,11 @@ class ReporteBugAdmin(admin.ModelAdmin):
     def has_change_permission(self, request, obj= None):
         return False
 
-
+#dasasdas
 @admin.register(Programador)
 class ReporteBugAdmin(admin.ModelAdmin):
     list_display = ('nombre_programador', 'correo_programador')
-    #exclude      = ('nombre_programador', 'correo_programador')
+    #exclude      = ('nombre_programador', 'correo_programador') 
 
 admin.site.register(Proyecto)
 
