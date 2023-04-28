@@ -125,7 +125,7 @@
               <div class="card">
                 <span class="text nav-text">Lista de bugs</span>
                 <p>Revisa todos los bugs en los que estamos trabajando</p>
-                <a href="{% url 'home:buglist' %}">Ir a la buglist</a>
+                <a href="{% url 'buglist:bug_list' %}">Ir a la buglist</a>
               </div>
             </div>
             <div class="item">
@@ -133,7 +133,7 @@
               <div class="card">
                 <span class="text nav-text">Reportar bug</span>
                 <p>Avísanos de un bug en alguno de los proyectos</p>
-                <a href="#">Reportar</a>
+                <a href="{% url 'report:reportar_bug' %}">Reportar</a>
               </div>
             </div>
             <div class="item">
