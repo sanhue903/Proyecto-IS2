@@ -1,10 +1,12 @@
-{% load static %}
+
+{%load static%}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="Inicio" content="width=device-width, initial-scale=1.0">
+    
     <!----======== CSS ======== -->
     <link rel="stylesheet" href='{%static "css/style.css"%}'>
     <link rel="stylesheet" href='{%static "css/parallax.css"%}'>
@@ -65,23 +67,48 @@
                             <i class='bx bx-pie-chart-alt icon' ></i>
                             <span class="text nav-text">Analytics</span>
                         </a>
-</li> -->
-            <!-- <li class="nav-link">
+                    </li> -->
+
+                    <!-- <li class="nav-link">
                         <a href="#">
-                            <i class='bx bx-heart icon'></i>
+                            <i class='bx bx-heart icon' ></i>
                             <span class="text nav-text">Likes</span>
                         </a>
-</li> -->
-            <!-- <li class="nav-link">
+                    </li> -->
+
+                    <!-- <li class="nav-link">
                         <a href="#">
-                            <i class='bx bx-wallet icon'></i>
+                            <i class='bx bx-wallet icon' ></i>
                             <span class="text nav-text">Wallets</span>
                         </a>
-</li> -->
-          </ul>
+                    </li> -->
+
+                </ul>
+            </div>
+
+            <div class="bottom-content">
+                <li class="">
+                    <a href="#">
+                        <i class='bx bx-log-out icon' ></i>
+                        <span class="text nav-text">Cerrar sesión</span>
+                    </a>
+                </li>
+
+                <li class="mode">
+                    <div class="sun-moon">
+                        <i class='bx bx-moon icon moon'></i>
+                        <i class='bx bx-sun icon sun'></i>
+                    </div>
+                    <span class="mode-text text">Modo oscuro</span>
+
+                    <div class="toggle-switch">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+                
+            </div>
         </div>
     </nav>
-
 
     <section class="home">
         {% comment %} <div class="text">Inicio</div> {% endcomment %}
@@ -119,94 +146,6 @@
             </div>
           </div>
 
-                  <td>{{ ReporteBug.reporte }}</td>
-
-                  <td>{{ ReporteBug.fecha_reporte }}</td>
-
-                </tr>
-
-                {%endfor%}
-            </tbody>
-          </table>
-          {% else %}
-          <table class= "sombra" id = "table_Bugs">
-            <thead>
-              <tr>
-                <th style= "width: 3%">ID</th>
-                <th style= "width: 20%">Reporte</th>
-                <th style= "width: 8%">Fecha</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td colspan="4" style="text-align: center">No hay Reportes disponibles</td>
-              </tr>
-            </tbody>
-          </table>
-          {% endif %}
-        </div>
-        
-        <div class= "elemento dos">
-          <label for = "grafico">Cantidad de Reportes Diarios</label>
-          <img class= "img_Grafico sombra"src= {% static "images/imagengrafico.png" %} alt="">
-        </div>
-
-        <label for = "table_Bugs">Últimos Bugs</label>
-        <div class= "elemento tres">
-          <!--Tabla de Últimos Bugs-->
-          {% if listar_bug %}
-          <table class= "sombra" id = "table_Bugs">
-            <thead>
-              <tr>
-                <th style= "width: 3%">ID</th>
-                <th style= "width: 8%">Nombre</th>
-                <th style= "width: 20%">Descripción</th>
-                <th style= "width: 5%">Fecha</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for Bug in  listar_bug%}
-                <tr>
-                  <td>{{ Bug.id_bug }}</td>
-
-                  <td>{{ Bug.titutlo }}</td>
-
-                  <td>{{ Bug.descripcion }}</td>
-
-                  <td>{{ Bug.fecha_reporte }}</td>
-
-                </tr>
-
-              {%endfor%}
-            </tbody>
-          </table>
-          {% else %}
-          <table class= "sombra" id = "table_Bugs">
-            <thead>
-              <tr>
-                <th style= "width: 3%">ID</th>
-                <th style= "width: 8%">Nombre</th>
-                <th style= "width: 20%">Descripción</th>
-                <th style= "width: 5%">Fecha</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td colspan="4" style="text-align: center">No hay Bugs disponibles</td>
-              </tr>
-            </tbody>
-          </table>
-          {% endif %}
-        </div>
-        
-        
-        <div class = "elemento cuatro sombra">
-          <form action= "{% url 'home:buglist' %}">
-            <input class= "mi-boton" type= "submit" value= "Reportar Bug">
-          </form>
-          
-        </div>
-      </div>
     </section>
 
 

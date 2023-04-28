@@ -14,6 +14,5 @@ def index(request):
 # def buglist_home(request):
 #     return redirect('home:principal')
 
-
 def refresh(request):
     return redirect('buglist:index')
