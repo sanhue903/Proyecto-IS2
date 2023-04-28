@@ -22,13 +22,15 @@ toggle.addEventListener("click" , () =>{
 }) */
 
 modeSwitch.addEventListener("click" , () =>{
-    body.classList.toggle("dark");
-    
-    if(body.classList.contains("dark")){
-        modeText.innerText = "Modo claro";
-    }else{
-        modeText.innerText = "Modo oscuro";
-        
-    }
+
+    const WasDarkMode = localStorage.getItem('darkmode') === 'true'
+    localStorage.setItem('darkmode', !WasDarkMode);
+    const element = document.body;
+    element.classList.toggle("dark");
+
 });
+
+function onload(){
+    document.body.classList.toggle("dark", localStorage.getItem('darkmode') === 'true');
+}
 
