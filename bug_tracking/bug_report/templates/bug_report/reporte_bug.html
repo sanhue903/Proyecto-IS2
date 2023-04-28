@@ -1,0 +1,14 @@
+{% extends 'home/base.html' %}
+{% block content %}
+<section class='home'>
+  <h1 class="text">Reportar un bug</h1>
+  <form method="post">
+    <!-- csrf es para proteccion contra crost site request forgeries -->
+    {% csrf_token %}
+    {{ form_bug.as_p }}
+    {{ form_usuario.as_p }}
+    
+    <button type="submit">Enviar reporte</button>
+  </form>
+</section>
+{% endblock %}
