@@ -1,5 +1,5 @@
 from django import forms
-from database.models import ReporteBug, Usuario, Proyecto
+from database.models import ReporteBug, Usuario
 
 class UsuarioForm(forms.ModelForm):
     class Meta:
@@ -21,17 +21,4 @@ class ReporteBugForm(forms.ModelForm):
                 'placeholder': 'Describe el problema aquí...',
                 }),
         }
-
-class ProyectoForm(forms.ModelForm):
-    nombre_proyecto = forms.ModelChoiceField(
-        queryset=Proyecto.objects.all(),
-        empty_label=None,
-        widget=forms.Select(attrs={'class': 'form-control'}),
-        to_field_name='id_proyecto',
-        label='Nombre del proyecto'
-    )
-
-    class Meta:
-        model = Proyecto
-        fields = ['nombre_proyecto']
 
