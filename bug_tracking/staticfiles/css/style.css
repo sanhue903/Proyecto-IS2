@@ -39,7 +39,7 @@ body.dark{
     --body-color: #18191a;
     --sidebar-color: #242526;
     --primary-color: #3a3b3c;
-    --primary-color-light: #545657;
+    --primary-color-light: #474849;
     --toggle-color: #fff;
     --text-color: #ccc;
     --shadow-box: rgba(240, 235, 235, 0.15);
@@ -491,7 +491,7 @@ body.dark .home .text{
     margin-top: 0.25em;
   }
 
-  .container-form .card-form {
+  .container-form form[method="post"] {
     padding: 2rem 1rem 0;
   }
 
@@ -535,19 +535,26 @@ body.dark .home .text{
     margin-top: 2rem;
   }
   
-  .action-button {
-    font: inherit;
+  .action button[type="submit"]{
+    
     font-size: 1.25rem;
     padding: 1em;
     width: 100%;
     font-weight: 500;
-    background-color: var(--primary-color);
+    background-color: var(--body-color);
     border-radius: 6px;
-    color: #FFF;
+    border-color: var(--primary-color);
+    border-width: 10px;
+    color: var(--primary-color);
     border: 0;
   }
-  .action-button:focus {
+  .action button[type="submit"]:focus {
     outline: 0;
+  }
+  .action button[type="submit"]:hover{
+    background-color: var(--primary-color);
+    color: var(--primary-color-light);
+    transition: var(--tran-03);
   }
   
   .card-info {
@@ -602,6 +609,8 @@ body.dark .home .text{
     width: 450px;
     height: 25px;
     border-radius: 6px;
+    background-color: var(--body-color);
+    color: var(--text-color);
  }
  
  .input label[for="id_correo_usuario"] {
