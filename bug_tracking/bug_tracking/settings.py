@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'home',
     'database',
     'buglist',
+    'bug_report',
 ]
 
 MIDDLEWARE = [
@@ -122,8 +123,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR / "buglist" / "static",
-    BASE_DIR / "home" / "static",
+
+    BASE_DIR /"staticfiles"
 ]
 
 # Default primary key field type
