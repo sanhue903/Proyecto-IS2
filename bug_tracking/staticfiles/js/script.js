@@ -12,9 +12,9 @@ if (prefersDarkScheme.matches) {
 }
 
 
-/* searchBtn.addEventListener("click" , () =>{
-    sidebar.classList.remove("close");
-}) */
+toggle.addEventListener("click" , () =>{
+    sidebar.classList.toggle("close");
+})
 
 modeSwitch.addEventListener("click" , () =>{
 
