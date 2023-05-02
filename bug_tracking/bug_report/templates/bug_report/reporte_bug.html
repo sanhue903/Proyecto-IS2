@@ -12,7 +12,8 @@
           <small>Para reportar el error completa los campos</small>
         </h2>
       </div>
-      <form class="card-form">
+      <form method="post">
+        {% csrf_token %}
         <div class="input">
           {{ form_bug.as_p }} 
           <label class="input-label">Descripción del problema</label>
@@ -26,7 +27,7 @@
           <label class="input-label">Proyecto ascociado</label>
         </div>
         <div class="action">
-          <button type="submit" class="action-button">Enviar reporte</button>
+          <button type="submit">Enviar reporte</button>
         </div>
       </form>
       <div class="card-info">
