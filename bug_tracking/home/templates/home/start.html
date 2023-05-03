@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %}
-
+{%load static%}
 {% block content %}
 
 <section class='home'>
@@ -8,7 +8,101 @@
         <p>Bienvenido a la plataforma de bugtrucking de IS2</p>
         <a href="#">Registrarme</a>
     </div>
-    <div class="blank"></div>
+    <div class="blank">
+      <div class = "grid_container">
+        <!--Tabla últimos reportes-->
+        <div class= "elemento">
+            <label for = "table_Reportes">Últimos Reportes</label>
+            {% if listar_reportes %}
+            <table class= "uno sombra">
+                <thead>
+                    <tr>
+                        <th style= "width: 3%">ID</th>
+                        <th style= "width: 20%">Reporte</th>
+                        <th style= "width: 8%">Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ReporteBug in listar_reportes %}
+                        <tr>
+                            <td>{{ ReporteBug.id_reporte }}</td>
+                            <td>{{ ReporteBug.reporte }}</td>
+                            <td>{{ ReporteBug.fecha_reporte }}</td>
+                        </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+            {% else %}
+            <table class= "sombra" id = "table_Bugs">
+                <thead>
+                    <tr>
+                        <th style= "width: 3%">ID</th>
+                        <th style= "width: 20%">Reporte</th>
+                        <th style= "width: 8%">Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="4" style="text-align: center">No hay Reportes disponibles</td>
+                    </tr>
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+    
+
+        <div class= "elemento dos">
+            <label for = "grafico">Cantidad de Reportes Diarios</label>
+            <img class= "img_Grafico sombra"src= {% static "images/imagengrafico.png" %} alt="">
+        </div>
+
+
+        <label for = "table_Bugs">Últimos Bugs</label>
+        <div class= "elemento tres">
+            <!--Tabla de Últimos Bugs-->
+            {% if listar_bug %}
+            <table class= "sombra" id = "table_Bugs">
+                <thead>
+                    <tr>
+                        <th style= "width: 3%">ID</th>
+                        <th style= "width: 8%">Nombre</th>
+                        <th style= "width: 20%">Descripción</th>
+                        <th style= "width: 5%">Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for Bug in  listar_bug%}
+                        <tr>
+                            <td>{{ Bug.id_bug }}</td>
+                            <td>{{ Bug.titutlo }}</td>
+                            <td>{{ Bug.descripcion }}</td>
+                            <td>{{ Bug.fecha_reporte }}</td>
+                        </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+            {% else %}
+            <table class= "sombra" id = "table_Bugs">
+                <thead>
+                    <tr>
+                        <th style= "width: 3%">ID</th>
+                        <th style= "width: 8%">Nombre</th>
+                        <th style= "width: 20%">Descripción</th>
+                        <th style= "width: 5%">Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="4" style="text-align: center">No hay Bugs disponibles</td>
+                    </tr>
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+
+
+    </div>
+    </div>
     <div class="container second">
         <div class="item">
           <div class="img img-first"></div>
