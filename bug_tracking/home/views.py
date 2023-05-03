@@ -8,9 +8,11 @@ from database.models import ReporteBug, Bug
 
 
 def home(request):
+
     listar_reportes = ReporteBug.objects.order_by("id_reporte")[:20]
 
     listar_bug = Bug.objects.order_by("id_bug")[:20]
+
 
     context = {
         "listar_reportes": listar_reportes,
