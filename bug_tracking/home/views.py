@@ -18,7 +18,7 @@ def home(request):
         "listar_reportes": listar_reportes,
         "listar_bug": listar_bug
     }
-    return render(request, 'home/base.html', context)
+    return render(request, 'home/start.html', context)
 
 
 # def home_inicio(request):
