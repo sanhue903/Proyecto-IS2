@@ -6,6 +6,9 @@ const modeText = body.querySelector(".mode-text");
 
 const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
 
+if(body.offsetWidth <= 1024){
+    sidebar.classList.toggle("close");
+}
 if (prefersDarkScheme.matches) {
     document.body.classList.toggle("dark", localStorage.getItem('darkmode') === 'true');
     modeText.innerText = "Modo claro";
