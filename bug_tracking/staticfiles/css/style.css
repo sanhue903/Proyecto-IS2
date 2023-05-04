@@ -15,6 +15,7 @@
     --toggle-color: #DDD;
     --text-color: #707070;
     --shadow-box: rgba(0, 0, 0, 0.15);
+    --title-color: #695CFE;
 
     /* ====== Transition ====== */
     --tran-03: all 0.2s ease;
@@ -55,6 +56,11 @@ h2{
     font-weight: 700;
     color: var(--text-color);
     padding: auto;
+}
+
+h3 {
+    font-size: clamp(20px,5vw,30px);
+    font-weight: 850;
 }
 
 /* ===== Sidebar ===== */
@@ -419,17 +425,64 @@ body.dark .home .text {
 .other,
 .info-view {
     width: 100%;
-    height: 100vh;
-    background-color: var(--color);
-    display: flex;
-    justify-content: space-around;
+    height: auto;
+    background-color: var(--body-color);
+    
 }
 
 .info-view {
     
+    display: flex;
     flex-direction: row;
+    justify-content: space-around;
     flex-flow: wrap;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    
 }
+
+.info-view .table{
+    width: 100%
+    
+}
+
+.info-view .box {
+    
+    align-items: center;
+    min-width: 290px;
+    width: 40%;
+    height: 300px;
+    background-color: transparent;
+    margin: 10px;
+    box-sizing: border-box;
+}
+
+.info-view h2{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+.info-view .box .table{
+    margin: auto;
+    position: relative;
+    left: 0px;
+}
+
+.info-view .box .text-info{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-content: center;
+}
+.info-view .box h3{
+    text-align: center;
+    color: var(--title-color);
+    text-shadow: 20px 20px 20px var(--shadow-box);
+}
+
 
 
 .second {
@@ -474,9 +527,10 @@ body.dark .home .text {
 @media screen and (max-width<=1200) and (max-width>=300px)  {
     .second .item{
         width: 310px;
-        
     }
 }
+
+
 
 
 
