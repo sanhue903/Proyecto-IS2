@@ -15,7 +15,7 @@
     
     <title>Inicio</title> 
 </head>
-<body onload="onload()">
+<body>
     <nav class="sidebar">
         
         <header>
@@ -111,9 +111,10 @@
         </div>
     </nav>
 
-    <section class="home">
-
+    <section class="home" id="home">
+        <i class='bx bx-menu toggle'></i>
     </section>
+
     {% block content%}
     {% endblock %}
 

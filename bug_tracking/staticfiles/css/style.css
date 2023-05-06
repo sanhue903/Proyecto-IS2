@@ -81,6 +81,14 @@ h3 {
     width: 88px;
 }
 
+.sidebar.close.hide {
+    left: -100%;
+}
+
+.sidebar.close.unhide{
+    left: 0;
+}
+
 .sidebar li {
     height: 50px;
     list-style: none;
@@ -368,6 +376,24 @@ body.dark .switch::before {
     color: var(--text-color);
 }
 
+.home .toggle {
+    position: fixed;
+    flex-direction: column;
+    top: 88px;
+    margin-left: 30px;
+    transform: translateY(-50%);
+    background-color: var(--primary-color);
+    color: var(--sidebar-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    cursor: pointer;
+    transition: var(--tran-05);
+    z-index: 100;
+}
+
 
 .sidebar.close~.home {
     left: 88px;
@@ -375,370 +401,26 @@ body.dark .switch::before {
     width: calc(100% - 88px);
 }
 
+.sidebar.close.hide~.home {
+    left: 0px;
+    height: 100vh;
+    width: 100%;
+}
+
 body.dark .home .text {
     color: var(--text-color);
 }
 
-/* ===== Start parallax effect  ===== */
-
-.parallax {
-    text-align: center;
-    color: var(--color);
-    width: 100%;
-    min-height: 800px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-image: url(https://images.unsplash.com/photo-1519120944692-1a8d8cfc107f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=872&q=80);
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-}
-
-
-
-.parallax p {
-    max-width: 60ch;
-    line-height: 1.5;
-    padding: 1em;
-}
-
-.parallax a {
-    display: inline-block;
-    padding: 1em 3.5em;
-    background-color: var(--primary-color);
-    color: white;
-    text-decoration: none;
-    text-transform: uppercase;
-    border-radius: 0.3em;
-    font-weight: 700;
-    letter-spacing: .5px;
-    font-size: .875rem;
-}
-
-.parallax p {
-    color: var(--text-color);
-}
-
-.blank,
-.other,
-.info-view {
-    width: 100%;
-    height: auto;
-    background-color: var(--body-color);
-    
-}
-
-.info-view {
-    
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    flex-flow: wrap;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    
-}
-
-.info-view .table{
-    width: 100%
-    
-}
-
-.info-view .box {
-    
-    align-items: center;
-    min-width: 290px;
-    width: 40%;
-    height: 300px;
-    background-color: transparent;
-    margin: 10px;
-    box-sizing: border-box;
-}
-
-.info-view h2{
-    display: flex;
-    justify-content: center;
-    margin-bottom: 5px;
-}
-
-.info-view .box .table{
-    margin: auto;
-    position: relative;
-    left: 0px;
-}
-
-.info-view .box .text-info{
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    height: 100%;
-    justify-content: center;
-    align-content: center;
-}
-.info-view .box h3{
-    text-align: center;
-    color: var(--title-color);
-    text-shadow: 20px 20px 20px var(--shadow-box);
-}
-
-
-
-.second {
-    background-image: url(https://images.unsplash.com/photo-1514496959998-c01c40915c5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80);
-    background-attachment: fixed;
-    height: auto;
-    display: flex;
-    flex-direction: row;
-    flex-flow: wrap;
-    justify-content: center;
-    gap: 1.6em;
-    
-}
-
-.second .item{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    width: 310px;
-    height: 360px;
-    background-color: var(--body-color);
-    margin: 20px;
-    box-sizing: border-box;
-    border-radius: 0.4em;
-    -webkit-box-shadow: 0px 29px 38px -15px rgba(0, 0, 0, 0.43);
-    -moz-box-shadow: 0px 29px 38px -15px rgba(0, 0, 0, 0.43);
-    box-shadow: 0px 29px 38px -15px rgba(0, 0, 0, 0.43);
-    
-}
-
-.second text nav-text {
-    margin-top: 3em;
-    text-align: center;
-    text-size-adjust: auto;
-    
-}
-
-.second .card>a {
-    margin-bottom: 2em;
-}
-
-@media screen and (max-width<=1200) and (max-width>=300px)  {
-    .second .item{
-        width: 310px;
+@media (max-width:600px) {
+    .sidebar.close header i {
+        display: none;
     }
 }
 
-
-
-
-
-.parallax .img {
-    width: 90%;
-    height: 200px;
-    background-color: lightgrey;
-    background-size: cover;
-    background-position: center;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    border-radius: .3em;
-    ;
-}
-
-.img-first {
-    background-image: url(https://w0.peakpx.com/wallpaper/582/516/HD-wallpaper-linux-programmer-pixel-art-linux-computer-hacker-pixel-8-bit.jpg);
-}
-
-.img-second {
-    background-image: url(https://preview.redd.it/1d11s820dgm91.gif?width=640&crop=smart&format=png8&s=a18429691d6b7fe12b301d21a292643b604e2679);
-}
-
-.img-third {
-    background-image: url(https://preview.redd.it/newspaper-pixilart-is-the-software-i-use-and-an-online-v0-t3ccxihfxiia1.png?width=1080&crop=smart&auto=webp&v=enabled&s=d297b9d74d3e3601ef4817d84d61990de85f4f7f);
-}
+/* ===== Start parallax effect  ===== */
 
 
 
   /* ===== Report form page ===== */
 
-  .container-form{
-    text-align: center;
-  }
-  .container-form .card {
-    margin: 2rem auto;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 500px;
-    background-color: var(--primary-color-light);
-    border-radius: 10px;
-    box-shadow: 0 10px 20px 0 rgba(153, 153, 153, 0.25);
-    padding: 0.75rem;
-  }
 
-  .container-form .card-image {
-    border-radius: 8px;
-    overflow: hidden;
-    padding-bottom: 65%;
-    background-image: url("https://assets.codepen.io/285131/coffee_1.jpg");
-    background-repeat: no-repeat;
-    background-size: 150%;
-    background-position: 0 5%;
-    position: relative;
-  }
-
-  .container-form .card-heading {
-    position: absolute;
-    left: 10%;
-    top: 15%;
-    right: 10%;
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: #735400;
-    line-height: 1.222;
-  }
-
-  .container-form .card-heading small {
-    display: block;
-    font-size: 0.75em;
-    font-weight: 400;
-    margin-top: 0.25em;
-  }
-
-  .container-form form[method="post"] {
-    padding: 2rem 1rem 0;
-  }
-
-  .input {
-    display: flex;
-    flex-direction: column-reverse;
-    position: relative;
-    padding-top: 1.5rem;
-  }
-  .input + .input {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-  }
-  
-  .input-label {
-    color: var(--text-color);
-    position: absolute;
-    top: 1.5rem;
-    transition: 0.25s ease;
-  }
-  
-  .input-field {
-    border: 0;
-    z-index: 1;
-    background-color: transparent;
-    border-bottom: 2px solid #eee;
-    font: inherit;
-    font-size: 1.125rem;
-    padding: 0.25rem 0;
-  }
-  .input-field:focus, .input-field:valid {
-    outline: 0;
-    border-bottom-color: #6658d3;
-  }
-  .input-field:focus + .input-label, .input-field:valid + .input-label {
-    color: #6658d3;
-    transform: translateY(-1.5rem);
-  }
-  
-  .action {
-    margin-top: 2rem;
-  }
-  
-  .action button[type="submit"]{
-    
-    font-size: 1.25rem;
-    padding: 1em;
-    width: 100%;
-    font-weight: 500;
-    background-color: var(--body-color);
-    border-radius: 6px;
-    border-color: var(--primary-color);
-    border-width: 10px;
-    color: var(--primary-color);
-    border: 0;
-  }
-  .action button[type="submit"]:focus {
-    outline: 0;
-  }
-  .action button[type="submit"]:hover{
-    background-color: var(--primary-color);
-    color: var(--primary-color-light);
-    transition: var(--tran-03);
-  }
-  
-  .card-info {
-    padding: 1rem 1rem;
-    text-align: center;
-    font-size: 0.875rem;
-    color: #8597a3;
-  }
-  .card-info a {
-    display: block;
-    color: #6658d3;
-    text-decoration: none;
-  }
-
-  .input textarea {
-    margin-top: 2em;
-	width: 450px;
-	height: 60px;
-	border: 0.5px solid #cccccc;
-    
-	padding: 5px;
-	font-family: 'Segoe UI';
-    color-scheme: var(--text-color);
-	background-position: center;
-	background-repeat: no-repeat;
-    background-color: var(--body-color);
-    color: var(--text-color);
-    border-radius: 6px;
-    text-align: center;
-}
-
- .input p{
-    height: 60px;
- }
- .input input{
-
-    margin-top: 2em;
-    border: 0.5px solid #cccccc;
-    background-color: var(--body-color);
-    color-scheme: var(--text-color);
-    color: var(--text-color);
-    border-radius: 6px;
-    width: 450px;
-    height: 30px;
-    padding: 5px;
-    text-align: center;
-    
- }
-
- .input select{
-    margin-top: 2em;
-    width: 450px;
-    height: 25px;
-    border-radius: 6px;
-    background-color: var(--body-color);
-    color: var(--text-color);
- }
- 
- .input label[for="id_correo_usuario"] {
-    display: none;
-  }
-
-  .input label[for="id_correo_usuario"] {
-    display: none;
-  }
-  .input label[for="id_reporte"] {
-    display: none;
-  }
-  
-  .input label[for="id_nombre_proyecto"]{
-    display: none;
-  }
