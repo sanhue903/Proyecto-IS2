@@ -1,4 +1,9 @@
 
+import os
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "bug_tracking.settings")
+
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
 
 # Importar los modelos
 #from django.contrib.auth.models import User
@@ -81,14 +86,14 @@ bug4 = Bug.objects.create(titulo='Bug 4', descripcion='Al adjuntar archivos, los
 bug4.save()
 
 # Insertar reportes de bugs
-reporte1 = ReporteBug.objects.create(titulo='Reporte 1', reporte='Reporte del Bug 1', fecha_reporte=datetime.now(), estado='nuevo',correo_usuario=usuario, id_bug=bug1)
+reporte1 = ReporteBug.objects.create(titulo='Reporte 1', reporte='Reporte del Bug 1', fecha_reporte=datetime.now(), estado='nuevo',correo_usuario=usuario, id_bug=bug1, id_proyecto=proyecto1)
 reporte1.save()
 
-reporte2 = ReporteBug.objects.create(titulo='Reporte 2', reporte='Reporte del Bug 2',fecha_reporte=datetime.now(), estado='en proceso', correo_usuario=usuario2, id_bug=bug2)
+reporte2 = ReporteBug.objects.create(titulo='Reporte 2', reporte='Reporte del Bug 2',fecha_reporte=datetime.now(), estado='en proceso', correo_usuario=usuario2, id_bug=bug2, id_proyecto=proyecto2)
 reporte2.save()
 
-reporte3 = ReporteBug.objects.create(titulo='Reporte 3', reporte='Reporte del Bug 3',fecha_reporte=datetime.now(), estado='nuevo', correo_usuario=usuario3, id_bug=bug3)
+reporte3 = ReporteBug.objects.create(titulo='Reporte 3', reporte='Reporte del Bug 3',fecha_reporte=datetime.now(), estado='nuevo', correo_usuario=usuario3, id_bug=bug3, id_proyecto=proyecto1)
 reporte3.save()
 
-reporte4 = ReporteBug.objects.create(titulo='Reporte 4', reporte='Reporte del Bug 4', fecha_reporte=datetime.now(), estado='en proceso' , correo_usuario=usuario3, id_bug=bug4)
+reporte4 = ReporteBug.objects.create(titulo='Reporte 4', reporte='Reporte del Bug 4', fecha_reporte=datetime.now(), estado='en proceso' , correo_usuario=usuario3, id_bug=bug4, id_proyecto=proyecto2)
 reporte4.save()

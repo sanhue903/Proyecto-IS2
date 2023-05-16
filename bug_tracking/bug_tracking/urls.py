@@ -25,4 +25,5 @@ urlpatterns = [
     path('', include("home.urls")),
     path('buglist', include("buglist.urls")),
     path('report', include("bug_report.urls")),
+    path('bug_detail', include("bug_detail.urls")),
 ]

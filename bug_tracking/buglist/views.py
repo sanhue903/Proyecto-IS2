@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.shortcuts import redirect, reverse
+from django.shortcuts import redirect
 from .models import Bug
 from database.models import Bug
 

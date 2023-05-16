@@ -8,6 +8,7 @@
             <thead>
                 <tr>
                   <th>ID</th>
+                  <th>Titulo</th>
                   <th>Descripción</th>
                   <th>Prioridad</th>
                   <th>Estado</th>
@@ -19,15 +20,17 @@
                 <tr>
                   <td>{{ Bug.id_bug }}</td>
 
+                  <td><a href="{% url 'bug_detail:index' Bug.id_bug %}">{{ Bug.titulo }}</a></td>
+
                   <td>{{ Bug.descripcion }}</td>
 
                   <td>{{ Bug.prioridad }}</td>
 
                   <td>{{ Bug.estado }}</td>
-
-                  <td>{{ Bug.proyecto }}</td>
+    
+                  <td>{{ Bug.id_proyecto_id }}</td>
                 </tr>
-
+                
                 {%endfor%}
               </tbody>
         </table>
