@@ -11,6 +11,7 @@
   <div class="info-view">
       <div class="box">
         <h2>Últimos errores</h2>
+        {% if listar_reportes %}
         <table class="table"> 
             <thead>
                 <tr>
@@ -22,65 +23,40 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                  <td>Hola</td>
-
-                  <td>Adios</td>
-
-                  <td>Luego</td>
-
-                  <td>Probando</td>
-
-                  <td>Juju</td>
-                </tr>
-                 <tr>
-                  <td>Hola</td>
-
-                  <td>Adios</td>
-
-                  <td>Luego</td>
-
-                  <td>Probando</td>
-
-                  <td>Juju</td>
-                </tr>
-                 <tr>
-                  <td>Hola</td>
-
-                  <td>Adios</td>
-
-                  <td>Luego</td>
-
-                  <td>Probando</td>
-
-                  <td>Juju</td>
-                </tr>
-                 <tr>
-                  <td>Hola</td>
-
-                  <td>Adios</td>
-
-                  <td>Luego</td>
-
-                  <td>Probando</td>
-
-                  <td>Juju</td>
-                </tr>
-                 <tr>
-                  <td>Hola</td>
-
-                  <td>Adios</td>
-
-                  <td>Luego</td>
-
-                  <td>Probando</td>
-
-                  <td>Juju</td>
-                </tr>
-
-              </tbody>
+              {% for ReporteBug in listar_reportes %}
+              <tr>
+                <td>{{ ReporteBug.id_reporte }}</td>
+                <td>{{ ReporteBug.reporte }}</td>
+                <td>{{ ReporteBug.fecha_reporte }}</td>
+              </tr>
+              {%endfor%}
+            </tbody>
         </table>
+        {% else %}
+        <table class="table"> 
+          <thead>
+              <tr>
+                <th>ID</th>
+                <th>Descripción</th>
+                <th>Prioridad</th>
+                <th>Estado</th>
+                <th>Proyecto</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td colspan="4" style="text-align: center">No hay errores disponibles</td>
+              </tr>
+            </tbody>
+      </table>
+      {% endif %}
       </div>
+
+
+
+
+
+
       <div class="box">
         <div class="text-info">
           <h3>Hemos resuelto más de 300 errores</h3>
@@ -94,6 +70,7 @@
       </div>
       <div class="box">
         <h2>Últimos reportes</h2>
+        {% if listar_bug %}
         <table class="table"> 
             <thead>
                 <tr>
@@ -105,53 +82,35 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                  <td>Hola</td>
-
-                  <td>Adios</td>
-
-                  <td>Luego</td>
-
-                  <td>Probando</td>
-
-                  <td>Juju</td>
-                </tr>
-                                 <tr>
-                  <td>Hola</td>
-
-                  <td>Adios</td>
-
-                  <td>Luego</td>
-
-                  <td>Probando</td>
-
-                  <td>Juju</td>
-                </tr>
-                                 <tr>
-                  <td>Hola</td>
-
-                  <td>Adios</td>
-
-                  <td>Luego</td>
-
-                  <td>Probando</td>
-
-                  <td>Juju</td>
-                </tr>
-                                 <tr>
-                  <td>Hola</td>
-
-                  <td>Adios</td>
-
-                  <td>Luego</td>
-
-                  <td>Probando</td>
-
-                  <td>Juju</td>
-                </tr>
-
+              {% for Bug in  listar_bug%}
+              <tr>
+                  <td>{{ Bug.id_bug }}</td>
+                  <td>{{ Bug.titutlo }}</td>
+                  <td>{{ Bug.descripcion }}</td>
+                  <td>{{ Bug.fecha_reporte }}</td>
+              </tr>
+              {%endfor%}
               </tbody>
-        </table></div>
+        </table>
+        {% else %}
+        <table class="table"> 
+          <thead>
+              <tr>
+                <th>ID</th>
+                <th>Descripción</th>
+                <th>Prioridad</th>
+                <th>Estado</th>
+                <th>Proyecto</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td colspan="4" style="text-align: center">No hay reportes disponibles</td>
+              </tr>
+            </tbody>
+      </table>
+      {% endif %}
+      </div>
   </div>
   <div class="parallax second">
     <div class="item">
