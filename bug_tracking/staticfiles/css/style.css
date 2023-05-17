@@ -383,7 +383,7 @@ body.dark .switch::before {
     margin-left: 30px;
     transform: translateY(-50%);
     background-color: var(--primary-color);
-    color: var(--sidebar-color);
+    color: var(--toggle-color);
     border-radius: 50%;
     display: flex;
     align-items: center;

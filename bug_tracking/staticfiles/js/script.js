@@ -5,7 +5,7 @@ function onload() {
   const modeSwitch = body.querySelector(".toggle-switch");
   const modeText = body.querySelector(".mode-text");
   const home = document.querySelector("#home .toggle");
-  const touch = body.querySelector("home");
+
 
   const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -16,9 +16,10 @@ function onload() {
 
   toggle.addEventListener("click", () => {
     sidebar.classList.toggle("close");
+    sidebar.classList.toggle("hide");
   });
 
-    home.addEventListener("click", () => {
+  home.addEventListener("click", () => {
     
     sidebar.classList.toggle("unhide");
   });
@@ -42,10 +43,8 @@ function onload() {
     } else {
       if (screen.width < 850) {
         sidebar.classList.add("close");
-        console.log("entre al load");
       }
       if (screen.width < 600) {
-        console.log("entre al load");
         sidebar.classList.add("close");
         sidebar.classList.add("hide");
         home.style.display = "block";
@@ -65,7 +64,6 @@ function onload() {
         sidebar.classList.add("close");
 
         if (screen.width < 600) {
-          console.log("entre al resize");
           sidebar.classList.add("close");
           sidebar.classList.add("hide");
           home.style.display = "block";
