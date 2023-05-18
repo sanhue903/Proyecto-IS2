@@ -111,8 +111,8 @@
   }
 
   .action button[type="submit"]:hover {
-      background-color: var(--primary-color);
-      color: var(--primary-color-light);
+      background-color: var(--title-color);
+      color: white;
       transition: var(--tran-03);
   }
 

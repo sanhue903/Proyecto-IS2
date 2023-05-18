@@ -9,14 +9,17 @@ from database.models import ReporteBug, Bug
 
 def home(request):
 
-    listar_reportes = ReporteBug.objects.order_by("id_reporte")[:20]
-
-    listar_bug = Bug.objects.order_by("id_bug")[:20]
+    listar_reportes = ReporteBug.objects.order_by("id_reporte")[:5]
+    total_report = ReporteBug.objects.count();
+    total_bug = Bug.objects.count();
+    listar_bug = Bug.objects.order_by("id_bug")[:5]
 
 
     context = {
         "listar_reportes": listar_reportes,
-        "listar_bug": listar_bug
+        "listar_bug": listar_bug,
+        "total_report": total_report,
+        "total_bug": total_bug
     }
     return render(request, 'home/start.html', context)
 
