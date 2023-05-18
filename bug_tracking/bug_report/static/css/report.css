@@ -1,0 +1,191 @@
+  .container-form {
+      text-align: center;
+  }
+
+  .container-form .card {
+      margin: 2rem auto;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 500px;
+      background-color: var(--primary-color-light);
+      border-radius: 10px;
+      box-shadow: 0 10px 20px 0 rgba(153, 153, 153, 0.25);
+      padding: 0.75rem;
+  }
+
+  .container-form .card-image {
+      border-radius: 8px;
+      overflow: hidden;
+      padding-bottom: 65%;
+      background-image: url("https://assets.codepen.io/285131/coffee_1.jpg");
+      background-repeat: no-repeat;
+      background-size: 150%;
+      background-position: 0 5%;
+      position: relative;
+  }
+
+  .container-form .card-heading {
+      position: absolute;
+      left: 10%;
+      top: 15%;
+      right: 10%;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #735400;
+      line-height: 1.222;
+  }
+
+  .container-form .card-heading small {
+      display: block;
+      font-size: 0.75em;
+      font-weight: 400;
+      margin-top: 0.25em;
+  }
+
+  .container-form form[method="post"] {
+      padding: 2rem 1rem 0;
+  }
+
+  .input {
+      display: flex;
+      flex-direction: column-reverse;
+      position: relative;
+      padding-top: 1.5rem;
+  }
+
+  .input+.input {
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+  }
+
+  .input-label {
+      color: var(--text-color);
+      position: absolute;
+      top: 1.5rem;
+      transition: 0.25s ease;
+  }
+
+  .input-field {
+      border: 0;
+      z-index: 1;
+      background-color: transparent;
+      border-bottom: 2px solid #eee;
+      font: inherit;
+      font-size: 1.125rem;
+      padding: 0.25rem 0;
+  }
+
+  .input-field:focus,
+  .input-field:valid {
+      outline: 0;
+      border-bottom-color: #6658d3;
+  }
+
+  .input-field:focus+.input-label,
+  .input-field:valid+.input-label {
+      color: #6658d3;
+      transform: translateY(-1.5rem);
+  }
+
+  .action {
+      margin-top: 2rem;
+  }
+
+  .action button[type="submit"] {
+
+      font-size: 1.25rem;
+      padding: 1em;
+      width: 100%;
+      font-weight: 500;
+      background-color: var(--body-color);
+      border-radius: 6px;
+      border-color: var(--primary-color);
+      border-width: 10px;
+      color: var(--primary-color);
+      border: 0;
+  }
+
+  .action button[type="submit"]:focus {
+      outline: 0;
+  }
+
+  .action button[type="submit"]:hover {
+      background-color: var(--title-color);
+      color: white;
+      transition: var(--tran-03);
+  }
+
+  .card-info {
+      padding: 1rem 1rem;
+      text-align: center;
+      font-size: 0.875rem;
+      color: #8597a3;
+  }
+
+  .card-info a {
+      display: block;
+      color: #6658d3;
+      text-decoration: none;
+  }
+
+  .input textarea {
+      margin-top: 2em;
+      width: 450px;
+      height: 60px;
+      border: 0.5px solid #cccccc;
+
+      padding: 5px;
+      font-family: 'Segoe UI';
+      color-scheme: var(--text-color);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: var(--body-color);
+      color: var(--text-color);
+      border-radius: 6px;
+      text-align: center;
+  }
+
+  .input p {
+      height: 60px;
+  }
+
+  .input input {
+
+      margin-top: 2em;
+      border: 0.5px solid #cccccc;
+      background-color: var(--body-color);
+      color-scheme: var(--text-color);
+      color: var(--text-color);
+      border-radius: 6px;
+      width: 450px;
+      height: 30px;
+      padding: 5px;
+      text-align: center;
+
+  }
+
+  .input select {
+      margin-top: 2em;
+      width: 450px;
+      height: 25px;
+      border-radius: 6px;
+      background-color: var(--body-color);
+      color: var(--text-color);
+  }
+
+  .input label[for="id_correo_usuario"] {
+      display: none;
+  }
+
+  .input label[for="id_correo_usuario"] {
+      display: none;
+  }
+
+  .input label[for="id_reporte"] {
+      display: none;
+  }
+
+  .input label[for="id_nombre_proyecto"] {
+      display: none;
+  }

@@ -1,13 +1,12 @@
-
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    
+
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-:root{
+:root {
     /* ===== Colors ===== */
     --body-color: #E4E9F7;
     --sidebar-color: #FFF;
@@ -16,6 +15,7 @@
     --toggle-color: #DDD;
     --text-color: #707070;
     --shadow-box: rgba(0, 0, 0, 0.15);
+    --title-color: #695CFE;
 
     /* ====== Transition ====== */
     --tran-03: all 0.2s ease;
@@ -23,31 +23,50 @@
     --tran-04: all 0.3s ease;
     --tran-05: all 0.3s ease;
 }
-
-body{
+    /* ===== Body ===== */
+body {
     min-height: 100vh;
     background-color: var(--body-color);
     transition: var(--tran-05);
 }
-
-::selection{
+    /* ===== Transition between selection ===== */
+::selection {
     background-color: var(--primary-color);
     color: #fff;
 }
-
-body.dark{
+    /* ===== Body in dark mode ===== */
+body.dark {
     --body-color: #18191a;
     --sidebar-color: #242526;
     --primary-color: #3a3b3c;
-    --primary-color-light: #3a3b3c;
+    --primary-color-light: #474849;
     --toggle-color: #fff;
     --text-color: #ccc;
     --shadow-box: rgba(240, 235, 235, 0.15);
 }
 
+
+h1 {
+    font-weight: 700;
+    font-size: 3rem;
+}
+
+h2{
+    font-size: 25px;
+    font-weight: 700;
+    color: var(--text-color);
+    padding: auto;
+}
+
+h3 {
+    font-size: clamp(20px,5vw,30px);
+    font-weight: 850;
+}
+
 /* ===== Sidebar ===== */
- .sidebar{
+.sidebar {
     position: fixed;
+    flex: 1;
     top: 0;
     left: 0;
     height: 100%;
@@ -55,14 +74,22 @@ body.dark{
     padding: 10px 14px;
     background: var(--sidebar-color);
     transition: var(--tran-05);
-    z-index: 100;  
+    z-index: 100;
 }
-.sidebar.close{
+
+.sidebar.close {
     width: 88px;
 }
 
-/* ===== Reusable code - Here ===== */
-.sidebar li{
+.sidebar.close.hide {
+    left: -100%;
+}
+
+.sidebar.close.unhide{
+    left: 0;
+}
+
+.sidebar li {
     height: 50px;
     list-style: none;
     display: flex;
@@ -71,12 +98,12 @@ body.dark{
 }
 
 .sidebar header .image,
-.sidebar .icon{
+.sidebar .icon {
     min-width: 60px;
     border-radius: 6px;
 }
 
-.sidebar .icon{
+.sidebar .icon {
     min-width: 60px;
     border-radius: 6px;
     height: 100%;
@@ -87,58 +114,62 @@ body.dark{
 }
 
 .sidebar .text,
-.sidebar .icon{
+.sidebar .icon {
     color: var(--text-color);
     transition: var(--tran-03);
 }
 
-.sidebar .text{
+.sidebar .text {
     font-size: 17px;
     font-weight: 500;
     white-space: nowrap;
     opacity: 1;
 }
-.sidebar.close .text{
+
+.sidebar.close .text {
     opacity: 0;
 }
+
 /* =========================== */
 
-.sidebar header{
+.sidebar header {
     position: relative;
 }
 
-.sidebar header .image-text{
+.sidebar header .image-text {
     display: flex;
     align-items: center;
 }
-.sidebar header .logo-text{
+
+.sidebar header .logo-text {
     display: flex;
     flex-direction: column;
 }
+
 header .image-text .name {
     margin-top: 2px;
     font-size: 18px;
     font-weight: 600;
 }
 
-header .image-text .profession{
+header .image-text .profession {
     font-size: 16px;
     margin-top: -2px;
     display: block;
 }
 
-.sidebar header .image{
+.sidebar header .image {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.sidebar header .image img{
+.sidebar header .image img {
     width: 40px;
     border-radius: 6px;
 }
 
-.sidebar header .toggle{
+.sidebar header .toggle {
     position: absolute;
     top: 50%;
     right: -25px;
@@ -156,15 +187,15 @@ header .image-text .profession{
     transition: var(--tran-05);
 }
 
-body.dark .sidebar header .toggle{
+body.dark .sidebar header .toggle {
     color: var(--text-color);
 }
 
-.sidebar.close .toggle{
+.sidebar.close .toggle {
     transform: translateY(-50%) rotate(0deg);
 }
 
-.sidebar .menu{
+.sidebar .menu {
     margin-top: 40px;
 }
 
@@ -187,7 +218,7 @@ body.dark .sidebar header .toggle{
     font-weight: 500;
     transition: var(--tran-05);
 } */
-.sidebar li a{
+.sidebar li a {
     list-style: none;
     height: 100%;
     background-color: transparent;
@@ -200,54 +231,61 @@ body.dark .sidebar header .toggle{
     transition: var(--tran-03);
 }
 
-.sidebar li a:hover{
+.sidebar li a:hover {
     background-color: var(--primary-color);
 }
+
 .sidebar li a:hover .icon,
-.sidebar li a:hover .text{
+.sidebar li a:hover .text {
     color: var(--sidebar-color);
 }
+
 body.dark .sidebar li a:hover .icon,
-body.dark .sidebar li a:hover .text{
+body.dark .sidebar li a:hover .text {
     color: var(--text-color);
 }
 
-.sidebar .menu-bar{
+.sidebar .menu-bar {
     height: calc(100% - 55px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     overflow-y: scroll;
 }
-.menu-bar::-webkit-scrollbar{
+
+.menu-bar::-webkit-scrollbar {
     display: none;
 }
-.sidebar .menu-bar .mode{
+
+.sidebar .menu-bar .mode {
     border-radius: 6px;
     background-color: var(--primary-color-light);
     position: relative;
     transition: var(--tran-05);
 }
 
-.menu-bar .mode .sun-moon{
+.menu-bar .mode .sun-moon {
     height: 50px;
     width: 60px;
 }
 
-.mode .sun-moon i{
+.mode .sun-moon i {
     position: absolute;
 }
-.mode .sun-moon i.sun{
-    opacity: 0;
-}
-body.dark .mode .sun-moon i.sun{
-    opacity: 1;
-}
-body.dark .mode .sun-moon i.moon{
+
+.mode .sun-moon i.sun {
     opacity: 0;
 }
 
-.menu-bar .bottom-content .toggle-switch{
+body.dark .mode .sun-moon i.sun {
+    opacity: 1;
+}
+
+body.dark .mode .sun-moon i.moon {
+    opacity: 0;
+}
+
+.menu-bar .bottom-content .toggle-switch {
     position: absolute;
     right: 0;
     height: 100%;
@@ -258,7 +296,8 @@ body.dark .mode .sun-moon i.moon{
     border-radius: 6px;
     cursor: pointer;
 }
-.toggle-switch .switch{
+
+.toggle-switch .switch {
     position: relative;
     height: 22px;
     width: 40px;
@@ -267,7 +306,7 @@ body.dark .mode .sun-moon i.moon{
     transition: var(--tran-05);
 }
 
-.switch::before{
+.switch::before {
     content: '';
     position: absolute;
     height: 15px;
@@ -280,11 +319,15 @@ body.dark .mode .sun-moon i.moon{
     transition: var(--tran-04);
 }
 
-body.dark .switch::before{
+body.dark .switch::before {
     left: 20px;
 }
 
-.home{
+
+/* ===== Home ===== */
+
+.home {
+    flex: 1;
     position: absolute;
     top: 0;
     top: 0;
@@ -294,14 +337,15 @@ body.dark .switch::before{
     background-color: var(--body-color);
     transition: var(--tran-05);
 }
-.home .text{
+
+.home .text {
     font-size: 30px;
     font-weight: 500;
     color: var(--text-color);
     padding: 12px 60px;
 }
 
-.home .table{
+.home .table {
     position: absolute;
     left: 50px;
     border-collapse: collapse;
@@ -311,7 +355,7 @@ body.dark .switch::before{
     border-radius: 5px 5px 0 0;
     overflow: hidden;
     box-shadow: 0 0 20px var(--shadow-box);
-    
+
 }
 
 .home .table thead tr {
@@ -332,117 +376,138 @@ body.dark .switch::before{
     color: var(--text-color);
 }
 
-
-.sidebar.close ~ .home{
-    left: 78px;
-    height: 100vh;
-    width: calc(100% - 78px);
-}
-body.dark .home .text{
-    color: var(--text-color);
-}
-
-.container {
-    text-align: center;
-    color: var(--color);
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
+.home .toggle {
+    position: fixed;
     flex-direction: column;
+    top: 88px;
+    margin-left: 30px;
+    transform: translateY(-50%);
+    background-color: var(--primary-color);
+    color: var(--toggle-color);
+    border-radius: 50%;
+    display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url(https://images.unsplash.com/photo-1519120944692-1a8d8cfc107f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=872&q=80);
-    background-size: cover;
-    background-position: center;
-    
-  /*  this is where the magic happens:  */
-    background-attachment: fixed;
+    font-size: 30px;
+    cursor: pointer;
+    transition: var(--tran-05);
+    z-index: 100;
 }
 
-.container h1 {
-    font-weight: 700;
-    font-size: 3rem;
-}
-  
-.container p {
-    max-width: 52ch;
-    line-height: 1.5;
-    padding: 1em;
-}
-  
-.container a {
-    display: inline-block;
-    padding: 1em 3.5em;
-    background-color: var(--primary-color);
-    color: white;
-    text-decoration: none;
-    text-transform: uppercase;
-    border-radius: 0.3em;
-    font-weight: 700;
-    letter-spacing: .5px;
-    font-size: .875rem;
+
+.sidebar.close~.home {
+    left: 88px;
+    height: 100vh;
+    width: calc(100% - 88px);
 }
 
-.container p{
+.sidebar.close.hide~.home {
+    left: 0px;
+    height: 100vh;
+    width: 100%;
+}
+
+body.dark .home .text {
     color: var(--text-color);
 }
-.blank,
-.other {
-  width: 100%;
-  min-height: 60vh;
-  background-color: var(--color);
-}
 
-.second {
-    background-image:url(https://images.unsplash.com/photo-1514496959998-c01c40915c5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80);
-    background-attachment: fixed;
-    height: 1200px;
-}
 
-.second text nav-text{
-    margin-top: 2em;
-}
-  
-.second  .card > a {
-    margin-bottom: 2em;
-  }
-  
-.second .item {
+
+.container-table{
     display: flex;
-    max-width: 320px;
-    background-color: var(--body-color);;
-    flex-direction: column;
-    align-items: center;
-    border-radius: .5em;
-    -webkit-box-shadow: 0px 29px 38px -15px rgba(0,0,0,0.43);
-    -moz-box-shadow: 0px 29px 38px -15px rgba(0,0,0,0.43);
-    box-shadow: 0px 29px 38px -15px rgba(0,0,0,0.43);
-  }
-  
-  .img {
-    width: 90%;
-    height: 200px;
-    background-color: lightgrey;
-    background-size: cover;
-    background-position: center;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    border-radius: .3em;;
-  }
-  
-  .img-first {
-    background-image: url(https://w0.peakpx.com/wallpaper/582/516/HD-wallpaper-linux-programmer-pixel-art-linux-computer-hacker-pixel-8-bit.jpg);
-  }
-  
-  .img-second {
-    background-image: url(https://preview.redd.it/1d11s820dgm91.gif?width=640&crop=smart&format=png8&s=a18429691d6b7fe12b301d21a292643b604e2679);
-  }
-  
-  .img-third {
-    background-image: url(https://preview.redd.it/newspaper-pixilart-is-the-software-i-use-and-an-online-v0-t3ccxihfxiia1.png?width=1080&crop=smart&auto=webp&v=enabled&s=d297b9d74d3e3601ef4817d84d61990de85f4f7f);
-  }
-  
-  .second {
-    flex-direction: row;
-    gap: 1.6em;
-  }
+    width: 100%;
+    justify-content: center;
+}
+
+ .table-data {
+	display: flex;
+	grid-gap: 24px;
+	margin-top: 20px;
+	width: 90%;
+	color: var(--text-color);
+}
+.table-data > div {
+	border-radius: 10px;
+	background: var(--sidebar-color);
+	padding: 24px;
+	overflow-x: auto;
+}
+.table-data .head {
+	display: flex;
+	align-items: center;
+	grid-gap: 16px;
+	margin-bottom: 24px;
+}
+.table-data .head h3 {
+	margin-right: auto;
+	font-size: 24px;
+	font-weight: 600;
+}
+.table-data .head .bx {
+	cursor: pointer;
+}
+
+ .table-data .order {
+	flex-grow: 1;
+	flex-basis: 500px;
+}
+ .table-data .order table {
+	width: 100%;
+	border-collapse: collapse;
+}
+.table-data .order table th {
+	padding-bottom: 12px;
+	font-size: 13px;
+	text-align: left;
+	border-bottom: 1px solid var(--grey);
+}
+.table-data .order table td {
+	padding: 16px 0;
+}
+.table-data .order table tr td:first-child {
+	display: flex;
+	align-items: center;
+	grid-gap: 12px;
+	padding-left: 6px;
+}
+.table-data .order table td img {
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+.table-data .order table tbody tr:hover {
+	background: var(--body-color);
+	border-radius: 10px;
+}
+.table-data .order table tr td .status {
+	font-size: 10px;
+	padding: 6px 16px;
+	color: var(--sidebar-color);
+	border-radius: 20px;
+	font-weight: 700;
+}
+.table-data .order table tr td .status.completed {
+	background: var(--green)
+}
+.table-data .order table tr td .status.process {
+	background: var(--yellow);
+	color: black;
+}
+.table-data .order table tr td .status.pending {
+	background: var(--orange);
+}
+
+@media (max-width:600px) {
+    .sidebar.close header i {
+        display: none;
+    }
+}
+
+/* ===== Start parallax effect  ===== */
+
+
+
+  /* ===== Report form page ===== */
+
+
