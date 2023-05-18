@@ -9,17 +9,15 @@
     
     <!----======== CSS ======== -->
     <link rel="stylesheet" href='{%static "css/style.css"%}'>
-
-    <link rel="stylesheet" href='{%static "css/parallax.css"%}'>
-    <link rel="stylesheet" href='{% static "css/index.css" %}'>
     
     <!----===== Boxicons CSS ===== -->
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     
     <title>Inicio</title> 
 </head>
-<body onload="onload()">
-    <nav class="sidebar">
+<body>
+    <nav class="sidebar close hide">
+        
         <header>
             <div class="image-text">
                 <span class="image">
@@ -50,7 +48,7 @@
                             <span class="text nav-text">Inicio</span>
                         </a>
                     </li>
-
+                    
                     <li class="nav-link">
                         <a href="{% url 'buglist:bug_list' %}">
                             <i class='bx bx-list-ul icon'></i>
@@ -113,9 +111,10 @@
         </div>
     </nav>
 
-    <section class="home">
-
+    <section class="home" id="home">
+        <i class='bx bx-menu toggle'></i>
     </section>
+
     {% block content%}
     {% endblock %}
 

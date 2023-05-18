@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# DESACTIVA LA OPCIÓN QUE EL NAVEGADOR OCUPE EL CACHE
+
+CACHE_MIDDLEWARE_SECONDS = 0
 
 # Application definition
 
@@ -51,7 +54,11 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    #CACHE OPCIONES
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'bug_tracking.urls'
@@ -123,7 +130,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
-
+    BASE_DIR /"static",
     BASE_DIR /"staticfiles"
 ]
 
