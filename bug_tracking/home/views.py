@@ -9,10 +9,10 @@ from database.models import ReporteBug, Bug
 
 def home(request):
 
-    listar_reportes = ReporteBug.objects.order_by("id_reporte")[:5]
+    listar_reportes = ReporteBug.objects.order_by("fecha_reporte")[:5]
     total_report = ReporteBug.objects.count();
     total_bug = Bug.objects.count();
-    listar_bug = Bug.objects.order_by("id_bug")[:5]
+    listar_bug = Bug.objects.order_by("fecha_reporte")[:5]
 
 
     context = {
