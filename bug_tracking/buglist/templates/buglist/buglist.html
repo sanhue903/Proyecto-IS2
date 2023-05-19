@@ -30,7 +30,7 @@
             <tr>
               {% for Bug in bug_list %}
               <td>
-                {{ Bug.id_bug }}
+                <a href="{% url 'detail:index' Bug.id_bug %}"> {{ Bug.id_bug }} </a>
                 <img src={%static "images/logo.png"%}>
               </td>
               <td>

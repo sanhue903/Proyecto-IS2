@@ -1,0 +1,113 @@
+{%extends 'home/base.html'%}
+
+{% block content %}
+
+    <section class="home">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Titulo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ bug.id_bug }}</td>
+                    <td>{{ bug.titulo }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="margin-top: 100px;"></div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Prioridad</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ bug.prioridad }}</td>
+                    <td>{{ bug.estado }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="margin-top: 200px;"></div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ bug.descripcion }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="margin-top: 300px;"></div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Proyecto</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ proyecto.nombre_proyecto }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="margin-top: 400px;"></div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Programador</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ programador.nombre_programador }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="margin-top: 500px;"></div>
+
+        <div class="text">Reportes</div>
+        {%if reporte%}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Titulo</th>
+                    <th>Reporte</th>
+                    <th>Usuario</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for Reporte in reporte %}
+                <tr>
+                    <td>{{ Reporte.id_reporte }}</td>
+                    <td>{{ Reporte.titulo }}</td>
+                    <td>{{ Reporte.reporte }}</td>
+                    <td>{{ Reporte.correo_usuario }}</td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="text">No hay reportes disponibles</div>
+        {% endif %}
+    </section>
+
+
+{% endblock %}
