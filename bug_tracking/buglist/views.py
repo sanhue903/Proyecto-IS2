@@ -1,15 +1,18 @@
 from django.shortcuts import render
-from django.shortcuts import redirect, reverse
-from database.models import Bug, ReporteBug
+from django.shortcuts import redirect
+from .models import Bug
+from database.models import Bug
+
 
 # Create your views here.
 
 def index(request):
-    bug_list = Bug.objects.order_by("id_bug")[:20]
-    report_list = ReporteBug.objects.order_by("id_reporte")[:20]
-    context = {"bug_list": bug_list, "report_list": report_list}
-    return render(request, "buglist/buglist.html", context)
+    latest_bug_list = Bug.objects.order_by("id_bug")[:20]
+    context = {"latest_bug_list": latest_bug_list}
+    return render(request, "buglist/index.html", context)
 
+# def buglist_home(request):
+#     return redirect('home:principal')
 
 def refresh(request):
     return redirect('buglist:index')

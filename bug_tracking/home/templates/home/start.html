@@ -10,14 +10,16 @@
   </div>
   <div class="info-view">
       <div class="box">
-        <h2>Últimos reportes</h2>
+        <h2>Últimos errores</h2>
         {% if listar_reportes %}
         <table class="table"> 
             <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Título</th>
-                  <th>Fecha</th>
+                  <th>Descripción</th>
+                  <th>Prioridad</th>
+                  <th>Estado</th>
+                  <th>Proyecto</th>
                 </tr>
             </thead>
             <tbody>
@@ -57,25 +59,25 @@
 
       <div class="box">
         <div class="text-info">
-          <h3>Hemos resuelto más de {{total_bug}} errores</h3>
+          <h3>Hemos resuelto más de 300 errores</h3>
         </div>
       </div>
       
       <div class="box">
         <div class="text-info">
-          <h3>Hemos recibido más de {{total_report}} reportes</h3>
+          <h3>Hemos recibido más de 100.000 reportes</h3>
         </div>
       </div>
       <div class="box">
-        <h2>Últimos errores</h2>
+        <h2>Últimos reportes</h2>
         {% if listar_bug %}
         <table class="table"> 
             <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Título</th>
                   <th>Descripción</th>
-                  <th>Fecha</th>
+                  <th>Prioridad</th>
+                  <th>Estado</th>
                   <th>Proyecto</th>
                 </tr>
             </thead>
@@ -83,7 +85,7 @@
               {% for Bug in  listar_bug%}
               <tr>
                   <td>{{ Bug.id_bug }}</td>
-                  <td>{{ Bug.titulo }}</td>
+                  <td>{{ Bug.titutlo }}</td>
                   <td>{{ Bug.descripcion }}</td>
                   <td>{{ Bug.fecha_reporte }}</td>
               </tr>
