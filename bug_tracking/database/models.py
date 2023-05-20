@@ -4,8 +4,7 @@ from django.db import models
 
 
 class Usuario(models.Model):
-    id_usuario     = models.AutoField(primary_key=True)
-    correo_usuario = models.EmailField(unique=True, verbose_name='Email')
+    correo_usuario = models.EmailField(primary_key=True, verbose_name='Email')
     
     def __str__(self):
         return self.correo_usuario
@@ -81,7 +80,7 @@ class ReporteBug(models.Model):
     fecha_reporte = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de reporte')
     estado        = models.CharField(max_length=20, default='Pendiente', choices=ESTADOS_CHOICES, verbose_name='Estado')
     
-    id_usuario    = models.ForeignKey(Usuario, null=False, on_delete=models.CASCADE, verbose_name='Usuario', related_name='reportes')
+    correo_usuario    = models.ForeignKey(Usuario, null=False, on_delete=models.CASCADE, verbose_name='Usuario')
     id_proyecto   = models.ForeignKey(Proyecto, null=False, on_delete=models.CASCADE, verbose_name='Proyecto')
     id_bug        = models.ForeignKey(Bug, blank=True, null=True, on_delete=models.CASCADE, verbose_name='Bug')
 
@@ -90,7 +89,7 @@ class ReporteBug(models.Model):
 
 class Imagen(models.Model):
     id_imagen  = models.AutoField(primary_key=True)
-    imagen     = models.ImageField(null=False,upload_to="") #definir ruta
+    #imagen     = models.ImageField(null=False,upload_to="") #definir ruta
     
     id_reporte = models.ForeignKey(ReporteBug, null=False, on_delete=models.CASCADE, verbose_name='reporte')
 
@@ -121,7 +120,7 @@ class Notificaciones(models.Model):
     id_notificacion = models.AutoField(primary_key=True)
     descripcion     = models.TextField(null=False)
     
-    id_usuario      = models.ForeignKey(Usuario, null=True, on_delete=models.CASCADE, verbose_name='Usuario', related_name='reportes')
+    id_usuario      = models.ForeignKey(Usuario, null=True, on_delete=models.CASCADE, verbose_name='Usuario')
     id_programador  = models.ForeignKey(Programador, null=True, on_delete=models.CASCADE, verbose_name='Programador')
     id_bug          = models.ForeignKey(Bug, null=False, on_delete=models.CASCADE, verbose_name='Bug')  
     
