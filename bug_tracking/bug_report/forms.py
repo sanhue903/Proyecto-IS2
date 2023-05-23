@@ -1,5 +1,8 @@
 from django import forms
-from database.models import ReporteBug, Usuario, Proyecto
+from multiupload.fields import MultiFileField
+from django.core.exceptions import ValidationError
+from PIL import Image
+from database.models import ReporteBug, Usuario, Proyecto, Imagen
 
 class UsuarioForm(forms.ModelForm):
     class Meta:
@@ -15,6 +18,18 @@ class UsuarioForm(forms.ModelForm):
         }
         
 class ReporteBugForm(forms.ModelForm):
+    imagenes = MultiFileField(min_num=0, max_num=4, max_file_size=1024*1024*4, required=False)
+
+    def clean_imagenes(self):
+        imagenes = self.cleaned_data.get('imagenes')
+        for imagen in imagenes:
+            try:
+                img = Image.open(imagen)
+                img.verify()
+            except:
+                raise forms.ValidationError('Solo se permiten archivos de imagen.')
+            return imagenes
+
     class Meta:
         model = ReporteBug
         fields = ['reporte']
