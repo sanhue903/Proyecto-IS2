@@ -1,4 +1,4 @@
-{% extends 'home/base.html' %} {%load static%} {% block content %}
+{% extends 'home/base.html' %} {%load static%} {% load humanize %} {% block content %}
 
 <link rel="stylesheet" href='{%static "css/buglist.css"%}'>
 <section class="home">
@@ -36,7 +36,7 @@
               <td>
                 <p>{{ Bug.descripcion }}</p>
               </td>
-              <td>{{ Bug.fecha_reporte }}</td>
+              <td>{{ Bug.fecha_reporte | naturaltime}}</td>
               {%if Bug.estado == "en proceso"%}
                 <td><span class="status process">{{ Bug.estado }}</span></td>
               {%endif%}
