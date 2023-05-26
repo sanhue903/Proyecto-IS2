@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# DESACTIVA LA OPCIÓN QUE EL NAVEGADOR OCUPE EL CACHE
+
+CACHE_MIDDLEWARE_SECONDS = 0
 
 # Application definition
 
@@ -42,6 +45,7 @@ INSTALLED_APPS = [
     'database',
     'buglist',
     'bug_report',
+    'bug_detail',
 ]
 
 MIDDLEWARE = [
@@ -51,7 +55,11 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    #CACHE OPCIONES
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'bug_tracking.urls'
@@ -80,8 +88,13 @@ WSGI_APPLICATION = 'bug_tracking.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # BASE_DIR / 
+        'NAME': 'is2',
+        'USER': 'postgres',
+        'PASSWORD': '1234',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -123,7 +136,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
-
+    BASE_DIR /"static",
     BASE_DIR /"staticfiles"
 ]
 

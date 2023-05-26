@@ -1,12 +1,14 @@
-{% extends 'home/base.html' %}
-{% block content %}
-<section class='home'>
+{% extends 'home/base.html' %} {%load static%} {% block content %}
+
+<link rel="stylesheet" href='{%static "css/report.css"%}'>
+
+<section class="home">
   <div class="container-form">
     <!-- code here -->
-    
+
     <div class="text">Reportar un error</div>
     <div class="card">
-      <div class="card-image">	
+      <div class="card-image">
         <h2 class="card-heading">
           Comencemos!
           <small>Para reportar el error completa los campos</small>
@@ -15,15 +17,15 @@
       <form method="post">
         {% csrf_token %}
         <div class="input">
-          {{ form_bug.as_p }} 
+          {{ form_bug.as_p }}
           <label class="input-label">Descripción del problema</label>
         </div>
-          <div class="input">
-            {{ form_usuario.as_p }}
+        <div class="input">
+          {{ form_usuario.as_p }}
           <label class="input-label">Email</label>
         </div>
-          <div class="input">
-            {{ form_proyecto.as_p }}
+        <div class="input">
+          {{ form_proyecto.as_p }}
           <label class="input-label">Proyecto ascociado</label>
         </div>
         <div class="action">
@@ -31,19 +33,20 @@
         </div>
       </form>
       <div class="card-info">
-        <p>Registrándote podrás tener más información sobre tus reportes <a href="#">Registrarme ahora</a></p>
+        <p>
+          Registrándote podrás tener más información sobre tus reportes
+          <a href="#">Registrarme ahora</a>
+        </p>
       </div>
     </div>
   </div>
 
-
   <h1 class="text">Reportar un bug</h1>
   <form method="post">
     <!-- csrf es para proteccion contra crost site request forgeries -->
-    {% csrf_token %}
-    {{ form_bug.as_p }}
-    {{ form_usuario.as_p }}
-    
+    {% csrf_token %} {{ form_bug.as_p }} {{ form_usuario.as_p }} {{
+    form_proyecto.as_p }}
+
     <button type="submit">Enviar reporte</button>
   </form>
 </section>

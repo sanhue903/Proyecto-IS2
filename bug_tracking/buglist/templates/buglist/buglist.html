@@ -1,0 +1,150 @@
+{% extends 'home/base.html' %} {%load static%} {% block content %}
+
+<link rel="stylesheet" href='{%static "css/buglist.css"%}'>
+<section class="home">
+  <div class="titulo">
+    <div class="text">Lista de bugs</div>
+  </div>
+
+  <div class="container-table">
+    <div class="table-data">
+      <div class="order">
+        <div class="head">
+          <h3>Errores</h3>
+          
+          <a href="www.google.cl"><i class='bx bx-search'></i></a>
+          <i class='bx bx-filter'></i>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Título</th>
+              <th>Fecha</th>
+              <th>Estado</th>
+              <th>Proyecto</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if bug_list %}
+            <tr>
+              {% for Bug in bug_list %}
+              <td>
+                <a href="{% url 'detail:index' Bug.id_bug %}"> {{ Bug.id_bug }} </a>
+                <img src={%static "images/logo.png"%}>
+              </td>
+              <td>
+                <p>{{ Bug.descripcion }}</p>
+              </td>
+              <td>{{ Bug.fecha_reporte }}</td>
+              {%if Bug.estado == "en proceso"%}
+                <td><span class="status process">{{ Bug.estado }}</span></td>
+              {%endif%}
+              {%if Bug.estado == "solucionado"%}
+                <td><span class="status completed">{{ Bug.estado }}</span></td>
+              {%endif%}
+              {%if Bug.estado == "nuevo"%}
+                <td><span class="status pending">{{ Bug.estado }}</span></td>
+              {%endif%}
+              <td>{{ Bug.id_proyecto }}</td>
+            </tr>
+              {%endfor%}
+            {%else%}
+            <tr>
+              <td>No hay errores disponibles</p>
+            </tr>
+            {%endif%}
+            
+            <tr>
+              <td>1
+                <img src={%static "images/logo.png"%}>
+              </td>
+              <td>
+                
+                <p>Error1</p>
+              </td>
+              <td>01-10-2021</td>
+              <td><span class="status completed">Solucionado</span></td>
+              <td>Proyecto1</td>
+            </tr>
+            <tr>
+              <td>2
+                <img src={%static "images/logo.png"%}>
+              </td>
+              <td>
+                
+                <p>Error2</p>
+              </td>
+              <td>01-10-2021</td>
+              <td><span class="status pending">Nuevo</span></td>
+              <td>Proyecto2</td>
+            </tr>
+            <tr>
+              <td>3
+                <img src={%static "images/logo.png"%}>
+              </td>
+              <td>
+                
+                <p>Error3</p>
+              </td>
+              <td>01-10-2021</td>
+              <td><span class="status process">Procesando</span></td>
+              <td>Proyecto3</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="titulo">
+    <div class="text">Lista de reportes</div>
+  </div>
+
+  <div class="container-table">
+    <div class="table-data" style="margin-bottom: 2em;">
+      <div class="order">
+        <div class="head">
+          <h3>Reportes</h3>
+          
+          <a href="www.google.cl"><i class='bx bx-search'></i></a>
+          <i class='bx bx-filter'></i>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Título</th>
+              <th>Fecha</th>
+              <th>Proyecto</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if report_list %}
+            <tr>
+              {% for ReporteBug in report_list %}
+              <td>
+                <p>{{ ReporteBug.id_reporte }}</p>
+                <img src={%static "images/logo.png"%}>
+              </td>
+              <td>{{ ReporteBug.reporte }}</td>
+              <td>{{ ReporteBug.fecha_reporte }}</td>
+              <td>{{ Bug.id_proyecto }}</td>
+            </tr>
+              {%endfor%}
+            {%else%}
+            <tr>
+              <td>No hay errores disponibles</p>
+            </tr>
+            {%endif%}
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+
+</section>
+{% endblock %}
