@@ -189,3 +189,11 @@
   .input label[for="id_nombre_proyecto"] {
       display: none;
   }
+
+  .input label[for="id_titulo"]{
+        display: none;
+  }
+
+  .input label[for="id_imagenes"]{
+    display: none;
+}

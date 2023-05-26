@@ -92,7 +92,7 @@ class ReporteBug(models.Model):
 def custom_upload_to(instance, filename):
     extension = filename.split('.')[-1]
     new_filename = f"{uuid.uuid4()}.{extension}"
-    return os.path.join('database/images', new_filename)
+    return os.path.join('', new_filename)
 
 class Imagen(models.Model):
     id_imagen  = models.AutoField(primary_key=True)

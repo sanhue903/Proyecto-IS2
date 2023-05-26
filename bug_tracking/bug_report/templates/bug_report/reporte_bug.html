@@ -17,6 +17,10 @@
       <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="input">
+          {{ form_resumen.as_p }}
+          <label class="input-label">Resumen del problema</label>
+        </div>
+        <div class="input">
           {{ form_bug.as_p }}
           <label class="input-label">Descripción del problema</label>
         </div>
@@ -27,6 +31,10 @@
         <div class="input">
           {{ form_proyecto.as_p }}
           <label class="input-label">Proyecto ascociado</label>
+        </div>
+        <div class="input">
+          {{ form_imagen.as_p }}
+          <label class="input-label">Imagen</label>
         </div>
         <div class="action">
           <button type="submit">Enviar reporte</button>

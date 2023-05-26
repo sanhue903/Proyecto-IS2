@@ -5,6 +5,7 @@
 
 <link rel="stylesheet" href='{%static "css/detail.css"%}'>
 
+
 <section class="home">
     <div class="info-view">
         <div class="box">
@@ -79,6 +80,30 @@
                 </tbody>
             </table>
 
+            <div class="text">Imagenes</div>
+            {%if imagen%}
+            <div class="row">
+                {% for Imagen in imagen %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="{{ Imagen.imagen.url }}" class="card-img-top" alt="{{ Imagen.imagen }}">
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+            {% else %}
+            <div class="text">No hay imagenes disponibles</div>
+            {% endif %}
+
+            <div id="myModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                  <span class="close">&times;</span>
+                  <img id="img01" class="modal-img">
+                  <div id="caption" class="modal-caption"></div>
+                </div>
+            </div>
+
             <div class="text">Avances</div>
             {%if avance%}
             <table class="table">
@@ -105,12 +130,10 @@
             <div class="text">No hay avances disponibles</div>
             {% endif %}
         </div>
-
-
-        <!-- Haz que el estilo lo deje mas abajo -->
-        
     </div>
+
 </section>
 
+<script src={%static "js/detailscript.js"%}></script>
 
 {% endblock %}

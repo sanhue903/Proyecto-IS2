@@ -18,17 +18,6 @@ class UsuarioForm(forms.ModelForm):
         }
         
 class ReporteBugForm(forms.ModelForm):
-    imagenes = MultiFileField(min_num=0, max_num=4, max_file_size=1024*1024*4, required=False)
-
-    def clean_imagenes(self):
-        imagenes = self.cleaned_data.get('imagenes')
-        for imagen in imagenes:
-            try:
-                img = Image.open(imagen)
-                img.verify()
-            except:
-                raise forms.ValidationError('Solo se permiten archivos de imagen.')
-            return imagenes
 
     class Meta:
         model = ReporteBug
@@ -37,6 +26,7 @@ class ReporteBugForm(forms.ModelForm):
             'reporte': forms.Textarea(attrs={
                 'rows': 2,
                 'placeholder': 'Describe el problema aquí...',
+                'style':'resize:none;',
                 }),
         }       
 
@@ -53,3 +43,40 @@ class ProyectoForm(forms.ModelForm):
     class Meta:
         model = Proyecto
         fields = ['nombre_proyecto']
+
+
+class TituloForm(forms.ModelForm):
+    class Meta:
+        model = ReporteBug
+        fields = ['titulo']
+        widgets = {
+            'titulo': forms.Textarea(attrs={
+                'rows': 1,
+                'placeholder': 'Resumen del problema ...',
+                'style':'resize:none;',
+                }),
+        }
+
+class ImagenForm(forms.ModelForm):
+
+    imagenes = MultiFileField(min_num=0, max_num=4, max_file_size=1024*1024*4, required=False)
+
+    def clean_imagenes(self):
+        imagenes = self.cleaned_data.get('imagenes')
+        for imagen in imagenes:
+            try:
+                img = Image.open(imagen)
+                img.verify()
+            except:
+                raise forms.ValidationError('Solo se permiten archivos de imagen.')
+            return imagenes
+        
+    class Meta:
+        model = Imagen
+        fields = ['imagenes']
+        widgets = {
+            'imagenes': forms.ClearableFileInput(attrs={
+                'multiple': True,
+                'class': 'form-control-file',
+                }),
+        }
