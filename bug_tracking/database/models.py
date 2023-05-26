@@ -1,4 +1,6 @@
 from django.db import models
+import uuid
+import os
 
 # Create your models here.
 
@@ -87,10 +89,15 @@ class ReporteBug(models.Model):
     def __str__(self):
         return self.titulo
 
+def custom_upload_to(instance, filename):
+    extension = filename.split('.')[-1]
+    new_filename = f"{uuid.uuid4()}.{extension}"
+    return os.path.join('database/images', new_filename)
+
 class Imagen(models.Model):
     id_imagen  = models.AutoField(primary_key=True)
-    #imagen     = models.ImageField(null=False,upload_to="") #definir ruta
-    
+    imagen     = models.ImageField(null=False,upload_to=custom_upload_to, default="database/images/default.jpg") #definir ruta
+
     id_reporte = models.ForeignKey(ReporteBug, null=False, on_delete=models.CASCADE, verbose_name='reporte')
 
 class Avances(models.Model):
