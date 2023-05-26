@@ -78,34 +78,37 @@
                     </tr>
                 </tbody>
             </table>
+
+            <div class="text">Avances</div>
+            {%if avance%}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Titulo</th>
+                        <th>Descripción</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for Avance in avance %}
+                    <tr>
+                        <td>{{ Avance.id_reporte }}</td>
+                        <td>{{ Avance.titulo }}</td>
+                        <td>{{ Avance.descripcion }}</td>
+                        <td>{{ Avance.fecha_avance | naturaltime }}</td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="text">No hay avances disponibles</div>
+            {% endif %}
         </div>
 
 
-        <!-- <div class="text">Reportes</div>
-        {%if reporte%}
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Titulo</th>
-                    <th>Reporte</th>
-                    <th>Usuario</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for Reporte in reporte %}
-                <tr>
-                    <td>{{ Reporte.id_reporte }}</td>
-                    <td>{{ Reporte.titulo }}</td>
-                    <td>{{ Reporte.reporte }}</td>
-                    <td>{{ Reporte.correo_usuario }}</td>
-                </tr>
-                {%endfor%}
-            </tbody>
-        </table>
-        {% else %}
-        <div class="text">No hay reportes disponibles</div>
-        {% endif %} -->
+        <!-- Haz que el estilo lo deje mas abajo -->
+        
     </div>
 </section>
 
