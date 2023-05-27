@@ -12,6 +12,7 @@ def reportar_bug(request):
     form_proyecto = ProyectoForm()
     form_imagen = ImagenForm()
     form_resumen = TituloForm()
+    formulario_enviado = False
     if request.method == 'POST':
         form_bug = ReporteBugForm(request.POST)
         form_proyecto = ProyectoForm(request.POST)
@@ -38,7 +39,7 @@ def reportar_bug(request):
                     usuario = form_usuario.save()
                     reporte_bug.correo_usuario = usuario
                 else:
-                    return render(request, 'bug_report/reporte_bug.html', {'form_bug': form_bug, 'form_usuario': form_usuario, 'form_proyecto': form_proyecto, 'form_imagen': form_imagen, 'form_resumen': form_resumen})
+                    return render(request, 'bug_report/reporte_bug.html', {'form_bug': form_bug, 'form_usuario': form_usuario, 'form_proyecto': form_proyecto, 'form_imagen': form_imagen, 'form_resumen': form_resumen, 'formulario_enviado': formulario_enviado})
             
             # idProyecto = reporte_proyecto.save()
             reporte_bug.id_proyecto = id_proyecto2
@@ -47,14 +48,21 @@ def reportar_bug(request):
             for file in request.FILES.getlist('imagenes'):
                 Imagen.objects.create(imagen=file, id_reporte=reporte_bug)
 
-            return redirect('report:confirmacion_reporte')
+            formulario_enviado = True
+            
+            form_bug = ReporteBugForm()
+            form_usuario = UsuarioForm()
+            form_proyecto = ProyectoForm()
+            form_imagen = ImagenForm()
+            form_resumen = TituloForm()
+            return render(request, 'bug_report/reporte_bug.html', {'form_bug': form_bug, 'form_usuario': form_usuario, 'form_proyecto': form_proyecto, 'form_imagen': form_imagen, 'form_resumen': form_resumen, 'formulario_enviado': formulario_enviado})
     else:
         form_bug = ReporteBugForm()
         form_usuario = UsuarioForm()
         form_proyecto = ProyectoForm()
         form_imagen = ImagenForm()
         form_resumen = TituloForm()
-    return render(request, 'bug_report/reporte_bug.html', {'form_bug': form_bug, 'form_usuario': form_usuario, 'form_proyecto': form_proyecto, 'form_imagen': form_imagen, 'form_resumen': form_resumen})
+    return render(request, 'bug_report/reporte_bug.html', {'form_bug': form_bug, 'form_usuario': form_usuario, 'form_proyecto': form_proyecto, 'form_imagen': form_imagen, 'form_resumen': form_resumen, 'formulario_enviado': formulario_enviado})
 
 def confirmacion_reporte(request):
     return render(request, 'bug_report/confirmacion_reporte.html')
