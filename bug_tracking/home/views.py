@@ -23,6 +23,8 @@ def home(request):
     }
     return render(request, 'home/start.html', context)
 
+def login(request):
+    return render(request, 'home/login.html')
 
 # def home_inicio(request):
 #     listar_reportes = ReporteBug.objects.order_by("id_reporte")[:20]
