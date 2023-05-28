@@ -1,6 +1,6 @@
 .parallax {
     text-align: center;
-    color: var(--color);
+    color: #707070;
     width: 100%;
     min-height: 800px;
     display: flex;
@@ -12,7 +12,6 @@
     background-position: center;
     background-attachment: fixed;
 }
-
 
 
 .parallax p {
