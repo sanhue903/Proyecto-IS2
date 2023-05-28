@@ -1,4 +1,4 @@
-{% extends 'home/base.html' %} {%load static%} {% block content %}
+{% extends 'home/base.html' %} {%load static%} {% load humanize %} {% block content %}
 
 <link rel="stylesheet" href='{%static "css/buglist.css"%}'>
 <section class="home">
@@ -36,7 +36,7 @@
               <td>
                 <p>{{ Bug.descripcion }}</p>
               </td>
-              <td>{{ Bug.fecha_reporte }}</td>
+              <td>{{ Bug.fecha_reporte | naturaltime}}</td>
               {%if Bug.estado == "en proceso"%}
                 <td><span class="status process">{{ Bug.estado }}</span></td>
               {%endif%}
@@ -55,42 +55,7 @@
             </tr>
             {%endif%}
             
-            <tr>
-              <td>1
-                <img src={%static "images/logo.png"%}>
-              </td>
-              <td>
-                
-                <p>Error1</p>
-              </td>
-              <td>01-10-2021</td>
-              <td><span class="status completed">Solucionado</span></td>
-              <td>Proyecto1</td>
-            </tr>
-            <tr>
-              <td>2
-                <img src={%static "images/logo.png"%}>
-              </td>
-              <td>
-                
-                <p>Error2</p>
-              </td>
-              <td>01-10-2021</td>
-              <td><span class="status pending">Nuevo</span></td>
-              <td>Proyecto2</td>
-            </tr>
-            <tr>
-              <td>3
-                <img src={%static "images/logo.png"%}>
-              </td>
-              <td>
-                
-                <p>Error3</p>
-              </td>
-              <td>01-10-2021</td>
-              <td><span class="status process">Procesando</span></td>
-              <td>Proyecto3</td>
-            </tr>
+            
           </tbody>
         </table>
       </div>
