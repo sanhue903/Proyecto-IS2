@@ -3,7 +3,6 @@ from django.db.models import Q
 
 # Create your models here.
 
-
 class Usuario(models.Model):
     class Meta:
         verbose_name        = 'usuario'
@@ -143,13 +142,13 @@ class Bug(models.Model):
     )
     
     prioridad      = models.CharField(
-        max_length=20, 
+        max_length=50, 
         choices=PRIORIDADES_CHOICES, 
         verbose_name='prioridad',
     )
     
     estado         = models.CharField(
-        max_length=20, 
+        max_length=50, 
         choices=ESTADOS_CHOICES, 
         verbose_name='estado',
     )
@@ -207,7 +206,7 @@ class ReporteBug(models.Model):
     )
     
     estado         = models.CharField(
-        max_length=20, 
+        max_length=50, 
         default=ESTADOS_CHOICES[0], 
         choices=ESTADOS_CHOICES, 
         verbose_name='estado del reporte'
