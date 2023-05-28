@@ -1,5 +1,8 @@
 from django.db import models
 from django.db.models import Q
+import os
+import uuid
+
 
 # Create your models here.
 
@@ -239,6 +242,11 @@ class ReporteBug(models.Model):
         return self.titulo
 
 
+def custom_upload_to(instance, filename):
+    extension = filename.split('.')[-1]
+    new_filename = f"{uuid.uuid4()}.{extension}"
+    return os.path.join('database/images', new_filename)
+
 class Imagen(models.Model):
     class Meta:
         verbose_name        = 'imagen'
@@ -246,8 +254,13 @@ class Imagen(models.Model):
         
         
     id_imagen  = models.AutoField(primary_key=True)
-    #imagen     = models.ImageField(null=False,upload_to="") #definir ruta
     
+    imagen     = models.ImageField(
+        null=False,
+        upload_to=custom_upload_to, 
+        default="database/images/default.jpg"
+    ) #definir ruta
+
     id_reporte = models.ForeignKey(
         ReporteBug,
         on_delete=models.CASCADE,

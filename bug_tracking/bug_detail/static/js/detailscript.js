@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var modal = document.getElementById('myModal');
   var modalImg = document.getElementById('img01');
   var captionText = document.getElementById('caption');
-  var close = document.getElementsByClassName('close')[0];
+  var close = document.getElementById('closeModal');
   var images = document.querySelectorAll('.card-img-top');
 
   images.forEach(function(image) {
