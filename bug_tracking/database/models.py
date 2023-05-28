@@ -171,7 +171,7 @@ class Bug(models.Model):
     )
     
     def __str__(self):
-        return '%s_%s', (self.id_proyecto, self.id_bug)
+        return '{0.id_proyecto}_{0.id_bug}'.format(self)
 
     
 class ReporteBug(models.Model):
@@ -290,7 +290,7 @@ class Avances(models.Model):
     
     
     def __str__(self):
-        return '%s_%s', (self.id_bug, self.id_avance) 
+        return '{0.id_bug}_{0.id_avance}'.format(self)
  
  
 class Reasignacion(models.Model):
@@ -340,7 +340,7 @@ class Reasignacion(models.Model):
     
     
     def __str__(self):
-        return '%s_%s_%s', (self.id_programador_inicial, self.id_bug, self.id_reasignacion)
+        return '{0.id_programador_inicial}_{0.id_bug}_{0.id_reasignacion}'.format(self)
     
 
 class Notificaciones(models.Model):
@@ -376,5 +376,5 @@ class Notificaciones(models.Model):
     )  
     
     def __str__(self):
-        return '%s_%s', (self.id_bug, self.id_notificacion)
+        return '{0.id_bug}_{0.id_notificacion}'.format(self)
     
