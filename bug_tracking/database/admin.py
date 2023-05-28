@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import User, Group
 from .models import *
+from django.db.models import Count
 # Register your models here.
 
 admin.site.unregister(User)

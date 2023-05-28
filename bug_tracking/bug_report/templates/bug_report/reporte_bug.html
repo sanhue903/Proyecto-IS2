@@ -1,6 +1,9 @@
 {% extends 'home/base.html' %} {%load static%} {% block content %}
 
 <link rel="stylesheet" href='{%static "css/report.css"%}'>
+<div id="formularioEnviadoValue" data-formulario-enviado="{{ formularioEnviado|default:'false' }}"></div>
+<script src="{% static 'js/report.js' %}"></script>
+
 
 <section class="home">
   <div class="container-form">
@@ -14,8 +17,12 @@
           <small>Para reportar el error completa los campos</small>
         </h2>
       </div>
-      <form method="post">
+      <form id="myForm" method="post" enctype="multipart/form-data">
         {% csrf_token %}
+        <div class="input">
+          {{ form_resumen.as_p }}
+          <label class="input-label">Resumen del problema</label>
+        </div>
         <div class="input">
           {{ form_bug.as_p }}
           <label class="input-label">Descripción del problema</label>
@@ -28,8 +35,12 @@
           {{ form_proyecto.as_p }}
           <label class="input-label">Proyecto ascociado</label>
         </div>
+        <div class="input">
+          {{ form_imagen.as_p }}
+          <label class="input-label">Imagen</label>
+        </div>
         <div class="action">
-          <button type="submit">Enviar reporte</button>
+          <button id="submitButton" type="submit">Enviar reporte</button>
         </div>
       </form>
       <div class="card-info">
@@ -41,13 +52,22 @@
     </div>
   </div>
 
-  <h1 class="text">Reportar un bug</h1>
-  <form method="post">
-    <!-- csrf es para proteccion contra crost site request forgeries -->
-    {% csrf_token %} {{ form_bug.as_p }} {{ form_usuario.as_p }} {{
-    form_proyecto.as_p }}
+  <div class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Reporte enviado</h2>
+        <span id="closeModalButton" class="close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <p>
+          Tu reporte ha sido enviado con éxito.
+        </p>
+      </div>
 
-    <button type="submit">Enviar reporte</button>
-  </form>
-</section>
+      <div class="modal-footer">
+        <a href="{% url 'home:principal' %}">Volver al inicio</a>
+        <a href="{% url 'report:reportar_bug' %}">Enviar otro reporte</a>
+      </div>
+  </div>
+
 {% endblock %}
