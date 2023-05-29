@@ -4,6 +4,7 @@ from django.template import loader
 from django.contrib import messages
 from .models import ReporteBug, Bug
 from database.models import ReporteBug, Bug
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
@@ -24,7 +25,7 @@ def home(request):
     return render(request, 'home/start.html', context)
 
 def login(request):
-    return render(request, 'home/login.html')
+    return render(request, 'registration/login.html')
 
 # def home_inicio(request):
 #     listar_reportes = ReporteBug.objects.order_by("id_reporte")[:20]

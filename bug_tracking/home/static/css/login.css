@@ -27,14 +27,13 @@ a {
 }
 .login-wrap {
   width: 100%;
-  margin: auto;
+  margin-right: auto;
+  margin-left: auto;
   max-width: 600px;
   min-height: 670px;
-  height: 50%;
+  height: 90%;
   position: relative;
   /* background:url(https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/14528074521939.5c32f5d813a98.jpg) no-repeat center; */
-  box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24),
-    0 17px 50px 0 rgba(0, 0, 0, 0.19);
   border-radius: 15px;
 }
 .login-html {
@@ -42,8 +41,9 @@ a {
   height: 670px;
   position: absolute;
   padding: 70px 70px 50px 70px;
-  background: rgba(56, 50, 124, 0.9);
+  background: rgba(56, 50, 124, 0.97);
   border-radius: 15px;
+  box-shadow: 0 10px 20px 0 rgba(153, 153, 153, 0.25);
 }
 .login-html .sign-in-htm,
 .login-html .sign-up-htm {
@@ -103,12 +103,11 @@ a {
   border: none;
   padding: 15px 20px;
   border-radius: 25px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--sidebar-color);
 }
-.login-form .group input[data-type="password"] {
-  text-security: circle;
+/* .login-form .group input[data-type="password"] {
   -webkit-text-security: circle;
-}
+} */
 .login-form .group .label {
   color: #aaa;
   font-size: 12px;
