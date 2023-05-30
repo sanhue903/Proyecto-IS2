@@ -182,9 +182,10 @@ class ReporteBug(models.Model):
         verbose_name        = 'reporte de bug'
         verbose_name_plural = 'reportes de bugs'
     
+    ESTADO_PENDIENTE = 'PENDIENTE'
     
     ESTADOS_CHOICES = (
-        ('PENDIENTE'  , 'reporte del bug esta en revisión'),
+        (ESTADO_PENDIENTE  , 'reporte del bug esta en revisión'),
         ('APROBADO'   , 'reporte del bug fue aprobado'),
         ('DESAPROBADO', 'reporte del bug fue desaprobado'),
     )
@@ -210,7 +211,8 @@ class ReporteBug(models.Model):
     
     estado         = models.CharField(
         max_length=50, 
-        default=ESTADOS_CHOICES[0], 
+        # 
+        default=ESTADO_PENDIENTE, 
         choices=ESTADOS_CHOICES, 
         verbose_name='estado del reporte'
     )

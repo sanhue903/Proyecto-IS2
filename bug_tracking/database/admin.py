@@ -51,10 +51,14 @@ class ReporteBugAdmin(admin.ModelAdmin):
 
 @admin.register(ReporteBug)
 class ReporteBugAdmin(admin.ModelAdmin):
-    list_display = ('titulo', 'fecha_reporte', 'id_proyecto', 'id_bug')
+    list_display = ('titulo', 'fecha_reporte', 'id_proyecto', 'id_bug', 'estado')
     list_filter = ('estado', 'id_proyecto')
     # exclude      = ('id_reporte','titulo','reporte','fecha_reporte','correo_usuario')
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.filter(estado='PENDIENTE')
+    
     def has_add_permission(self, request):
         return False
 
