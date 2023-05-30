@@ -1,5 +1,7 @@
+from typing import Optional
 from django.contrib import admin
 from django.contrib.auth.models import User, Group
+from django.http.request import HttpRequest
 from .models import *
 from django.db.models import Count
 # Register your models here.
@@ -11,7 +13,7 @@ admin.site.unregister(Group)
 @admin.register(Usuario)
 class ReporteBugAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
-        return False
+        return True
 
     def has_change_permission(self, request, obj= None):
         return False
@@ -48,11 +50,41 @@ class ReporteBugAdmin(admin.ModelAdmin):
 
 @admin.register(ReporteBug)
 class ReporteBugAdmin(admin.ModelAdmin):
-    list_display = ('titulo','fecha_reporte','id_proyecto','id_bug')
-    list_filter = ('estado','id_proyecto')
+    list_display = ('titulo','fecha_reporte','id_proyecto','estado','id_bug')
+    list_filter = ('estado',)
     #exclude      = ('id_reporte','titulo','reporte','fecha_reporte','correo_usuario')
     
+    def has_add_permission(self, request):      
+        return True
+    
+
+@admin.register(Imagen)
+class ImagenAdmin(admin.ModelAdmin):
+    
     def has_add_permission(self, request):
+        return False
+    
+    def has_change_permission(self, request):
+        return False
+    
+    
+@admin.register(Avances)
+class AvancesAdmin(admin.ModelAdmin):
+    
+    def has_add_permission(self, request):
+        return False
+    
+    def has_change_permission(self, request):
+        return False
+    
+    
+@admin.register(Notificaciones)
+class NotificacionesAdmin(admin.ModelAdmin):
+    
+    def has_add_permission(self, request):
+        return False
+    
+    def has_change_permission(self, request):
         return False
     
     
