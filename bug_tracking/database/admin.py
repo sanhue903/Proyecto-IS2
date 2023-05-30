@@ -70,4 +70,4 @@ class ReasignacionBugAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        return qs.filter(id_programador_inicial='1')
+        return qs.filter(estado='PENDIENTE')
