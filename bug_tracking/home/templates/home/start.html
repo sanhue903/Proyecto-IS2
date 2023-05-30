@@ -3,6 +3,19 @@
 <link rel="stylesheet" href='{%static "css/start.css"%}'>
 
 <section class="home">
+  {%if request.user.is_authenticated%}
+  <div class="text">Bienvenido {{request.user.username | title}}</div>
+
+
+
+
+
+
+
+
+
+
+  {%else%}
   <div class="parallax">
     <div class="text">Inicio</div>
     <p>Bienvenido a la plataforma de seguimiento de errores de IS2</p>
@@ -138,5 +151,7 @@
       </div>
     </div>
   </div>
+  {%endif%}
+  
 </section>
 {% endblock %}

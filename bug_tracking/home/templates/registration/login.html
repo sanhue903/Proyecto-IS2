@@ -1,12 +1,11 @@
 {% extends 'home/base.html' %} {%load static%} {% block content %}
-<!-- <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:600'> -->
 <link rel="stylesheet" href='{%static "css/login.css"%}'>
 
 <style>
-    .home{
-      background-image: url("{% static 'images/treesSnow.png' %}");
-      background-repeat: no-repeat;
-    }
+  .home {
+    background-image: url("{% static 'images/treesSnow.png' %}");
+    background-repeat: no-repeat;
+  }
 </style>
 <section class="home">
   <!-- partial:index.partial.html -->
@@ -22,14 +21,14 @@
             <form action="" method="post">
               {% csrf_token %}
               <div class="group">
-                <label for="username" class="label">Usuario</label>
+                <label for="user" class="label">Usuario</label>
                 <input id="" name="username" type="text" class="input">
               </div>
               <div class="group">
-                <label for="password" class="label">Contraseña</label>
-                <input id="" type="password" name="password" class="input" >
+                <label for="pass" class="label">Contraseña</label>
+                <input id="" type="password" name="password" class="input">
               </div>
-              
+
               <div class="group">
                 <button class="button" type="submit">Iniciar sesión</button>
               </div>
@@ -42,7 +41,7 @@
                 <a href="#forgot">¿Olvidaste la contraseña?</a>
               </div>
             </form>
-            
+
           </div>
           <div class="sign-up-htm">
             <div class="group">
@@ -57,10 +56,10 @@
               <label for="pass" class="label">Repite la contraseña</label>
               <input id="pass" type="password" class="input" data-type="password">
             </div>
-            <!-- <div class="group">
+            <div class="group">
               <label for="pass" class="label">Email</label>
               <input id="pass" type="text" class="input">
-            </div> -->
+            </div>
             <div class="group">
               <input type="submit" class="button" value="Registrarme">
             </div>
@@ -73,16 +72,6 @@
       </div>
     </div>
   </div>
-  <form action="" method="post">
-    {% csrf_token %}
-    <input type="text" name="username" id="">
-    <br>
-    <input type="password" name="password" id="">
-    <br>
-    <button type="submit">Iniciar sesión</button>
-  </form>
-
-  <!-- partial -->
 
 </section>
 

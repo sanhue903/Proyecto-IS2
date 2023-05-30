@@ -26,8 +26,12 @@
                 </span>
 
                 <div class="text logo-text">
-                    <span class="name">NombreUsuario</span>
-                    <span class="profession">Bugtracking</span>
+                    {%if request.user.is_authenticated%}
+                        <span class="name">{{user.username | title}}</span>
+                    {%else%}
+                        <span class="name">Invitado</span>
+                    {%endif%}
+                    <span class="name">Bugtracking</span>
                 </div>
             </div>
 
@@ -90,10 +94,18 @@
 
             <div class="bottom-content">
                 <li class="">
-                    <a href="login">
-                        <i class='bx bx-log-in icon' ></i>
-                        <span class="text nav-text">Iniciar sesión</span>
-                    </a>
+                    {%if request.user.is_authenticated%}
+                        <a href="{% url 'home:exit' %}">
+                            <i class='bx bx-log-out icon' ></i>
+                            <span class="text nav-text">Cerrar sesión</span>
+                        </a>
+                    {%else%}
+                        <a href="login">
+                            <i class='bx bx-log-in icon' ></i>
+                            <span class="text nav-text">Iniciar sesión</span>
+                        </a>
+                        
+                    {%endif%}
                 </li>
 
                 <li class="mode">
