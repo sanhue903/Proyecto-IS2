@@ -68,6 +68,15 @@ class ReasignacionBugAdmin(admin.ModelAdmin):
     list_display = ('id_reasignacion', 'id_bug',
                     'id_programador_inicial', 'fecha_reasignacion')
 
+    fieldsets = (
+        ('Programadores involucrados', {
+            'fields': ('id_programador_inicial', 'id_programador_final')
+        }),
+        
+        ('Estado solicitud', {
+            'fields': ('estado', 'id_bug')
+        })
+    )
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         return qs.filter(estado='PENDIENTE')
