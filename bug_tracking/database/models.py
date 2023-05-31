@@ -1,7 +1,10 @@
 from django.db import models
-from django.db.models import Q
+from django.core.exceptions import ValidationError
 import os
 import uuid
+from django.contrib.auth.models import User
+from django.db.models.signals import pre_save, post_save
+from django.dispatch import receiver
 ##ver datetime para las fechas 
 
 
@@ -13,29 +16,11 @@ class Usuario(models.Model):
         verbose_name_plural = 'usuarios'
     
     
-    id_usuario     = models.AutoField(primary_key=True)
-    
-    nombre_usuario = models.CharField(
-        max_length=25, 
-        blank=False,
-        verbose_name='nombre',
-    )
-    
-    correo_usuario = models.EmailField(
-        unique=True,
-        blank=False,
-        verbose_name='email',
-    )
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-    #TODO ver encriptación de las contraseñas
-    contraseña_usuario = models.CharField(
-        max_length=25,
-        blank=False,
-    )
-    
     
     def __str__(self):
-        return self.nombre_usuario
+        return self.user.username
     
     
     
@@ -43,26 +28,25 @@ class Programador(models.Model):
     class Meta:
         verbose_name        = 'programador'
         verbose_name_plural = 'programadores'
+      
         
-        
-    id_programador     = models.AutoField(primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     
-    nombre_programador = models.CharField(
-        max_length=255,
-        blank=False,
-        verbose_name='nombre',
-        )
-    
-    
-    #TODO ver tema entre cuenta empleados para el login y este modelo
-    correo_programador = models.EmailField(
-        unique=True,
-        blank=False,
-        verbose_name='email',
-    )
     
     def __str__(self):
-        return self.nombre_programador
+        return self.user.username
+    
+    
+    
+@receiver(post_save, sender=User)
+def crear_perfil_usuario_empleado(sender, instance, created, **kwargs):
+    if created:
+        if not instance.is_staff:
+            Usuario.objects.create(user=instance)
+            return
+        
+        if not instance.is_superuser:
+            Programador.objects.create(user=instance)
     
 
 
@@ -314,11 +298,10 @@ class Reasignacion(models.Model):
     class Meta:
         verbose_name        = 'reasignación'
         verbose_name_plural = 'reasignaciones'
-    
-    ESTADO_PENDIENTE = 'PENDIENTE'    
+        
         
     ESTADOS_CHOICES        = (
-        (ESTADO_PENDIENTE  , 'reasignación pendiente'),
+        ('PENDIENTE'   , 'reasignación pendiente'),
         ('APROBADO'   , 'reasignación aprobada'),
         ('DESAPROBADO', 'reasignación desaprobada'),
     )
@@ -362,16 +345,23 @@ class Reasignacion(models.Model):
         null=True, 
         verbose_name='caso del bug asociado',
     )
-    estado         = models.CharField(
-        max_length=50, 
-        # 
-        default=ESTADO_PENDIENTE, 
-        choices=ESTADOS_CHOICES, 
-        verbose_name='estado'
-    )   
+
     
     def __str__(self):
         return '{0.id_programador_inicial}_{0.id_bug}_{0.id_reasignacion}'.format(self)
+    
+        
+@receiver(pre_save, sender=Reasignacion)
+def actualizar_id_programador_final(sender, instance, **kwargs):
+    if instance.estado == 'DESAPROBADO':
+        instance.id_programador_final = instance.id_programador_inicial
+    
+    elif instance.estado == 'PENDIENTE' and instance.id_programador_final is not None:
+            raise ValidationError("No se puede asignar si el estado es pendiente")
+
+    elif instance.estado == 'APROBADO' and instance.id_programador_final == instance.id_programador_inicial:
+            raise ValidationError("No se puede reasignar el caso a una misma persona")
+    
     
 
 class Notificaciones(models.Model):
