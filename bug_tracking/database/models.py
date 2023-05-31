@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models import Q
 import os
 import uuid
+##ver datetime para las fechas 
 
 
 # Create your models here.
@@ -152,11 +153,12 @@ class Bug(models.Model):
     
     estado         = models.CharField(
         max_length=50, 
+        default=ESTADOS_CHOICES[0], 
         choices=ESTADOS_CHOICES, 
         verbose_name='estado',
     )
     
-    fecha_reporte  = models.DateTimeField(
+    fecha_reporte  = models.DateField(
         auto_now_add=True, 
         verbose_name='fecha del caso',
     )
@@ -185,9 +187,9 @@ class ReporteBug(models.Model):
     ESTADO_PENDIENTE = 'PENDIENTE'
     
     ESTADOS_CHOICES = (
-        (ESTADO_PENDIENTE  , 'reporte del bug esta en revisión'),
-        ('APROBADO'   , 'reporte del bug fue aprobado'),
-        ('DESAPROBADO', 'reporte del bug fue desaprobado'),
+        ('PENDIENTE'  , 'reporte en estado pendiente'),
+        ('APROBADO'   , 'reporte aprobado'),
+        ('DESAPROBADO', 'reporte desaprobado'),
     )
     
     
@@ -324,6 +326,13 @@ class Reasignacion(models.Model):
     
     id_reasignacion        = models.AutoField(primary_key=True)
     
+    estado                 = models.CharField(
+        max_length=50, 
+        default=ESTADOS_CHOICES[0], 
+        choices=ESTADOS_CHOICES, 
+        verbose_name='estado de la reasignación'
+    )
+    
     fecha_reasignacion     = models.DateTimeField(
         auto_now_add=True,
         verbose_name='fecha de la petición',
@@ -396,7 +405,8 @@ class Notificaciones(models.Model):
         null=False, 
         verbose_name='caso del bug'
     )  
-    
+     
+     
     def __str__(self):
         return '{0.id_bug}_{0.id_notificacion}'.format(self)
     

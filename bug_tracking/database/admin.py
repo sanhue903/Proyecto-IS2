@@ -1,5 +1,7 @@
+from typing import Optional
 from django.contrib import admin
 from django.contrib.auth.models import User, Group
+from django.http.request import HttpRequest
 from .models import *
 from django.db.models import Count
 # Register your models here.
@@ -11,7 +13,7 @@ admin.site.unregister(Group)
 @admin.register(Usuario)
 class ReporteBugAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
-        return False
+        return True
 
     def has_change_permission(self, request, obj=None):
         return False
@@ -58,11 +60,39 @@ class ReporteBugAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         return qs.filter(estado='PENDIENTE')
+
+    
+    def has_add_permission(self, request):      
+        return True
+    
+
+@admin.register(Imagen)
+class ImagenAdmin(admin.ModelAdmin):
     
     def has_add_permission(self, request):
         return False
-
-
+    
+    def has_change_permission(self, request):
+        return False
+    
+    
+@admin.register(Avances)
+class AvancesAdmin(admin.ModelAdmin):
+    
+    def has_add_permission(self, request):
+        return False
+    
+    def has_change_permission(self, request):
+        return False
+    
+    
+@admin.register(Notificaciones)
+class NotificacionesAdmin(admin.ModelAdmin):
+    
+    
+    def has_change_permission(self, request):
+        return False
+   
 @admin.register(Reasignacion)
 class ReasignacionBugAdmin(admin.ModelAdmin):
     list_display = ('id_reasignacion', 'id_bug',
@@ -71,3 +101,4 @@ class ReasignacionBugAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         return qs.filter(estado='PENDIENTE')
+
