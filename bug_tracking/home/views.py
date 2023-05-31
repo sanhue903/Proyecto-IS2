@@ -4,6 +4,9 @@ from django.template import loader
 from django.contrib import messages
 from .models import ReporteBug, Bug
 from database.models import ReporteBug, Bug
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+from .forms import CustomUserCreationForm
 # Create your views here.
 
 
@@ -22,6 +25,14 @@ def home(request):
         "total_bug": total_bug
     }
     return render(request, 'home/start.html', context)
+
+@login_required
+def login(request):
+    return redirect('home:principal')
+
+def exit(request):
+    logout(request)
+    return redirect('home:principal')
 
 
 # def home_inicio(request):

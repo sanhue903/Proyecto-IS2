@@ -9,9 +9,9 @@ class UsuarioForm(forms.ModelForm):
     class Meta:
         model = Usuario
         
-        fields = ['correo_usuario']
+        fields = ['user']
         widgets = {
-            'correo_usuario': forms.EmailInput(attrs={
+            'user.email': forms.EmailInput(attrs={
                 'placeholder': 'Introduzca su correo',
                 'rows': 2,
                 })

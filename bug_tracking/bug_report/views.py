@@ -4,9 +4,10 @@ from django.template import loader
 from bug_report.forms import ReporteBugForm, UsuarioForm, ProyectoForm, ImagenForm, TituloForm
 from database.models import ReporteBug, Usuario, Proyecto, Imagen
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-
+@login_required
 def reportar_bug(request):
     form_bug = ReporteBugForm()
     form_usuario = UsuarioForm()

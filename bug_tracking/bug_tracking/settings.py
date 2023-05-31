@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'buglist',
     'bug_report',
     'bug_detail',
+    'multiupload',
 ]
 
 MIDDLEWARE = [
@@ -149,3 +150,6 @@ MEDIA_URL = 'database/media/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+""" LOGIN_REDIRECT_URL = 'home/start.html'
+LOGOUT_REDIRECT_URL = 'principal' """
