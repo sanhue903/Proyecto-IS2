@@ -184,11 +184,12 @@ class ReporteBug(models.Model):
         verbose_name        = 'reporte de bug'
         verbose_name_plural = 'reportes de bugs'
     
+    ESTADO_PENDIENTE = 'PENDIENTE'
     
     ESTADOS_CHOICES = (
-        ('PENDIENTE'  , 'pendiente'),
-        ('APROBADO'   , 'aprobado'),
-        ('DESAPROBADO', 'desaprobado'),
+        ('PENDIENTE'  , 'reporte en estado pendiente'),
+        ('APROBADO'   , 'reporte aprobado'),
+        ('DESAPROBADO', 'reporte desaprobado'),
     )
     
     
@@ -212,7 +213,8 @@ class ReporteBug(models.Model):
     
     estado         = models.CharField(
         max_length=50, 
-        default=ESTADOS_CHOICES[0], 
+        # 
+        default=ESTADO_PENDIENTE, 
         choices=ESTADOS_CHOICES, 
         verbose_name='estado del reporte'
     )
@@ -312,10 +314,11 @@ class Reasignacion(models.Model):
     class Meta:
         verbose_name        = 'reasignación'
         verbose_name_plural = 'reasignaciones'
-        
+    
+    ESTADO_PENDIENTE = 'PENDIENTE'    
         
     ESTADOS_CHOICES        = (
-        ('PENDIENTE'  , 'reasignación pendiente'),
+        (ESTADO_PENDIENTE  , 'reasignación pendiente'),
         ('APROBADO'   , 'reasignación aprobada'),
         ('DESAPROBADO', 'reasignación desaprobada'),
     )
@@ -358,8 +361,14 @@ class Reasignacion(models.Model):
         on_delete=models.CASCADE,
         null=True, 
         verbose_name='caso del bug asociado',
+    )
+    estado         = models.CharField(
+        max_length=50, 
+        # 
+        default=ESTADO_PENDIENTE, 
+        choices=ESTADOS_CHOICES, 
+        verbose_name='estado'
     )   
-    
     
     def __str__(self):
         return '{0.id_programador_inicial}_{0.id_bug}_{0.id_reasignacion}'.format(self)
