@@ -3,6 +3,7 @@ from multiupload.fields import MultiFileField
 from django.core.exceptions import ValidationError
 from PIL import Image
 from database.models import ReporteBug, Usuario, Proyecto, Imagen
+from django.core.validators import FileExtensionValidator
 
 class UsuarioForm(forms.ModelForm):
     class Meta:
@@ -58,19 +59,12 @@ class TituloForm(forms.ModelForm):
         }
 
 class ImagenForm(forms.ModelForm):
+    imagenes = forms.FileField(widget=forms.FileInput(attrs={
+        #'multiple': True,
+        'class': 'form-control-file',
+        'validators': [FileExtensionValidator(allowed_extensions=['jpg', 'png', 'jpeg'])],
+    }), required=False)
 
-    imagenes = MultiFileField(min_num=0, max_num=4, max_file_size=1024*1024*4, required=False)
-
-    def clean_imagenes(self):
-        imagenes = self.cleaned_data.get('imagenes')
-        for imagen in imagenes:
-            try:
-                img = Image.open(imagen)
-                img.verify()
-            except:
-                raise forms.ValidationError('Solo se permiten archivos de imagen.')
-            return imagenes
-        
     class Meta:
         model = Imagen
         fields = ['imagenes']
@@ -80,3 +74,4 @@ class ImagenForm(forms.ModelForm):
                 'class': 'form-control-file',
                 }),
         }
+

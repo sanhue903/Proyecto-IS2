@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'buglist',
     'bug_report',
     'bug_detail',
+    'multiupload',
 ]
 
 MIDDLEWARE = [
