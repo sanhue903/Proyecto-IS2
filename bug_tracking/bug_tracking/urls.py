@@ -29,6 +29,7 @@ urlpatterns = [
     path('buglist', include("buglist.urls")),
     path('report', include("bug_report.urls")),
     path('detail', include("bug_detail.urls")),
+    path('accounts/',include('django.contrib.auth.urls')),
 ]
 
 if settings.DEBUG:

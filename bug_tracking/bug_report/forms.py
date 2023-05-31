@@ -68,3 +68,10 @@ class ImagenForm(forms.ModelForm):
     class Meta:
         model = Imagen
         fields = ['imagenes']
+        widgets = {
+            'imagenes': forms.ClearableFileInput(attrs={
+                """ 'multiple': True, """
+                'class': 'form-control-file',
+                }),
+        }
+

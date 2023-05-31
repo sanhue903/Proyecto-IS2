@@ -3,12 +3,12 @@
   }
 
   .container-form .card {
-      margin: 2rem auto;
+      margin: 0 auto;
       display: flex;
       flex-direction: column;
       width: 100%;
-      max-width: 500px;
-      background-color: var(--primary-color-light);
+      max-width: 700px;
+      background-color: var(--sidebar-color);
       border-radius: 10px;
       box-shadow: 0 10px 20px 0 rgba(153, 153, 153, 0.25);
       padding: 0.75rem;
@@ -17,11 +17,11 @@
   .container-form .card-image {
       border-radius: 8px;
       overflow: hidden;
-      padding-bottom: 65%;
+      padding-bottom: 30%;
       background-image: url("https://assets.codepen.io/285131/coffee_1.jpg");
       background-repeat: no-repeat;
-      background-size: 150%;
-      background-position: 0 5%;
+      background-size: 100%;
+      background-position: 0 30%;
       position: relative;
   }
 
@@ -44,9 +44,12 @@
   }
 
   .container-form form[method="post"] {
-      padding: 2rem 1rem 0;
+      padding: 0.5rem 1rem 0;
   }
-
+  
+  .input#tittle{
+    height: 90px;
+  }
   .input {
       display: flex;
       flex-direction: column-reverse;
@@ -54,16 +57,26 @@
       padding-top: 1.5rem;
   }
 
+.input .p {
+    height: auto;
+}
+
   .input+.input {
-      margin-top: 1rem;
-      margin-bottom: 1rem;
+      /* margin-top: 1rem; */
+      /* margin-bottom: 1rem; */
   }
 
+.input#userEmail {
+    height: 70px;
+    margin-top: 12px;
+}
+
   .input-label {
-      color: var(--text-color);
-      position: absolute;
-      top: 1.5rem;
-      transition: 0.25s ease;
+    display:block;
+    color: var(--text-color);
+    position: absolute;
+    top: 1rem;
+    transition: 0.25s ease;
   }
 
   .input-field {
@@ -89,22 +102,32 @@
   }
 
   .action {
-      margin-top: 2rem;
+      color: whi
   }
 
   .action button[type="submit"] {
 
-      font-size: 1.25rem;
-      padding: 1em;
-      width: 100%;
-      font-weight: 500;
-      background-color: var(--body-color);
-      border-radius: 6px;
-      border-color: var(--primary-color);
-      border-width: 10px;
-      color: var(--primary-color);
-      border: 0;
-  }
+font-size: 1.25rem;
+
+padding: 1em;
+
+width: 100%;
+
+font-weight: 500;
+
+background-color: var(--body-color);
+
+border-radius: 6px;
+
+border-color: var(--primary-color);
+
+border-width: 10px;
+
+color: var(--text-color);
+
+border: 0;
+
+}
 
   .action button[type="submit"]:focus {
       outline: 0;
@@ -129,12 +152,22 @@
       text-decoration: none;
   }
 
-  .input textarea {
-      margin-top: 2em;
-      width: 450px;
-      height: 60px;
-      border: 0.5px solid #cccccc;
+  .input textarea[name="titulo"]{
+    height: 40px;
+  }
+  .input textarea[name="reporte"]{
+    height: 80px;
+  }
 
+  .input#project{
+    height: 65px;
+  }
+
+  
+  .input textarea {
+      /* margin-top: 2em; */
+      width: 100%;
+      border: 0.5px solid #cccccc;
       padding: 5px;
       font-family: 'Segoe UI';
       color-scheme: var(--text-color);
@@ -148,26 +181,36 @@
 
   .input p {
       height: 60px;
+      margin-top: 20px;
   }
 
   .input input {
 
-      margin-top: 2em;
-      border: 0.5px solid #cccccc;
-      background-color: var(--body-color);
-      color-scheme: var(--text-color);
-      color: var(--text-color);
-      border-radius: 6px;
-      width: 450px;
-      height: 30px;
-      padding: 5px;
-      text-align: center;
+/* margin-top: 3em; */
 
-  }
+border: 0.5px solid #cccccc;
+
+background-color: var(--body-color);
+
+color-scheme: var(--text-color);
+
+color: var(--text-color);
+
+border-radius: 6px;
+
+width: 100%;
+
+height: 30px;
+
+padding: 5px;
+
+text-align: center;
+
+}
 
   .input select {
       margin-top: 2em;
-      width: 450px;
+      width: 100%;
       height: 25px;
       border-radius: 6px;
       background-color: var(--body-color);

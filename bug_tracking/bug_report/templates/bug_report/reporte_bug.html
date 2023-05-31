@@ -19,23 +19,24 @@
       </div>
       <form id="myForm" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="input">
-          {{ form_resumen.as_p }}
+        <div class="input" id="tittle">
           <label class="input-label">Resumen del problema</label>
+          {{ form_resumen.as_p }}
+          
         </div>
-        <div class="input">
+        <div class="input" id="description">
           {{ form_bug.as_p }}
           <label class="input-label">Descripción del problema</label>
         </div>
-        <div class="input">
+        <div class="input" id="userEmail">
           {{ form_usuario.as_p }}
           <label class="input-label">Email</label>
         </div>
-        <div class="input">
+        <div class="input" id="project">
           {{ form_proyecto.as_p }}
           <label class="input-label">Proyecto ascociado</label>
         </div>
-        <div class="input">
+        <div class="input" id="reportImage">
           {{ form_imagen.as_p }}
           <label class="input-label">Imagen</label>
         </div>
