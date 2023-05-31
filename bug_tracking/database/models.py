@@ -1,7 +1,10 @@
 from django.db import models
 from django.db.models import Q
+from django.core.exceptions import ValidationError
 import os
 import uuid
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 ##ver datetime para las fechas 
 
 
@@ -363,6 +366,19 @@ class Reasignacion(models.Model):
     
     def __str__(self):
         return '{0.id_programador_inicial}_{0.id_bug}_{0.id_reasignacion}'.format(self)
+    
+        
+@receiver(pre_save, sender=Reasignacion)
+def actualizar_id_programador_final(sender, instance, **kwargs):
+    if instance.estado == 'DESAPROBADO':
+        instance.id_programador_final = instance.id_programador_inicial
+    
+    elif instance.estado == 'PENDIENTE' and instance.id_programador_final is not None:
+            raise ValidationError("No se puede asignar si el estado es pendiente")
+
+    elif instance.estado == 'APROBADO' and instance.id_programador_final == instance.id_programador_inicial:
+            raise ValidationError("No se puede reasignar el caso a una misma persona")
+    
     
 
 class Notificaciones(models.Model):
