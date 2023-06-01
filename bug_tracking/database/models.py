@@ -142,7 +142,7 @@ class Bug(models.Model):
         verbose_name='estado',
     )
     
-    fecha_reporte  = models.DateField(
+    fecha_reporte  = models.DateTimeField(
         auto_now_add=True, 
         verbose_name='fecha del caso',
     )
