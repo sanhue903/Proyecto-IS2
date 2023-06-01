@@ -1,16 +1,16 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
-from bug_report.forms import ReporteBugForm, UsuarioForm, ProyectoForm, ImagenForm, TituloForm
+from bug_report.forms import ReporteBugForm, ProyectoForm, ImagenForm, TituloForm
 from database.models import ReporteBug, Usuario, Proyecto, Imagen
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 # Create your views here.
 @login_required
 def reportar_bug(request):
     form_bug = ReporteBugForm()
-    form_usuario = UsuarioForm()
     form_proyecto = ProyectoForm()
     form_imagen = ImagenForm()
     form_resumen = TituloForm()
@@ -19,14 +19,8 @@ def reportar_bug(request):
     if request.method == 'POST':
         form_bug = ReporteBugForm(request.POST)
         form_proyecto = ProyectoForm(request.POST)
-        correo_usuario = request.POST.get('correo_usuario')
         form_imagen = ImagenForm(request.POST, request.FILES)
         form_resumen = TituloForm(request.POST)
-
-        try:
-            usuario = Usuario.objects.get(correo_usuario=correo_usuario)
-        except Usuario.DoesNotExist:
-            usuario = None
 
         id_proyecto = request.POST.get('nombre_proyecto')
         id_proyecto2 = Proyecto.objects.get(id_proyecto=id_proyecto)
@@ -35,16 +29,10 @@ def reportar_bug(request):
             reporte_bug = form_bug.save(commit=False)
             reporte_bug.titulo = form_resumen.cleaned_data['titulo']
 
-            if usuario:
-                reporte_bug.correo_usuario = usuario
-            else:
-                form_usuario = UsuarioForm(request.POST)
-                if form_usuario.is_valid():
-                    usuario = form_usuario.save()
-                    reporte_bug.correo_usuario = usuario
-                else:
-                    return render(request, 'bug_report/reporte_bug.html', {'form_bug': form_bug, 'form_usuario': form_usuario, 'form_proyecto': form_proyecto, 'form_imagen': form_imagen, 'form_resumen': form_resumen, 'formulario_enviado': formulario_enviado})
-            
+
+            usuario = Usuario.objects.get(user_id=request.user.id)
+            reporte_bug.correo_usuario = usuario
+
             reporte_bug.id_proyecto = id_proyecto2
             reporte_bug.save()
 
@@ -58,7 +46,6 @@ def reportar_bug(request):
             form_proyecto = ProyectoForm()
             form_imagen = ImagenForm()
             form_resumen = TituloForm()
-            form_usuario = UsuarioForm()
         
         else:
             # Limpiar formularios
@@ -66,15 +53,13 @@ def reportar_bug(request):
             form_proyecto = ProyectoForm()
             form_imagen = ImagenForm()
             form_resumen = TituloForm()
-            form_usuario = UsuarioForm()
     else:
         form_bug = ReporteBugForm()
-        form_usuario = UsuarioForm()
         form_proyecto = ProyectoForm()
         form_imagen = ImagenForm()
         form_resumen = TituloForm()
 
-    return render(request, 'bug_report/reporte_bug.html', {'form_bug': form_bug, 'form_usuario': form_usuario, 'form_proyecto': form_proyecto, 'form_imagen': form_imagen, 'form_resumen': form_resumen, 'formulario_enviado': formulario_enviado})
+    return render(request, 'bug_report/reporte_bug.html', {'form_bug': form_bug, 'form_proyecto': form_proyecto, 'form_imagen': form_imagen, 'form_resumen': form_resumen, 'formulario_enviado': formulario_enviado})
 
 
 def confirmacion_reporte(request):
