@@ -142,7 +142,7 @@ class Bug(models.Model):
         verbose_name='estado',
     )
     
-    fecha_reporte  = models.DateField(
+    fecha_reporte  = models.DateTimeField(
         auto_now_add=True, 
         verbose_name='fecha del caso',
     )
@@ -203,7 +203,7 @@ class ReporteBug(models.Model):
         verbose_name='estado del reporte'
     )
     
-    correo_usuario = models.ForeignKey(
+    id_usuario = models.ForeignKey(
         Usuario,
         on_delete=models.CASCADE, 
         null=False, 

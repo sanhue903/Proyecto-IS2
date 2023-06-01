@@ -221,7 +221,7 @@ text-align: center;
       display: none;
   }
 
-  .input label[for="id_correo_usuario"] {
+  .input label[for="id_email"] {
       display: none;
   }
 
