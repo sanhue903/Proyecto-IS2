@@ -21,7 +21,7 @@ class ReporteBugAdmin(admin.ModelAdmin):
 
 @admin.register(Programador)
 class ReporteBugAdmin(admin.ModelAdmin):
-    list_display = ('nombre_programador', 'correo_programador')
+    list_display = ('user',)
     # exclude      = ('nombre_programador', 'correo_programador')
 
 
