@@ -66,6 +66,10 @@
       /* margin-bottom: 1rem; */
   }
 
+  input[name="imagenes"] {
+    margin-top: 1rem;
+  }
+
 .input#userEmail {
     height: 70px;
     margin-top: 12px;
@@ -102,7 +106,7 @@
   }
 
   .action {
-      color: whi
+      margin-top: 1rem;
   }
 
   .action button[type="submit"] {
@@ -156,10 +160,11 @@ border: 0;
     height: 40px;
   }
   .input textarea[name="reporte"]{
-    height: 80px;
+    height: 140px;
   }
 
   .input#project{
+    margin-top: 5rem;
     height: 65px;
   }
 
