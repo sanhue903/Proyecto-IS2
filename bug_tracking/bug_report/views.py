@@ -31,7 +31,7 @@ def reportar_bug(request):
 
 
             usuario = Usuario.objects.get(user_id=request.user.id)
-            reporte_bug.correo_usuario = usuario
+            reporte_bug.id_usuario = usuario
 
             reporte_bug.id_proyecto = id_proyecto2
             reporte_bug.save()

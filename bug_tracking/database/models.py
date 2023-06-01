@@ -203,7 +203,7 @@ class ReporteBug(models.Model):
         verbose_name='estado del reporte'
     )
     
-    correo_usuario = models.ForeignKey(
+    id_usuario = models.ForeignKey(
         Usuario,
         on_delete=models.CASCADE, 
         null=False, 
