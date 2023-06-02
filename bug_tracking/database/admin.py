@@ -89,7 +89,6 @@ class AvancesAdmin(admin.ModelAdmin):
 @admin.register(Notificaciones)
 class NotificacionesAdmin(admin.ModelAdmin):
     
-    
     def has_change_permission(self, request):
         return False
    
@@ -101,4 +100,6 @@ class ReasignacionBugAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         return qs.filter(estado='PENDIENTE')
+    
+    
 

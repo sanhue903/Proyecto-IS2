@@ -374,19 +374,10 @@ class Notificaciones(models.Model):
     
     descripcion     = models.TextField(null=False)
     
-    id_usuario      = models.ForeignKey(
-        Usuario, 
+    id_user         = models.ForeignKey(
+        User,
         on_delete=models.CASCADE,
-        null=True, 
-        verbose_name='usuario'
-    )
-    
-    id_programador  = models.ForeignKey(
-        Programador,
-        on_delete=models.CASCADE,
-        null=True, 
-        verbose_name='programador'
-    
+        null=False,
     )
     
     id_bug          = models.ForeignKey(
@@ -399,4 +390,5 @@ class Notificaciones(models.Model):
      
     def __str__(self):
         return '{0.id_bug}_{0.id_notificacion}'.format(self)
+    
     
