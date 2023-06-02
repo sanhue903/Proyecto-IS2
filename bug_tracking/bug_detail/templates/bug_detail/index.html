@@ -19,7 +19,7 @@
         </span>
         <span class="text-2">
           {% if avance %}
-          Actualizado {{ avance.last.fecha_avance | naturaltime }}
+          Actualizado {{ avance.first.fecha_avance | naturaltime }}
           {% else %}
           Sin cambios
           {% endif %}
