@@ -34,6 +34,15 @@ def exit(request):
     logout(request)
     return redirect('home:principal')
 
+def signup(request):
+    if request.method == "POST":
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save() #guarda el usuario
+            return redirect('home:login')
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'registration/register.html', {'form': form})
 
 # def home_inicio(request):
 #     listar_reportes = ReporteBug.objects.order_by("id_reporte")[:20]

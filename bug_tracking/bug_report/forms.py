@@ -66,7 +66,7 @@ class TituloForm(forms.ModelForm):
 
 class ImagenForm(forms.ModelForm):
     imagenes = forms.FileField(widget=forms.FileInput(attrs={
-        'multiple': True,
+        #'multiple': True,
         'class': 'form-control-file',
         'validators': [FileExtensionValidator(allowed_extensions=['jpg', 'png', 'jpeg'])],
     }), required=False)
