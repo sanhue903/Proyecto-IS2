@@ -1,4 +1,4 @@
-{% extends 'home/base.html' %} {%load static%} {% block content %}
+{% extends 'home/base.html' %} {%load static%} {% block content %} {% load humanize %}
 
 <link rel="stylesheet" href='{%static "css/start.css"%}'>
 
@@ -31,14 +31,16 @@
                   <th>ID</th>
                   <th>Título</th>
                   <th>Fecha</th>
+                  <th>Proyecto</th>
                 </tr>
             </thead>
             <tbody>
               {% for ReporteBug in listar_reportes %}
               <tr>
                 <td>{{ ReporteBug.id_reporte }}</td>
-                <td>{{ ReporteBug.reporte }}</td>
-                <td>{{ ReporteBug.fecha_reporte }}</td>
+                <td>{{ ReporteBug.titulo | truncatechars:30 }}</td>
+                <td>{{ ReporteBug.fecha_reporte | naturaltime }}</td>
+                <td>{{ ReporteBug.id_proyecto.nombre_proyecto }}</td>
               </tr>
               {%endfor%}
             </tbody>
@@ -87,7 +89,6 @@
                 <tr>
                   <th>ID</th>
                   <th>Título</th>
-                  <th>Descripción</th>
                   <th>Fecha</th>
                   <th>Proyecto</th>
                 </tr>
@@ -96,9 +97,9 @@
               {% for Bug in  listar_bug%}
               <tr>
                   <td>{{ Bug.id_bug }}</td>
-                  <td>{{ Bug.titulo }}</td>
-                  <td>{{ Bug.descripcion }}</td>
-                  <td>{{ Bug.fecha_reporte }}</td>
+                  <td>{{ Bug.titulo | truncatechars:30 }}</td>
+                  <td>{{ Bug.fecha_reporte | naturaltime }}</td>
+                  <td>{{ Bug.id_proyecto.nombre_proyecto }}</td>
               </tr>
               {%endfor%}
               </tbody>
