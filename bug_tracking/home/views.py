@@ -4,6 +4,9 @@ from django.template import loader
 from django.contrib import messages
 from .models import ReporteBug, Bug
 from database.models import ReporteBug, Bug
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+from .forms import CustomUserCreationForm
 # Create your views here.
 
 
@@ -23,6 +26,23 @@ def home(request):
     }
     return render(request, 'home/start.html', context)
 
+@login_required
+def login(request):
+    return redirect('home:principal')
+
+def exit(request):
+    logout(request)
+    return redirect('home:principal')
+
+def signup(request):
+    if request.method == "POST":
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save() #guarda el usuario
+            return redirect('home:login')
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'registration/register.html', {'form': form})
 
 # def home_inicio(request):
 #     listar_reportes = ReporteBug.objects.order_by("id_reporte")[:20]
