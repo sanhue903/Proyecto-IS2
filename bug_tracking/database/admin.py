@@ -1,5 +1,7 @@
+from typing import Optional
 from django.contrib import admin
 from django.contrib.auth.models import User, Group
+from django.http.request import HttpRequest
 from .models import *
 from django.db.models import Count
 from django import forms
@@ -13,7 +15,7 @@ admin.site.unregister(Group)
 @admin.register(Usuario)
 class ReporteBugAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
-        return False
+        return True
 
     def has_change_permission(self, request, obj=None):
         return False
@@ -60,22 +62,37 @@ class ReporteBugAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         return qs.filter(estado='PENDIENTE')
+
+    
+    def has_add_permission(self, request):      
+        return True
+    
+
+@admin.register(Imagen)
+class ImagenAdmin(admin.ModelAdmin):
     
     def has_add_permission(self, request):
         return False
-
-# class ReasignacionForm(forms.ModelForm):
-#     class Meta:
-#         model = Reasignacion
-#         fields = '__all__'
-
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         # Aquí puedes personalizar cómo se muestra el campo id_programador_final
-#         # por ejemplo, puedes mostrar el nombre del programador en lugar de su ID
-#         self.fields['id_programador_final'].queryset = Programador.objects.all()
-        
-#@admin.register(Reasignacion)
+    
+    def has_change_permission(self, request):
+        return False
+    
+    
+@admin.register(Avances)
+class AvancesAdmin(admin.ModelAdmin):
+    
+    def has_add_permission(self, request):
+        return False
+        def has_change_permission(self, request):
+        return False
+    
+    
+@admin.register(Notificaciones)
+class NotificacionesAdmin(admin.ModelAdmin):
+    
+    
+    def has_change_permission(self, request):
+        return False
 
 class ProgramadorChoiceField(ModelChoiceField):
     def label_from_instance(self, obj):
