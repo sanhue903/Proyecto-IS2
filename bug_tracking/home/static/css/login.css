@@ -152,6 +152,6 @@ a{color:inherit;text-decoration:none}
     color: white;
 }
 
-.sidebar li.login-button{
+.bottom-content li.login-button{
 	display: none;
 }
