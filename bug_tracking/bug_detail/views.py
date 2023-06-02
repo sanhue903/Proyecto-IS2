@@ -17,5 +17,5 @@ def index(request, bug_id):
     imagen = Imagen.objects.order_by("id_imagen").filter(id_reporte_id__in = reporte)
 
 
-    context = {"bug": bug, "proyecto": proyecto, "programador": usuario, "avance": avance, "imagen":imagen}
+    context = {"bug": bug, "proyecto": proyecto, "programador": usuario, "avance": avance, "imagen":imagen, "reporte":reporte}
     return render(request, "bug_detail/index.html", context)
