@@ -139,8 +139,10 @@
     border-radius: 10px;
     background: var(--sidebar-color);
     min-width: 1000px; /* Ajusta el valor según tus necesidades */
+    max-width: 1000px;
     margin: 0 auto; /* Centra el div horizontalmente */
     height: auto; /* Permite ajuste automático del alto */
+    width: fit-content;
   }
   
   .titulo {
@@ -169,6 +171,22 @@
     font-weight: 250;
   }
   
+  .text-usuario{
+    color: var(--text-color);
+    padding: 3px 3px;
+    font-weight: bold;
+  }
+
+  .subido{
+    color: var(--text-color);
+    padding: 3px 3px;
+  }
+
+  .fecha{
+    color: var(--text-color);
+    padding: 3px 5px;
+  }
+
   .titulo-1{
     padding: 0px;
     font-size: 20px;

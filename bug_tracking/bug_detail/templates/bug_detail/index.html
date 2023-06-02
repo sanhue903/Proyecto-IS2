@@ -128,11 +128,17 @@
   
   <div class="modulo">
     {% if reporte %}
-      {% for Reporte in reporte %}
+      {% for Reporte,Usuario  in reporte %}
         <div class="reporte container">
           <div class="id-fecha">
             <span class="text-1">
               Ticket {{ Reporte.id_reporte }}
+            </span>
+            <span class="text-2 subido">
+              Subido por:
+            </span>
+            <span class="text-usuario">
+              {{ Usuario.username }}
             </span>
             <span class="text-2 fecha">
               {{ Reporte.fecha_reporte | naturaltime }}
