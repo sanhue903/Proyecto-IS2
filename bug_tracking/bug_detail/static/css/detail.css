@@ -119,3 +119,153 @@
     text-align: center;
     margin-top: 20px;
   }
+
+  /* Contenido */
+
+  .modulo {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 10px;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    padding: 5px;
+    border-radius: 10px;
+    background: var(--sidebar-color);
+    min-width: 1000px; /* Ajusta el valor según tus necesidades */
+    max-width: 1000px;
+    margin: 0 auto; /* Centra el div horizontalmente */
+    height: auto; /* Permite ajuste automático del alto */
+    width: fit-content;
+  }
+  
+  .titulo {
+    color: var(--text-color);
+    padding: 5px;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .contenido {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  
+  .text-1,
+  .text-2,
+  .text-estado {
+    color: var(--text-color);
+    padding: 3px 20px;
+  }
+  
+  .text-2{
+    font-weight: 250;
+  }
+  
+  .text-usuario{
+    color: var(--text-color);
+    padding: 3px 3px;
+    font-weight: bold;
+  }
+
+  .subido{
+    color: var(--text-color);
+    padding: 3px 3px;
+  }
+
+  .fecha{
+    color: var(--text-color);
+    padding: 3px 5px;
+  }
+
+  .titulo-1{
+    padding: 0px;
+    font-size: 20px;
+    font-weight: 500;
+  }
+  
+  .info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .item {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+  }
+  
+  .item.ajustado {
+    margin-right: 20px; /* Añadimos un margen derecho para separar los elementos */
+  }
+  
+
+  .descripcion {
+    display: flex;
+    flex-direction: column;
+    margin: 1px;
+  }
+  
+  .descripcion .text-1 {
+    margin: 0;
+  }
+
+  .cambio {
+    margin-bottom: 10px;
+  }
+  
+  .separador {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 10px 0;
+  }
+
+  .card {
+  width: 100%;
+  }
+
+  .card-img-top {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  }
+
+  .contenido .item {
+    width: 150px; /* Ajusta el tamaño deseado para las imágenes */
+    margin-right: 10px; /* Ajusta el margen derecho deseado entre las imágenes */
+  }
+  
+  .contenido .item .card-img-top {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .reporte{
+    margin-bottom: 10px;
+  }
+
+  .id-fecha {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  
+  .id-fecha .text-1 {
+    margin-right: 5px; /* Espacio entre ID y fecha */
+  }
+  
+  
+  
+  

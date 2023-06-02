@@ -12,10 +12,10 @@ from .forms import CustomUserCreationForm
 
 def home(request):
 
-    listar_reportes = ReporteBug.objects.order_by("fecha_reporte")[:5]
-    total_report = ReporteBug.objects.count();
-    total_bug = Bug.objects.count();
-    listar_bug = Bug.objects.order_by("fecha_reporte")[:5]
+    listar_reportes = ReporteBug.objects.order_by("-fecha_reporte")[:5].select_related("id_proyecto")
+    total_report = ReporteBug.objects.count()
+    total_bug = Bug.objects.count()
+    listar_bug = Bug.objects.order_by("-fecha_reporte")[:5].select_related("id_proyecto")
 
 
     context = {
