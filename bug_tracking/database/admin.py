@@ -83,7 +83,7 @@ class AvancesAdmin(admin.ModelAdmin):
     
     def has_add_permission(self, request):
         return False
-        def has_change_permission(self, request):
+    def has_change_permission(self, request):
         return False
     
     
@@ -109,7 +109,7 @@ class ReasignacionBugAdmin(admin.ModelAdmin):
     list_display = ('id_reasignacion', 'id_bug',
                     'id_programador_inicial', 'fecha_reasignacion')
     #'id_programador_final_display'
-    readonly_fields = ('id_programador_inicial','id_bug')
+    #readonly_fields = ('id_programador_inicial','id_bug')
 
 
     def get_fieldsets(self, request, obj=None):
