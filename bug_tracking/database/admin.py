@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.contrib.auth.models import User, Group
 from .models import *
 from django.db.models import Count
+from django import forms
+from django.forms import ModelChoiceField
 # Register your models here.
 
 admin.site.unregister(User)
@@ -62,21 +64,71 @@ class ReporteBugAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
         return False
 
+# class ReasignacionForm(forms.ModelForm):
+#     class Meta:
+#         model = Reasignacion
+#         fields = '__all__'
 
-@admin.register(Reasignacion)
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         # Aquí puedes personalizar cómo se muestra el campo id_programador_final
+#         # por ejemplo, puedes mostrar el nombre del programador en lugar de su ID
+#         self.fields['id_programador_final'].queryset = Programador.objects.all()
+        
+#@admin.register(Reasignacion)
+
+class ProgramadorChoiceField(ModelChoiceField):
+    def label_from_instance(self, obj):
+        total_bugs = obj.bug_set.count()
+        bugs_baja = obj.bug_set.filter(prioridad='BAJA').count()
+        bugs_media = obj.bug_set.filter(prioridad='MEDIA').count()
+        bugs_alta = obj.bug_set.filter(prioridad='ALTA').count()
+        bugs_urgente = obj.bug_set.filter(prioridad='URGENTE').count()
+        
+        return f'{obj.nombre_programador} -  TOTAL BUGS: {total_bugs} | BAJA: {bugs_baja} | MEDIA: {bugs_media} | ALTA: {bugs_alta} | URGENTE: {bugs_urgente}'
+        #return f'{obj.nombre_programador} ({obj.bug_set.count()} bugs asociados)'
+    
 class ReasignacionBugAdmin(admin.ModelAdmin):
     list_display = ('id_reasignacion', 'id_bug',
                     'id_programador_inicial', 'fecha_reasignacion')
+    #'id_programador_final_display'
+    readonly_fields = ('id_programador_inicial','id_bug')
 
-    fieldsets = (
-        ('Programadores involucrados', {
-            'fields': ('id_programador_inicial', 'id_programador_final')
-        }),
+
+    def get_fieldsets(self, request, obj=None):
+        fieldsets = (
+            ('Programadores involucrados', {
+                'fields': ('id_programador_inicial', 'id_programador_final')
+            }),
         
-        ('Estado solicitud', {
-            'fields': ('estado', 'id_bug')
-        })
-    )
+            ('Estado solicitud', {
+                'fields': ('estado', 'id_bug')
+            })
+        )
+        return fieldsets
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         return qs.filter(estado='PENDIENTE')
+    
+    
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'id_programador_final':
+            kwargs['form_class'] = ProgramadorChoiceField
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+    
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        
+        if obj.id_programador_final:
+    
+            bug_id = obj.id_bug.id_bug  # Obtener el id_bug del objeto Reasignacion
+            try:
+                bug = Bug.objects.get(id_bug=bug_id)
+                bug.id_programador = obj.id_programador_final
+                bug.save()
+            except Bug.DoesNotExist:
+                pass
+            
+    
+admin.site.register(Reasignacion, ReasignacionBugAdmin)
+
