@@ -87,14 +87,14 @@
           <tbody>
             {% if report_list %}
             <tr>
-              {% for ReporteBug, Proyecto in report_list %}
+              {% for ReporteBug in report_list %}
               <td>
                 <p>{{ ReporteBug.id_reporte }}</p>
                 <img src={%static "images/logo.png"%}>
               </td>
               <td>{{ ReporteBug.titulo | truncatechars:90 }}</td>
               <td>{{ ReporteBug.fecha_reporte }}</td>
-              <td>{{ Proyecto.nombre_proyecto }}</td>
+              <td>{{ ReporteBug.id_proyecto.nombre_proyecto }}</td>
             </tr>
               {%endfor%}
             {%else%}
