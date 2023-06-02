@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models import Q
 import os
 import uuid
+from django.contrib.auth.models import User
 ##ver datetime para las fechas 
 
 
@@ -32,11 +33,12 @@ class Usuario(models.Model):
         max_length=25,
         blank=False,
     )
-    
+    #def __str__(self):
+        #return self.nombre_usuario
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     
     def __str__(self):
-        return self.nombre_usuario
-    
+        return self.user.username    
     
     
 class Programador(models.Model):    
@@ -61,9 +63,13 @@ class Programador(models.Model):
         verbose_name='email',
     )
     
-    def __str__(self):
-        return self.nombre_programador
+    #def __str__(self):
+    #    return self.nombre_programador
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    # Agrega los campos adicionales necesarios para el modelo Programador
     
+    def __str__(self):
+        return self.user.username    
 
 
 class Proyecto(models.Model):

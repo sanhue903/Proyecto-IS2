@@ -76,7 +76,7 @@ class ImagenForm(forms.ModelForm):
         fields = ['imagenes']
         widgets = {
             'imagenes': forms.ClearableFileInput(attrs={
-                'multiple': True,
+                #'multiple': True,
                 'class': 'form-control-file',
                 }),
         }
