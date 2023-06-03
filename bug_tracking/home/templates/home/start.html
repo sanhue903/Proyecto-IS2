@@ -115,7 +115,7 @@
 
   <footer>
     <div class="text" style="text-align: center;">
-      {%if request.user.is_authenticated%}
+      {%if request.user.is_superuser%}
       Hemos detectado que eres administrador, te recomendamos utilizar el panel de administración
       {%endif%}
     </div>
