@@ -4,7 +4,7 @@
 
 <section class="home">
   {%if request.user.is_authenticated%}
-  <div class="text">Bienvenido {{request.user.username | title}}</div>
+  <div class="text" style="text-align: center;">Bienvenido {{request.user.username | title}}</div>
 
   <ul class="box-info">
     <li>
