@@ -109,7 +109,7 @@ input[name="imagenes"] {
   margin-top: 1rem;
 }
 
-.action button[type="submit"] {
+.action button,#buttonSubmit{
   font-size: 1.25rem;
 
   padding: 1em;
@@ -151,7 +151,8 @@ input[name="imagenes"] {
 .card-info a {
   display: block;
   color: #6658d3;
-  text-decoration: none;
+  font-weight: bold;
+  
 }
 
 .input textarea[name="titulo"] {
