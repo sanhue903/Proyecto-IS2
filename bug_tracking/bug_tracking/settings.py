@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-from django.contrib.auth.models import User, Group, Permission
+
 from pathlib import Path
 import os
 
@@ -155,18 +155,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGOUT_REDIRECT_URL = 'principal' """
 
 
-# Crear el grupo "Usuarios"
-group_usuarios, created = Group.objects.get_or_create(name='Usuarios')
-
-# Crear el grupo "Programadores"
-group_programadores, created = Group.objects.get_or_create(name='Programadores')
-
-# Asignar los permisos a los grupos correspondientes
-reporte_bug_permission = Permission.objects.get(codename='add_reportebug')
-group_usuarios.permissions.add(reporte_bug_permission)
-
-avance_permission = Permission.objects.get(codename='add_avance')
-reasignacion_permission = Permission.objects.get(codename='add_reasignacion')
-group_programadores.permissions.add(avance_permission, reasignacion_permission)
-
-# ...
