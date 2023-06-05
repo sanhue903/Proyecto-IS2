@@ -4,6 +4,10 @@ from django.contrib.auth.models import User, Group
 from django.http.request import HttpRequest
 from .models import *
 from django.db.models import Count
+from django import forms
+from django.forms import ModelChoiceField
+from django.utils.html import format_html
+
 # Register your models here.
 
 admin.site.unregister(User)
@@ -63,6 +67,7 @@ class ReporteBugAdmin(admin.ModelAdmin):
 
 @admin.register(ReporteBug)
 class ReporteBugAdmin(admin.ModelAdmin):
+
     list_display = ('id_reporte','titulo', 'fecha_reporte', 'id_proyecto', 'estado', 'id_bug')
     
     list_filter  = ('estado', 'id_proyecto')
@@ -75,6 +80,7 @@ class ReporteBugAdmin(admin.ModelAdmin):
             'fields': ('estado', 'id_proyecto', 'id_bug')
         })
     )
+
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
@@ -95,9 +101,10 @@ class ImagenAdmin(admin.ModelAdmin):
         return False
     
     def has_change_permission(self, request,obj=None):
+
         return False
-    
-    
+
+
 @admin.register(Avances)
 class AvancesAdmin(admin.ModelAdmin):
     
@@ -105,15 +112,18 @@ class AvancesAdmin(admin.ModelAdmin):
         return False
     
     def has_change_permission(self, request,obj=None):
+
         return False
-    
-    
+
+
 @admin.register(Notificaciones)
 class NotificacionesAdmin(admin.ModelAdmin):
+
     
     def has_change_permission(self, request,obj=None):
         return False
     
+
 class ProgramadorChoiceField(ModelChoiceField):
     def label_from_instance(self, obj):
 

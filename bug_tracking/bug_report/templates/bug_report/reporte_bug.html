@@ -41,14 +41,26 @@
           <label class="input-label">Imagen</label>
         </div>
         <div class="action">
+          {%if request.user.is_authenticated%}
           <button id="submitButton" type="submit">Enviar reporte</button>
+          {%else%}
+          <button type="reset">No estás registrado</button>
+          {%endif%}
+          
         </div>
       </form>
       <div class="card-info">
+        {%if request.user.is_authenticated%}
+          <a>Recuerda ser lo más específico posible para que podamos replicar el error</a>
+        {%else%}
         <p>
-          Registrándote podrás tener más información sobre tus reportes
-          <a href="#">Registrarme ahora</a>
+          <p>
+            Registrándote podrás tener más información sobre tus reportes
+            <a href="{% url 'home:signup' %}">Registrarme ahora</a>
+          </p>
+          
         </p>
+        {%endif%}
       </div>
     </div>
   </div>
