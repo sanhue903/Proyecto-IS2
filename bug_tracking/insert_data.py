@@ -125,6 +125,7 @@ reporte3.save()
 reporte4 = ReporteBug.objects.create(titulo='Reporte 4', reporte='Reporte del Bug 4', fecha_reporte=datetime.now(), estado='APROBADO' , id_usuario=usuario3, id_bug=bug4, id_proyecto=proyecto2)
 reporte4.save()
 
+
 #Insertar avances
 #avances bug 2 y 4 un avance asignado a cada uno
 #al bug 3 dos avances 
@@ -153,3 +154,4 @@ imagen3.save
 
 imagen4=Imagen.objects.create(imagen='bug_tracking\database\media\database\images\acc81edf-c260-4ce7-9b80-50f8c7e21f47.webp', id_reporte=reporte4)
 imagen4.save
+
