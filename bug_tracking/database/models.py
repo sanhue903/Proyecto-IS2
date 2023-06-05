@@ -156,8 +156,6 @@ class ReporteBug(models.Model):
         verbose_name = 'reporte de bug'
         verbose_name_plural = 'reportes de bugs'
 
-    ESTADO_PENDIENTE = 'PENDIENTE'
-
     ESTADOS_CHOICES = (
         ('PENDIENTE', 'reporte en estado pendiente'),
         ('APROBADO', 'reporte aprobado'),
@@ -181,12 +179,13 @@ class ReporteBug(models.Model):
         auto_now_add=True,
         verbose_name='fecha de reporte'
     )
+    
+    estado         = models.CharField(
+        max_length=50, 
+        # 
+        default=ESTADOS_CHOICES[0], 
+        choices=ESTADOS_CHOICES, 
 
-    estado = models.CharField(
-        max_length=50,
-        #
-        default=ESTADO_PENDIENTE,
-        choices=ESTADOS_CHOICES,
         verbose_name='estado del reporte'
     )
 
@@ -214,7 +213,17 @@ class ReporteBug(models.Model):
 
     def __str__(self):
         return self.titulo
-
+    
+@receiver(pre_save, sender=ReporteBug)
+def actualizar_id_bug(sender, instance, **kwargs):
+    if instance.estado == 'PENDIENTE' and instance.id_bug:
+        raise ValidationError("No se puede asignar caso del bug en estado pendiente")
+    
+    if instance.estado == 'APROBADO' and not instance.id_bug:
+        raise ValidationError("No se puede guardar un reporte aprobado sin un caso de bug")
+    
+    if instance.estado == 'DESAPROBADO' and instance.id_bug:
+        raise ValidationError("No se puede guardar un caso de bug en un reporte desaprobado")
 
 def custom_upload_to(instance, filename):
     extension = filename.split('.')[-1]
@@ -366,21 +375,13 @@ class Notificaciones(models.Model):
 
     id_notificacion = models.AutoField(primary_key=True)
 
-    descripcion = models.TextField(null=False)
-
-    id_usuario = models.ForeignKey(
-        Usuario,
+    
+    descripcion     = models.TextField(null=False)
+    
+    id_user         = models.ForeignKey(
+        User,
         on_delete=models.CASCADE,
-        null=True,
-        verbose_name='usuario'
-    )
-
-    id_programador = models.ForeignKey(
-        Programador,
-        on_delete=models.CASCADE,
-        null=True,
-        verbose_name='programador'
-
+        null=False,
     )
 
     id_bug = models.ForeignKey(

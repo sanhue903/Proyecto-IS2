@@ -16,10 +16,10 @@ admin.site.unregister(Group)
 
 @admin.register(Usuario)
 class ReporteBugAdmin(admin.ModelAdmin):
-    def has_add_permission(self, request):
+    def has_add_permission(self, request,obj=None):
         return True
 
-    def has_change_permission(self, request, obj=None):
+    def has_change_permission(self, request,obj=None):
         return False
 
 
@@ -34,20 +34,30 @@ admin.site.register(Proyecto)
 
 @admin.register(Cargo)
 class ReporteBugAdmin(admin.ModelAdmin):
-    list_display = ('id_programador', 'id_proyecto')
-    # exclude      = ('nombre_programador', 'correo_programador')
+    list_display = ('id_programador', 'cargo', 'id_proyecto')
+    
+    fieldsets = (
+        ('Proyecto', {
+            'fields': ('id_proyecto',)
+        }),
+        ('Información del programador', {
+            'fields': ('id_programador', 'cargo')
+        })
+    )
 
 
 @admin.register(Bug)
 class ReporteBugAdmin(admin.ModelAdmin):
-    list_display = ('id_bug', 'descripcion', 'id_proyecto',
-                    'id_programador', 'estado', 'prioridad')
+    list_display  = ('id_bug', 'titulo', 'id_proyecto',
+                    'estado', 'prioridad', 'id_programador')
+    
     search_fields = ('id_proyecto', 'id_programador')
-    list_filter = ('id_proyecto', 'estado')
+    
+    list_filter   = ('id_proyecto', 'estado')
 
-    fieldsets = (
+    fieldsets     = (
         ('Informacion del Bug', {
-            'fields': ('descripcion', 'id_proyecto', 'estado', 'prioridad')
+            'fields': ('titulo', 'descripcion', 'id_proyecto', 'estado', 'prioridad')
         }),
         ('Personal encargado', {
             'fields': ('id_programador',)
@@ -57,45 +67,62 @@ class ReporteBugAdmin(admin.ModelAdmin):
 
 @admin.register(ReporteBug)
 class ReporteBugAdmin(admin.ModelAdmin):
-    list_display = ('titulo', 'fecha_reporte',
-                    'id_proyecto', 'id_bug', 'estado')
-    list_filter = ('estado', 'id_proyecto')
-    # exclude      = ('id_reporte','titulo','reporte','fecha_reporte','correo_usuario')
+
+    list_display = ('id_reporte','titulo', 'fecha_reporte', 'id_proyecto', 'estado', 'id_bug')
+    
+    list_filter  = ('estado', 'id_proyecto')
+    
+    fieldsets    = (
+        ('Información entregada por el usuario', {
+            'fields': ('titulo', 'reporte', 'id_usuario')
+        }),
+        ('Información extra', {
+            'fields': ('estado', 'id_proyecto', 'id_bug')
+        })
+    )
+
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         return qs.filter(estado='PENDIENTE')
 
-    def has_add_permission(self, request):
+    
+    def has_add_permission(self, request,obj=None):      
         return True
-
+    
+    def has_change_permission(self, request,obj=None):
+        return False
+    
 
 @admin.register(Imagen)
 class ImagenAdmin(admin.ModelAdmin):
-
-    def has_add_permission(self, request):
+    
+    def has_add_permission(self, request,obj=None):
         return False
+    
+    def has_change_permission(self, request,obj=None):
 
-    def has_change_permission(self, request):
         return False
 
 
 @admin.register(Avances)
 class AvancesAdmin(admin.ModelAdmin):
-
-    def has_add_permission(self, request):
+    
+    def has_add_permission(self, request,obj=None):
         return False
+    
+    def has_change_permission(self, request,obj=None):
 
-    def has_change_permission(self, request):
         return False
 
 
 @admin.register(Notificaciones)
 class NotificacionesAdmin(admin.ModelAdmin):
 
-    def has_change_permission(self, request):
+    
+    def has_change_permission(self, request,obj=None):
         return False
-
+    
 
 class ProgramadorChoiceField(ModelChoiceField):
     def label_from_instance(self, obj):
@@ -223,3 +250,4 @@ class ReasignacionBugAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Reasignacion, ReasignacionBugAdmin)
+
