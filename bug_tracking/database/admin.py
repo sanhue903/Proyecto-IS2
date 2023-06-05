@@ -46,6 +46,9 @@ class ReporteBugAdmin(admin.ModelAdmin):
     )
 
 
+class AvancesInline(admin.TabularInline):
+    model = Avances
+
 @admin.register(Bug)
 class ReporteBugAdmin(admin.ModelAdmin):
     list_display  = ('id_bug', 'titulo', 'id_proyecto',
@@ -54,6 +57,10 @@ class ReporteBugAdmin(admin.ModelAdmin):
     search_fields = ('id_proyecto', 'id_programador')
     
     list_filter   = ('id_proyecto', 'estado')
+    
+    inlines       = [
+        AvancesInline,
+    ]
 
     fieldsets     = (
         ('Informacion del Bug', {
