@@ -167,7 +167,13 @@ class Command(BaseCommand):
         imagen4=Imagen.objects.create(imagen='bug_tracking\database\media\database\images\acc81edf-c260-4ce7-9b80-50f8c7e21f47.webp', id_reporte=reporte4)
         imagen4.save()
         
+        
+        reasignacion1 = Reasignacion.objects.create(id_programador_inicial=programador1.programador,id_bug=bug1)
+        reasignacion1.save()
+        
         self.stdout.write(self.style.SUCCESS('La base de datos se ha llenado correctamente.'))
+        
+       
         
         
 

@@ -173,6 +173,7 @@ class ProgramadorChoiceField(ModelChoiceField):
 
 
 class ReasignacionBugAdmin(admin.ModelAdmin):
+    
     list_display = ('id_reasignacion', 'id_bug',
                     'id_programador_inicial', 'fecha_reasignacion')
     # 'id_programador_final_display'
