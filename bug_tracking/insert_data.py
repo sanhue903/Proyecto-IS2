@@ -7,7 +7,7 @@ application = get_wsgi_application()
 
 # Importar los modelos
 #from django.contrib.auth.models import User
-from database.models import Usuario, Programador, Proyecto, Cargo, Bug, ReporteBug
+from database.models import *
 from datetime import datetime
 
 # Crear un usuario
@@ -97,3 +97,10 @@ reporte3.save()
 
 reporte4 = ReporteBug.objects.create(titulo='Reporte 4', reporte='Reporte del Bug 4', fecha_reporte=datetime.now(), estado='en proceso' , correo_usuario=usuario3, id_bug=bug4, id_proyecto=proyecto2)
 reporte4.save()
+
+
+
+
+
+
+
