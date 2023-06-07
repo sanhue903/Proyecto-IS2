@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.contrib import messages
 from .models import ReporteBug, Bug
-from database.models import ReporteBug, Bug
+from database.models import ReporteBug, Bug, Usuario
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from .forms import CustomUserCreationForm
@@ -14,7 +14,10 @@ def home(request):
 
     if(request.user.is_authenticated == True):
         """ reportes_usuario = ReporteBug.objects.filter(id_usuario=request.user.id).order_by("-fecha_reporte")[:5].select_related("id_proyecto") """
-        reportes_usuario = ReporteBug.objects.filter(id_usuario=request.user.id)
+        usuario = Usuario.objects.get(user_id=request.user.id)
+        reportes_usuario = ReporteBug.objects.filter(id_usuario = usuario.id)
+        
+
         reportes_usario_id = reportes_usuario.values_list('id_reporte', flat=True)
         reportes_solucionados = Bug.objects.filter(id_bug__in=reportes_usario_id, estado="SOLUCIONADO").count()
 

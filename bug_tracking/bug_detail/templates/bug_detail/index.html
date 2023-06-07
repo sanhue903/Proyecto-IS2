@@ -60,7 +60,15 @@
             Estado:
           </span>
           <span class="text-1">
-            {{ bug.estado }}
+            {%if bug.estado == "('ASIGNADO', 'bug recien asignado')"%}
+                <td><span class="status process">Asignado</span></td>
+              {%endif%}
+              {%if bug.estado == "('SOLUCIONADO', 'bug solucionado')"%}
+                <td><span class="status completed">Solucionado</span></td>
+              {%endif%}
+              {%if bug.estado == "('EN PROCESO', 'bug esta proceso de revisión')"%}
+                <td><span class="status pending">En proceso</span></td>
+              {%endif%}
           </span>
         </div>
   
@@ -69,7 +77,18 @@
             Prioridad:
           </span>
           <span class="text-1">
-            {{ bug.prioridad }}
+            {%if bug.prioridad == "('BAJA', 'bug de baja prioridad')"%}
+                <td><span class="status process">Baja</span></td>
+              {%endif%}
+              {%if bug.prioridad == "('MEDIA', 'bug de media prioridad')"%}
+                <td><span class="status completed">Media</span></td>
+              {%endif%}
+              {%if bug.prioridad == "('ALTA', 'bug de alta prioridad')"%}
+                <td><span class="status pending">Alta</span></td>
+              {%endif%}
+              {%if bug.prioridad == "('URGENTE', 'bug de urgente prioridad')"%}
+                <td><span class="status pending">Urgente</span></td>
+              {%endif%}
           </span>
         </div>
       </div>
@@ -127,7 +146,7 @@
   <h3 class="text-2 titulo">Tickets</h3>
   
   <div class="modulo">
-    {% if Reporte in reporte %}
+    {% if reporte %}
       {% for Reporte,Usuario  in reporte %}
         <div class="reporte container">
           <div class="id-fecha">
