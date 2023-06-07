@@ -125,16 +125,16 @@ class Command(BaseCommand):
         bug4.save()
 
         # Insertar reportes de bugs
-        reporte1 = ReporteBug.objects.create(titulo='Reporte 1', reporte='Reporte del Bug 1', estado='PENDIENTE',id_usuario=usuario.usuario, id_proyecto=proyecto1)
+        reporte1 = ReporteBug.objects.create(titulo='Reporte 1', reporte='Reporte del Bug 1', estado=('PENDIENTE', 'reporte en estado pendiente'),id_usuario=usuario.usuario, id_proyecto=proyecto1)
         reporte1.save()
 
-        reporte2 = ReporteBug.objects.create(titulo='Reporte 2', reporte='Reporte del Bug 2', estado='DESAPROBADO', id_usuario=usuario2.usuario, id_proyecto=proyecto2)
+        reporte2 = ReporteBug.objects.create(titulo='Reporte 2', reporte='Reporte del Bug 2', estado=('DESAPROBADO', 'reporte desaprobado'), id_usuario=usuario2.usuario, id_proyecto=proyecto2)
         reporte2.save()
 
-        reporte3 = ReporteBug.objects.create(titulo='Reporte 3', reporte='Reporte del Bug 3', estado='APROBADO', id_usuario=usuario3.usuario, id_bug=bug3, id_proyecto=proyecto1)
+        reporte3 = ReporteBug.objects.create(titulo='Reporte 3', reporte='Reporte del Bug 3', estado=('APROBADO', 'reporte aprobado'), id_usuario=usuario3.usuario, id_bug=bug3, id_proyecto=proyecto1)
         reporte3.save()
 
-        reporte4 = ReporteBug.objects.create(titulo='Reporte 4', reporte='Reporte del Bug 4', estado='APROBADO' , id_usuario=usuario3.usuario, id_bug=bug4, id_proyecto=proyecto2)
+        reporte4 = ReporteBug.objects.create(titulo='Reporte 4', reporte='Reporte del Bug 4', estado=('APROBADO', 'reporte aprobado'), id_usuario=usuario3.usuario, id_bug=bug4, id_proyecto=proyecto2)
         reporte4.save()
 
 
