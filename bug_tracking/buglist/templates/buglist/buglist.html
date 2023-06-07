@@ -93,7 +93,7 @@
                 <img src={%static "images/logo.png"%}>
               </td>
               <td>{{ ReporteBug.titulo | truncatechars:90 }}</td>
-              <td>{{ ReporteBug.fecha_reporte }}</td>
+              <td>{{ ReporteBug.fecha_reporte | naturaltime }}</td>
               <td>{{ ReporteBug.id_proyecto.nombre_proyecto }}</td>
             </tr>
               {%endfor%}
