@@ -112,29 +112,29 @@ class Command(BaseCommand):
         cargo6.save()
 
         # Insertar bugs
-        bug1 = Bug.objects.create(titulo='Bug 1', descripcion='Cuando voy a agregar una cocacola al carrito, me da error', prioridad='ALTA', estado='ASIGNADO',fecha_reporte=datetime.now(), id_proyecto=proyecto1, id_programador=programador1.programador)
+        bug1 = Bug.objects.create(titulo='Bug 1', descripcion='Cuando voy a agregar una cocacola al carrito, me da error', prioridad=('ALTA', 'bug de alta prioridad'), estado=('ASIGNADO', 'bug recien asignado'), id_proyecto=proyecto1, id_programador=programador1.programador)
         bug1.save()
 
-        bug2 = Bug.objects.create(titulo='Bug 2', descripcion='No puedo iniciar sesion desde un nuevo dispositivo, pero desde los viejos funciona bien',fecha_reporte=datetime.now(), prioridad='BAJA', estado='EN PROCESO', id_proyecto=proyecto2, id_programador=programador1.programador)
+        bug2 = Bug.objects.create(titulo='Bug 2', descripcion='No puedo iniciar sesion desde un nuevo dispositivo, pero desde los viejos funciona bien', prioridad=('BAJA', 'bug de baja prioridad'), estado=('EN PROCESO', 'bug esta proceso de revisión'), id_proyecto=proyecto2, id_programador=programador1.programador)
         bug2.save()
 
-        bug3 = Bug.objects.create(titulo='Bug 3', descripcion='al momento de agregar mas inventario, la sprite no suman', prioridad='URGENTE', estado='SOLUCIONADO',fecha_reporte=datetime.now(), id_proyecto=proyecto1, id_programador=programador3.programador)
+        bug3 = Bug.objects.create(titulo='Bug 3', descripcion='al momento de agregar mas inventario, la sprite no suman', prioridad=('URGENTE', 'bug de urgente prioridad'), estado=('SOLUCIONADO', 'bug solucionado'), id_proyecto=proyecto1, id_programador=programador3.programador)
         bug3.save()
 
-        bug4 = Bug.objects.create(titulo='Bug 4', descripcion='Al adjuntar archivos, los de tipo pdf no se agregan', prioridad='MEDIA', estado='EN PROCESO', fecha_reporte=datetime.now(), id_proyecto=proyecto2, id_programador=programador5.programador)
+        bug4 = Bug.objects.create(titulo='Bug 4', descripcion='Al adjuntar archivos, los de tipo pdf no se agregan', prioridad=('MEDIA', 'bug de media prioridad'), estado=('EN PROCESO', 'bug esta proceso de revisión'), id_proyecto=proyecto2, id_programador=programador5.programador)
         bug4.save()
 
         # Insertar reportes de bugs
-        reporte1 = ReporteBug.objects.create(titulo='Reporte 1', reporte='Reporte del Bug 1', fecha_reporte=datetime.now(), estado='PENDIENTE',id_usuario=usuario.usuario, id_proyecto=proyecto1)
+        reporte1 = ReporteBug.objects.create(titulo='Reporte 1', reporte='Reporte del Bug 1', estado='PENDIENTE',id_usuario=usuario.usuario, id_proyecto=proyecto1)
         reporte1.save()
 
-        reporte2 = ReporteBug.objects.create(titulo='Reporte 2', reporte='Reporte del Bug 2',fecha_reporte=datetime.now(), estado='DESAPROBADO', id_usuario=usuario2.usuario, id_proyecto=proyecto2)
+        reporte2 = ReporteBug.objects.create(titulo='Reporte 2', reporte='Reporte del Bug 2', estado='DESAPROBADO', id_usuario=usuario2.usuario, id_proyecto=proyecto2)
         reporte2.save()
 
-        reporte3 = ReporteBug.objects.create(titulo='Reporte 3', reporte='Reporte del Bug 3',fecha_reporte=datetime.now(), estado='APROBADO', id_usuario=usuario3.usuario, id_bug=bug3, id_proyecto=proyecto1)
+        reporte3 = ReporteBug.objects.create(titulo='Reporte 3', reporte='Reporte del Bug 3', estado='APROBADO', id_usuario=usuario3.usuario, id_bug=bug3, id_proyecto=proyecto1)
         reporte3.save()
 
-        reporte4 = ReporteBug.objects.create(titulo='Reporte 4', reporte='Reporte del Bug 4', fecha_reporte=datetime.now(), estado='APROBADO' , id_usuario=usuario3.usuario, id_bug=bug4, id_proyecto=proyecto2)
+        reporte4 = ReporteBug.objects.create(titulo='Reporte 4', reporte='Reporte del Bug 4', estado='APROBADO' , id_usuario=usuario3.usuario, id_bug=bug4, id_proyecto=proyecto2)
         reporte4.save()
 
 
@@ -155,16 +155,16 @@ class Command(BaseCommand):
 
         #insertar imagenes
 
-        imagen1=Imagen.objects.create(imagen='bug_tracking\database\media\database\images\2c1cfbd4-87e8-4864-9c81-2f9a99a731ed.webp', id_reporte=reporte1)
+        imagen1=Imagen.objects.create(imagen='database/images/2c1cfbd4-87e8-4864-9c81-2f9a99a731ed.webp', id_reporte=reporte1)
         imagen1.save()
 
-        imagen2=Imagen.objects.create(imagen='bug_tracking\database\media\database\images\734af5af-d132-4310-997c-110150f9d099.webp', id_reporte=reporte2)
+        imagen2=Imagen.objects.create(imagen='database/images/734af5af-d132-4310-997c-110150f9d099.webp', id_reporte=reporte2)
         imagen2.save()
 
-        imagen3=Imagen.objects.create(imagen='bug_tracking\database\media\database\images\34330fe8-8d04-4cd7-9175-43396e39c563.webp', id_reporte=reporte3)
+        imagen3=Imagen.objects.create(imagen='database/images/34330fe8-8d04-4cd7-9175-43396e39c563.webp', id_reporte=reporte3)
         imagen3.save()
 
-        imagen4=Imagen.objects.create(imagen='bug_tracking\database\media\database\images\acc81edf-c260-4ce7-9b80-50f8c7e21f47.webp', id_reporte=reporte4)
+        imagen4=Imagen.objects.create(imagen='database/images/acc81edf-c260-4ce7-9b80-50f8c7e21f47.webp', id_reporte=reporte4)
         imagen4.save()
         
         

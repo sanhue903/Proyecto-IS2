@@ -10,15 +10,11 @@ from django.utils.html import format_html
 
 # Register your models here.
 
-admin.site.unregister(User)
-admin.site.unregister(Group)
+
 
 
 @admin.register(Usuario)
 class ReporteBugAdmin(admin.ModelAdmin):
-    def has_add_permission(self, request,obj=None):
-        return True
-
     def has_change_permission(self, request,obj=None):
         return False
 
@@ -91,14 +87,12 @@ class ReporteBugAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        return qs.filter(estado='PENDIENTE')
+        return qs.filter(estado=('PENDIENTE', 'reporte en estado pendiente'))
 
     
     def has_add_permission(self, request,obj=None):      
-        return True
-    
-    def has_change_permission(self, request,obj=None):
         return False
+
     
 
 @admin.register(Imagen)
@@ -136,13 +130,13 @@ class ProgramadorChoiceField(ModelChoiceField):
 
         total_bugs = obj.bug_set.count()
         bugs_baja = obj.bug_set.filter(
-            id_programador=obj.id).filter(prioridad='BAJA').count()
+            id_programador=obj.id).filter(prioridad=('BAJA', 'bug de baja prioridad')).count()
         bugs_media = obj.bug_set.filter(
-            id_programador=obj.id).filter(prioridad='MEDIA').count()
+            id_programador=obj.id).filter(prioridad=('MEDIA', 'bug de media prioridad')).count()
         bugs_alta = obj.bug_set.filter(
-            id_programador=obj.id).filter(prioridad='ALTA').count()
+            id_programador=obj.id).filter(prioridad=('ALTA', 'bug de alta prioridad')).count()
         bugs_urgente = obj.bug_set.filter(
-            id_programador=obj.id).filter(prioridad='URGENTE').count()
+            id_programador=obj.id).filter(prioridad=('URGENTE', 'bug de urgente prioridad')).count()
 
         return f'{obj.user.username} -  TOTAL BUGS: {total_bugs} | BAJA: {bugs_baja} | MEDIA: {bugs_media} | ALTA: {bugs_alta} | URGENTE: {bugs_urgente}'
         # return f'{obj.nombre_programador} ({obj.bug_set.count()} bugs asociados)'
@@ -201,7 +195,7 @@ class ReasignacionBugAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        return qs.filter(estado='PENDIENTE')
+        return qs.filter(estado=('PENDIENTE', 'reasignación pendiente'))
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'id_programador_final':
@@ -221,7 +215,7 @@ class ReasignacionBugAdmin(admin.ModelAdmin):
                     bug = Bug.objects.get(id_bug=bug_id)
                     bug.id_programador = obj.id_programador_final
                     bug.save()
-                    obj.estado = 'APROBADO'
+                    obj.estado = ('APROBADO', 'reasignación aprobada')
                 except Bug.DoesNotExist:
                     pass
         super().save_model(request, obj, form, change)
@@ -249,11 +243,14 @@ class ReasignacionBugAdmin(admin.ModelAdmin):
 
     # PERMITE QUE AL PRESIONAR EL BOTÓN ELIMINAR SE CAMBIE EL ESTADO
 
-    def delete_model(self, request, obj):
-        obj.estado = 'DESAPROBADO'
+    def delete_model(self, request, obj=None):
+        obj.estado = ('DESAPROBADO', 'reasignación desaprobada')
         obj.save()
 
-    def has_add_permission(self, request):
+    def has_add_permission(self, request,obj=None):
+        return False
+    
+    def has_change_permission(self, request,obj=None):
         return False
 
 

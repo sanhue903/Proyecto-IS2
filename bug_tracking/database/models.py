@@ -2,7 +2,7 @@ from django.db import models
 from django.core.exceptions import ValidationError
 import os
 import uuid
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from django.contrib import messages
@@ -42,6 +42,10 @@ def crear_perfil_usuario_empleado(sender, instance, created, **kwargs):
 
         if not instance.is_superuser:
             Programador.objects.create(user=instance)
+            
+            grupo = Group.objects.get(name='empleados')
+            grupo.user_set.add(instance)
+            
 
 
 class Proyecto(models.Model):
