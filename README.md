@@ -13,3 +13,4 @@ Django
 psycopg2 (adapta postgreSQL a python)
 Pillow
 multiupload (pip install django-multiupload)
+Jazzmin (pip install -U django-jazzmin)
