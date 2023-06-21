@@ -35,7 +35,9 @@ CACHE_MIDDLEWARE_SECONDS = 0
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
+    
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -49,6 +51,7 @@ INSTALLED_APPS = [
     'bug_report',
     'bug_detail',
     'multiupload',
+    
 ]
 
 MIDDLEWARE = [
@@ -154,4 +157,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 """ LOGIN_REDIRECT_URL = 'home/start.html'
 LOGOUT_REDIRECT_URL = 'principal' """
 
+
+JAZZMIN_SETTINGS = {
+    "show_sidebar": True,
+    "show_ui_builder": True,
+}
 
