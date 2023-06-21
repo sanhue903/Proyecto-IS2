@@ -5,7 +5,7 @@
 <section class="home">
   {%if request.user.is_authenticated%}
   <div class="text" style="text-align: center;">Bienvenido {{request.user.username | title}}</div>
-
+  {%if not request.user.is_staff%}
   <ul class="box-info">
     <li>
       <i class='bx bxs-calendar-check'></i>
@@ -109,20 +109,14 @@
     </div>
   </div>
 
+
+  {%else%}
   <footer>
     <div class="text" style="text-align: center;">
-      {%if request.user.is_superuser%}
       Hemos detectado que eres administrador, te recomendamos utilizar el panel de administración
-      {%endif%}
     </div>
   </footer>
-
-
-
-
-
-
-
+  {%endif%}
   {%else%}
   <div class="parallax">
     <div class="text">Inicio</div>
