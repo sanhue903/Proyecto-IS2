@@ -21,53 +21,53 @@
           <thead>
             <tr>
               <th>
-                ID
-                {% if order == 'id' and request.GET.order == 'asc' %}
-                <a href="{% url 'buglist:bug_list_order' 'id' %}?order=desc"><i class='bx bx-sort-down'></i></a>
-                {% elif order == 'id' and request.GET.order == 'desc' %}
-                <a href="{% url 'buglist:bug_list_order' 'id' %}?order=asc"><i class='bx bx-sort-up'></i></a>
-                {% else %}
-                <a href="{% url 'buglist:bug_list_order' 'id' %}?order=desc"><i class='bx bx-sort-down'></i></a>
-                {% endif %}
+                  ID
+                  {% if bug_order == 'id' and request.GET.bug_order_direction == 'asc' %}
+                  <a href="#" onclick="loadBugFilter(event, 'id')"><i class='bx bx-sort-down'></i></a>
+                  {% elif bug_order == 'id' and request.GET.bug_order_direction == 'desc' %}
+                  <a href="#" onclick="loadBugFilter(event, 'id')"><i class='bx bx-sort-up'></i></a>
+                  {% else %}
+                  <a href="#" onclick="loadBugFilter(event, 'id')"><i class='bx bx-sort-down'></i></a>
+                  {% endif %}
               </th>
               <th>
-                Título
-                {% if order == 'titulo' and request.GET.order == 'asc' %}
-                <a href="{% url 'buglist:bug_list_order' 'titulo' %}?order=desc"><i class='bx bx-sort-down'></i></a>
-                {% elif order == 'titulo' and request.GET.order == 'desc' %}
-                <a href="{% url 'buglist:bug_list_order' 'titulo' %}?order=asc"><i class='bx bx-sort-up'></i></a>
+                Titulo
+                {% if bug_order == 'titulo' and request.GET.bug_order_direction == 'asc' %}
+                <a href="#" onclick="loadBugFilter(event, 'titulo')"><i class='bx bx-sort-down'></i></a>
+                {% elif bug_order == 'titulo' and request.GET.bug_order_direction == 'desc' %}
+                <a href="#" onclick="loadBugFilter(event, 'titulo')"><i class='bx bx-sort-up'></i></a>
                 {% else %}
-                <a href="{% url 'buglist:bug_list_order' 'titulo' %}?order=desc"><i class='bx bx-sort-down'></i></a>
+                <a href="#" onclick="loadBugFilter(event, 'titulo')"><i class='bx bx-sort-down'></i></a>
                 {% endif %}
               </th>
               <th>
                 Fecha
-                {% if order == 'fecha' and request.GET.order == 'asc' %}
-                <a href="{% url 'buglist:bug_list_order' 'fecha' %}?order=desc"><i class='bx bx-sort-down'></i></a>
-                {% elif order == 'fecha' and request.GET.order == 'desc' %}
-                <a href="{% url 'buglist:bug_list_order' 'fecha' %}?order=asc"><i class='bx bx-sort-up'></i></a>
+                {% if bug_order == 'fecha' and request.GET.bug_order_direction == 'asc' %}
+                <a href="#" onclick="loadBugFilter(event, 'fecha')"><i class='bx bx-sort-down'></i></a>
+                {% elif bug_order == 'fecha' and request.GET.bug_order_direction == 'desc' %}
+                <a href="#" onclick="loadBugFilter(event, 'fecha')"><i class='bx bx-sort-up'></i></a>
                 {% else %}
-                <a href="{% url 'buglist:bug_list_order' 'fecha' %}?order=desc"><i class='bx bx-sort-down'></i></a>
+                <a href="#" onclick="loadBugFilter(event, 'fecha')"><i class='bx bx-sort-down'></i></a>
                 {% endif %}
               </th>
               <th>
                 Estado
-                {% if order == 'estado' and request.GET.order == 'asc' %}
-                <a href="{% url 'buglist:bug_list_order' 'estado' %}?order=desc"><i class='bx bx-sort-down'></i></a>
-                {% elif order == 'estado' and request.GET.order == 'desc' %}
-                <a href="{% url 'buglist:bug_list_order' 'estado' %}?order=asc"><i class='bx bx-sort-up'></i></a>
+                {% if bug_order == 'estado' and request.GET.bug_order_direction == 'asc' %}
+                <a href="#" onclick="loadBugFilter(event, 'estado')"><i class='bx bx-sort-down'></i></a>
+                {% elif bug_order == 'estado' and request.GET.bug_order_direction == 'desc' %}
+                <a href="#" onclick="loadBugFilter(event, 'estado')"><i class='bx bx-sort-up'></i></a>
                 {% else %}
-                <a href="{% url 'buglist:bug_list_order' 'estado' %}?order=desc"><i class='bx bx-sort-down'></i></a>
+                <a href="#" onclick="loadBugFilter(event, 'estado')"><i class='bx bx-sort-down'></i></a>
                 {% endif %}
               </th>
               <th>
                 Proyecto
-                {% if order == 'proyecto' and request.GET.order == 'asc' %}
-                <a href="{% url 'buglist:bug_list_order' 'proyecto' %}?order=desc"><i class='bx bx-sort-down'></i></a>
-                {% elif order == 'proyecto' and request.GET.order == 'desc' %}
-                <a href="{% url 'buglist:bug_list_order' 'proyecto' %}?order=asc"><i class='bx bx-sort-up'></i></a>
+                {% if bug_order == 'proyecto' and request.GET.bug_order_direction == 'asc' %}
+                <a href="#" onclick="loadBugFilter(event, 'proyecto')"><i class='bx bx-sort-down'></i></a>
+                {% elif bug_order == 'proyecto' and request.GET.bug_order_direction == 'desc' %}
+                <a href="#" onclick="loadBugFilter(event, 'proyecto')"><i class='bx bx-sort-up'></i></a>
                 {% else %}
-                <a href="{% url 'buglist:bug_list_order' 'proyecto' %}?order=desc"><i class='bx bx-sort-down'></i></a>
+                <a href="#" onclick="loadBugFilter(event, 'proyecto')"><i class='bx bx-sort-down'></i></a>
                 {% endif %}
               </th>
             </tr>
@@ -107,8 +107,8 @@
           <div class="pagination bug-pagination">
             <span class="step-links">
               {% if bug_page_obj.has_previous %}
-                <a href="#" onclick="loadBugPage(1, event, '{{ request.GET.order }}')">&laquo;</a>
-                <a href="#" onclick="loadBugPage({{ bug_page_obj.previous_page_number }}, event, '{{ request.GET.order }}')">&lsaquo;</a>
+                <a href="#" onclick="loadBugPage(1, event)">&laquo;</a>
+                <a href="#" onclick="loadBugPage({{ bug_page_obj.previous_page_number }}, event)">&lsaquo;</a>
               {% endif %}
               <span class="page-numbers">
                 {% for num in bug_page_obj.adjusted_elided_pages %}
@@ -117,13 +117,13 @@
                   {% elif num == bug_page_obj.paginator.ELLIPSIS %}
                     <span class="ellipsis">...</span>
                   {% else %}
-                    <a href="#" onclick="loadBugPage({{ num }}, event, '{{ request.GET.order }}')">{{ num }}</a>
+                    <a href="#" onclick="loadBugPage({{ num }}, event)">{{ num }}</a>
                   {% endif %}
                 {% endfor %}
               </span>
               {% if bug_page_obj.has_next %}
-                <a href="#" onclick="loadBugPage({{ bug_page_obj.next_page_number }}, event, '{{ request.GET.order }}')">&rsaquo;</a>
-                <a href="#" onclick="loadBugPage({{ bug_page_obj.paginator.num_pages }}, event, '{{ request.GET.order }}')">&raquo;</a>
+                <a href="#" onclick="loadBugPage({{ bug_page_obj.next_page_number }}, event)">&rsaquo;</a>
+                <a href="#" onclick="loadBugPage({{ bug_page_obj.paginator.num_pages }}, event)">&raquo;</a>
               {% endif %}
             </span>
           </div>
@@ -133,151 +133,241 @@
   </div> 
 
   <div class="titulo">
-  <div class="text">Lista de reportes</div>
-</div>
+    <div class="text">Lista de reportes</div>
+  </div>
 
-<div class="container-table">
-  <div class="table-data">
-    <div class="order">
+  <div class="container-table">
+    <div class="table-data">
+      <div class="order">
 
-      <div class="head">
-        <h3>Reportes</h3>
-      </div>
+        <div class="head">
+          <h3>Reportes</h3>
+        </div>
 
-      <table id="report-table">
-        <thead>
-          <tr>
-            <th>
-              ID
-              {% if order == 'id' and request.GET.order == 'asc' %}
-              <a href="{% url 'buglist:bug_list_order' 'id' %}?order=desc"><i class='bx bx-sort-down'></i></a>
-              {% elif order == 'id' and request.GET.order == 'desc' %}
-              <a href="{% url 'buglist:bug_list_order' 'id' %}?order=asc"><i class='bx bx-sort-up'></i></a>
-              {% else %}
-              <a href="{% url 'buglist:bug_list_order' 'id' %}?order=desc"><i class='bx bx-sort-down'></i></a>
-              {% endif %}
+        <table id="report-table">
+          <thead>
+            <tr>
+              <th>
+                ID
+                {% if report_order == 'id' and request.GET.report_order_direction == 'asc' %}
+                <a href="#" onclick="loadReportFilter(event, 'id')"><i class='bx bx-sort-down'></i></a>
+                {% elif report_order == 'id' and request.GET.report_order_direction == 'desc' %}
+                <a href="#" onclick="loadReportFilter(event, 'id')"><i class='bx bx-sort-up'></i></a>
+                {% else %}
+                <a href="#" onclick="loadReportFilter(event, 'id')"><i class='bx bx-sort-down'></i></a>
+                {% endif %}
+              </th>
+              <th>
+                Titulo
+                {% if report_order == 'titulo' and request.GET.report_order_direction == 'asc' %}
+                <a href="#" onclick="loadReportFilter(event, 'titulo')"><i class='bx bx-sort-down'></i></a>
+                {% elif report_order == 'titulo' and request.GET.report_order_direction == 'desc' %}
+                <a href="#" onclick="loadReportFilter(event, 'titulo')"><i class='bx bx-sort-up'></i></a>
+                {% else %}
+                <a href="#" onclick="loadReportFilter(event, 'titulo')"><i class='bx bx-sort-down'></i></a>
+                {% endif %}
+              </th>
+              <th>
+                Fecha
+                {% if report_order == 'fecha_reporte' and request.GET.report_order_direction == 'asc' %}
+                <a href="#" onclick="loadReportFilter(event, 'fecha_reporte')"><i class='bx bx-sort-down'></i></a>
+                {% elif report_order == 'fecha_reporte' and request.GET.report_order_direction == 'desc' %}
+                <a href="#" onclick="loadReportFilter(event, 'fecha_reporte')"><i class='bx bx-sort-up'></i></a>
+                {% else %}
+                <a href="#" onclick="loadReportFilter(event, 'fecha_reporte')"><i class='bx bx-sort-down'></i></a>
+                {% endif %}
+              </th>
+              <th>
+                Proyecto
+                {% if report_order == 'id_proyecto' and request.GET.report_order_direction == 'asc' %}
+                <a href="#" onclick="loadReportFilter(event, 'id_proyecto')"><i class='bx bx-sort-down'></i></a>
+                {% elif report_order == 'id_proyecto' and request.GET.report_order_direction == 'desc' %}
+                <a href="#" onclick="loadReportFilter(event, 'id_proyecto')"><i class='bx bx-sort-up'></i></a>
+                {% else %}
+                <a href="#" onclick="loadReportFilter(event, 'id_proyecto')"><i class='bx bx-sort-down'></i></a>
+                {% endif %}
+              </th>
             </th>
-            <th>
-              Título
-              {% if order == 'titulo' and request.GET.order == 'asc' %}
-              <a href="{% url 'buglist:bug_list_order' 'titulo' %}?order=desc"><i class='bx bx-sort-down'></i></a>
-              {% elif order == 'titulo' and request.GET.order == 'desc' %}
-              <a href="{% url 'buglist:bug_list_order' 'titulo' %}?order=asc"><i class='bx bx-sort-up'></i></a>
-              {% else %}
-              <a href="{% url 'buglist:bug_list_order' 'titulo' %}?order=desc"><i class='bx bx-sort-down'></i></a>
-              {% endif %}
-            </th>
-            <th>
-              Fecha
-              {% if order == 'fecha' and request.GET.order == 'asc' %}
-              <a href="{% url 'buglist:bug_list_order' 'fecha' %}?order=desc"><i class='bx bx-sort-down'></i></a>
-              {% elif order == 'fecha' and request.GET.order == 'desc' %}
-              <a href="{% url 'buglist:bug_list_order' 'fecha' %}?order=asc"><i class='bx bx-sort-up'></i></a>
-              {% else %}
-              <a href="{% url 'buglist:bug_list_order' 'fecha' %}?order=desc"><i class='bx bx-sort-down'></i></a>
-              {% endif %}
-            </th>
-            <th>
-              Proyecto
-              {% if order == 'proyecto' and request.GET.order == 'asc' %}
-              <a href="{% url 'buglist:bug_list_order' 'proyecto' %}?order=desc"><i class='bx bx-sort-down'></i></a>
-              {% elif order == 'proyecto' and request.GET.order == 'desc' %}
-              <a href="{% url 'buglist:bug_list_order' 'proyecto' %}?order=asc"><i class='bx bx-sort-up'></i></a>
-              {% else %}
-              <a href="{% url 'buglist:bug_list_order' 'proyecto' %}?order=desc"><i class='bx bx-sort-down'></i></a>
-              {% endif %}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {% if report_page_obj %}
-          {% for ReporteBug in report_page_obj %}
-          <tr>
-            <td>
-              {{ ReporteBug.id_reporte }}
-              <img src="{% static 'images/logo.png' %}">
-            </td>
-            <td>
-              <p>{{ ReporteBug.titulo | truncatechars:90 }}</p>
-            </td>
-            <td>{{ ReporteBug.fecha_reporte | naturaltime }}</td>
-            <td>{{ ReporteBug.id_proyecto }}</td>
-          </tr>
-          {% endfor %}
-          {% else %}
-          <tr>
-            <td>No hay reportes disponibles</td>
-          </tr>
-          {% endif %}
-        </tbody>
-      </table>
-      <div class="pagination-container">
-        <div class="pagination report-pagination">
-          <span class="step-links">
-            {% if report_page_obj.has_previous %}
-            <a href="#" onclick="loadReportPage(1, event, '{{ request.GET.order }}')">&laquo;</a>
-            <a href="#" onclick="loadReportPage({{ report_page_obj.previous_page_number }}, event, '{{ request.GET.order }}')">&lsaquo;</a>
+          </thead>
+          <tbody>
+            {% if report_page_obj %}
+            {% for ReporteBug in report_page_obj %}
+            <tr>
+              <td>
+                {{ ReporteBug.id_reporte }}
+                <img src="{% static 'images/logo.png' %}">
+              </td>
+              <td>
+                <p>{{ ReporteBug.titulo | truncatechars:90 }}</p>
+              </td>
+              <td>{{ ReporteBug.fecha_reporte | naturaltime }}</td>
+              <td>{{ ReporteBug.id_proyecto }}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+              <td>No hay reportes disponibles</td>
+            </tr>
             {% endif %}
-            <span class="page-numbers">
-              {% for num in report_page_obj.adjusted_elided_pages %}
-              {% if num == report_page_obj.number %}
-              <span class="current-page">{{ num }}</span>
-              {% elif num == report_page_obj.paginator.ELLIPSIS %}
-              <span class="ellipsis">...</span>
-              {% else %}
-              <a href="#" onclick="loadReportPage({{ num }}, event, '{{ request.GET.order }}')">{{ num }}</a>
+          </tbody>
+        </table>
+        <div class="pagination-container">
+          <div class="pagination report-pagination">
+            <span class="step-links">
+              {% if report_page_obj.has_previous %}
+              <a href="#" onclick="loadReportPage(1, event)">&laquo;</a>
+              <a href="#" onclick="loadReportPage({{ report_page_obj.previous_page_number }}, event)">&lsaquo;</a>
               {% endif %}
-              {% endfor %}
+              <span class="page-numbers">
+                {% for num in report_page_obj.adjusted_elided_pages %}
+                {% if num == report_page_obj.number %}
+                <span class="current-page">{{ num }}</span>
+                {% elif num == report_page_obj.paginator.ELLIPSIS %}
+                <span class="ellipsis">...</span>
+                {% else %}
+                <a href="#" onclick="loadReportPage({{ num }}, event}}</a>
+                {% endif %}
+                {% endfor %}
+              </span>
+              {% if report_page_obj.has_next %}
+              <a href="#" onclick="loadReportPage({{ report_page_obj.next_page_number }}, event)">&rsaquo;</a>
+              <a href="#" onclick="loadReportPage({{ report_page_obj.paginator.num_pages }}, event)">&raquo;</a>
+              {% endif %}
             </span>
-            {% if report_page_obj.has_next %}
-            <a href="#" onclick="loadReportPage({{ report_page_obj.next_page_number }}, event, '{{ request.GET.order }}')">&rsaquo;</a>
-            <a href="#" onclick="loadReportPage({{ report_page_obj.paginator.num_pages }}, event, '{{ request.GET.order }}')">&raquo;</a>
-            {% endif %}
-          </span>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+
   <script>
-    // Función para cargar la página de bugs a través de AJAX
-    function loadBugPage(pageNumber, event, filter) {
-      event.preventDefault();
-      var currentUrl = window.location.href;
-      var bugListUrl = currentUrl.split('?')[0] + "?bug_page=" + pageNumber + "&order=" + filter;
+    var currentBugOrder = getCurrentBugOrder(window.location.href); // Orden inicial
+    var currentReportOrder = getCurrentReportOrder(window.location.href); // Orden inicial
   
-      $.ajax({
-        url: bugListUrl,
-        type: 'GET',
-        success: function(data) {
-          // Actualizar el contenido de la tabla de bugs y la paginación
-          var bugTable = $(data).find('#bug-table');
-          var bugPagination = $(data).find('.bug-pagination');
-          $('#bug-table').html(bugTable);
-          $('.bug-pagination').html(bugPagination);
-        }
+    function loadBugFilter(event, filter) {
+      event.preventDefault();
+  
+      var newOrder = getNextOrder(currentBugOrder);
+  
+      var bugListUrl = updateURLParameter(window.location.href, 'bug_page', '1');
+      bugListUrl = updateURLParameter(bugListUrl, 'bug_order', filter);
+      bugListUrl = updateURLParameter(bugListUrl, 'bug_order_direction', newOrder);
+  
+      history.pushState(null, null, bugListUrl);
+  
+      $('#bug-table').load(bugListUrl + ' #bug-table', function() {
+        // Actualizar la paginación también si es necesario
+        $('.bug-pagination').load(bugListUrl + ' .bug-pagination');
+      });
+  
+      currentBugOrder = newOrder; // Actualizar el orden actual
+    }
+  
+    function loadBugPage(pageNumber, event) {
+      event.preventDefault();
+  
+      var bugListUrl = updateURLParameter(window.location.href, 'bug_page', pageNumber);
+      bugListUrl = updateURLParameter(bugListUrl, 'bug_order_direction', currentBugOrder);
+  
+      history.pushState(null, null, bugListUrl);
+  
+      $('#bug-table').load(bugListUrl + ' #bug-table', function() {
+        // Actualizar la paginación también si es necesario
+        $('.bug-pagination').load(bugListUrl + ' .bug-pagination');
       });
     }
-    
-    // Función para cargar la página de reportes a través de AJAX
-    function loadReportPage(pageNumber, event, filter) {
+  
+    function loadReportFilter(event, filter) {
       event.preventDefault();
-      var currentUrl = window.location.href;
-      var reportListUrl = currentUrl.split('?')[0] + "?report_page=" + pageNumber + "&order=" + filter;
-    
-      $.ajax({
-        url: reportListUrl,
-        type: 'GET',
-        success: function(data) {
-          // Actualizar el contenido de la tabla de reportes y la paginación
-          var reportTable = $(data).find('#report-table');
-          var reportPagination = $(data).find('.report-pagination');
-          $('#report-table').html(reportTable);
-          $('.report-pagination').html(reportPagination);
-        }
+  
+      var newOrder = getNextOrder(currentReportOrder);
+  
+      var reportListUrl = updateURLParameter(window.location.href, 'report_page', '1');
+      reportListUrl = updateURLParameter(reportListUrl, 'report_order', filter);
+      reportListUrl = updateURLParameter(reportListUrl, 'report_order_direction', newOrder);
+  
+      history.pushState(null, null, reportListUrl);
+  
+      $('#report-table').load(reportListUrl + ' #report-table', function() {
+        // Actualizar la paginación también si es necesario
+        $('.report-pagination').load(reportListUrl + ' .report-pagination');
       });
+  
+      currentReportOrder = newOrder; // Actualizar el orden actual
+    }
+  
+    function loadReportPage(pageNumber, event) {
+      event.preventDefault();
+  
+      var reportListUrl = updateURLParameter(window.location.href, 'report_page', pageNumber);
+      reportListUrl = updateURLParameter(reportListUrl, 'report_order_direction', currentReportOrder);
+  
+      history.pushState(null, null, reportListUrl);
+  
+      $('#report-table').load(reportListUrl + ' #report-table', function() {
+        // Actualizar la paginación también si es necesario
+        $('.report-pagination').load(reportListUrl + ' .report-pagination');
+      });
+    }
+  
+    function updateURLParameter(url, param, paramValue) {
+      var pattern = new RegExp('(' + param + '=).*?(&|$)');
+      if (url.search(pattern) >= 0) {
+        return url.replace(pattern, '$1' + paramValue + '$2');
+      }
+      return url + (url.indexOf('?') > 0 ? '&' : '?') + param + '=' + paramValue;
+    }
+  
+    function getCurrentBugOrder(url) {
+      var regex = /[?&]bug_order_direction=([^&#]*)/;
+      var match = regex.exec(url);
+      if (match != null) {
+        return match[1];
+      }
+      return 'asc'; // Devuelve 'asc' si el parámetro no está presente en la URL
+    }
+  
+    function getCurrentReportOrder(url) {
+      var regex = /[?&]report_order_direction=([^&#]*)/;
+      var match = regex.exec(url);
+      if (match != null) {
+        return match[1];
+      }
+      return 'asc'; // Devuelve 'asc' si el parámetro no está presente en la URL
+    }
+  
+    function getNextOrder(currentOrder) {
+      if (currentOrder === 'asc') {
+        return 'desc';
+      } else if (currentOrder === 'desc') {
+        return 'asc';
+      } else {
+        return 'asc'; // Cambiar a ascendente si no está establecido actualmente
+      }
+    }
+  
+    function removeURLParameter(url, parameter) {
+      var urlParts = url.split('?');
+      if (urlParts.length >= 2) {
+        var prefix = encodeURIComponent(parameter) + '=';
+        var params = urlParts[1].split(/[&;]/g);
+  
+        for (var i = params.length; i-- > 0;) {
+          if (params[i].lastIndexOf(prefix, 0) !== -1) {
+            params.splice(i, 1);
+          }
+        }
+  
+        url = urlParts[0] + (params.length > 0 ? '?' + params.join('&') : '');
+      }
+  
+      return url;
     }
   </script>
+  
+  
+  
+
 </section>
 
 {% endblock %}
