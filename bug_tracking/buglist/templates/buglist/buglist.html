@@ -38,6 +38,7 @@
                 <p>{{ Bug.titulo | truncatechars:90 }}</p>
               </td>
               <td>{{ Bug.fecha_reporte | naturaltime}}</td>
+<<<<<<< HEAD
               {%if Bug.estado == "('ASIGNADO', 'bug recien asignado')"%}
               <td><span class="status process">Asignado</span></td>
               {%endif%}
@@ -46,6 +47,16 @@
               {%endif%}
               {%if Bug.estado == "('EN PROCESO', 'bug esta proceso de revisión')"%}
               <td><span class="status pending">En proceso</span></td>
+=======
+              {%if Bug.estado == "ASIGNADO"%}
+                <td><span class="status process">Asignado</span></td>
+              {%endif%}
+              {%if Bug.estado == "SOLUCIONADO"%}
+                <td><span class="status completed">Solucionado</span></td>
+              {%endif%}
+              {%if Bug.estado == "EN PROCESO"%}
+                <td><span class="status pending">En proceso</span></td>
+>>>>>>> adminsite
               {%endif%}
               <td>{{ Bug.id_proyecto }}</td>
             </tr>

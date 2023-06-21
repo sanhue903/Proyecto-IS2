@@ -14,8 +14,8 @@ def home(request):
 
     if(request.user.is_authenticated == True):
         """ reportes_usuario = ReporteBug.objects.filter(id_usuario=request.user.id).order_by("-fecha_reporte")[:5].select_related("id_proyecto") """
-        usuario = Usuario.objects.get(user_id=request.user.id)
-        reportes_usuario = ReporteBug.objects.filter(id_usuario = usuario.id)
+        usuario = Usuario.objects.get(id_user=request.user)
+        reportes_usuario = ReporteBug.objects.filter(id_usuario = usuario)
         
 
         reportes_usario_id = reportes_usuario.values_list('id_reporte', flat=True)

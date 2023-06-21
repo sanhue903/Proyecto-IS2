@@ -30,7 +30,7 @@ def reportar_bug(request):
             reporte_bug.titulo = form_resumen.cleaned_data['titulo']
 
 
-            usuario = Usuario.objects.get(user_id=request.user.id)
+            usuario = Usuario.objects.get(id_user=request.user)
             reporte_bug.id_usuario = usuario
 
             reporte_bug.id_proyecto = id_proyecto2
