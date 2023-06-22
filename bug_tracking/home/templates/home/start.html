@@ -111,6 +111,37 @@
 
 
   {%else%}
+  <ul class="box-info">
+    <li>
+      <i class='bx bx-search-alt-2'></i>
+      
+      <span class="text">
+        <h3>{{cant_bugs_revision}}</h3>
+        <p>tickets están en estado revisión</p>
+      </span>
+    </li>
+    <li>
+      <i class='bx bx-user-check'></i>
+      <span class="text">
+        <h3>{{cant_reportes_asignados}}</h3>
+        <p>errores en estado asignado</p>
+      </span>
+    </li>
+    <li>
+      <i class='bx bxs-watch' ></i>
+      <span class="text">
+        <h3>{{cant_reportes_pendientes}}</h3>
+        <p>errores en estado pendiente</p>
+      </span>
+    </li>
+  </ul>
+  {%autoescape off%}
+  <div class="graph">
+    <h2>Gráfico de reportes por día</h2>
+    
+    {{plot_div}}
+  </div>
+  {%endautoescape%}
   <footer>
     <div class="text" style="text-align: center;">
       Hemos detectado que eres administrador, te recomendamos utilizar el panel de administración

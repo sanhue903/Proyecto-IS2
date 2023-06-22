@@ -155,18 +155,16 @@ class BugAdmin(general):
     def get_form(self, request, obj=None, **kwargs):
         if obj:
             self.instance = obj
-            
-        return super(BugAdmin, self).get_form(request, obj, **kwargs)
-
+        return super().get_form(request, obj, **kwargs)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'id_programador':
-            kwargs['queryset'] = Programador.objects.filter(cargo__id_proyecto=self.instance.id_proyecto)
-            
-            kwargs['form_class'] = ProgramadorChoiceField
-            
+            if hasattr(self, 'instance') and hasattr(self.instance, 'id_proyecto'):
+                kwargs['queryset'] = Programador.objects.filter(cargo__id_proyecto=self.instance.id_proyecto)
+                kwargs['form_class'] = ProgramadorChoiceField
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
-    
+
+
        
     #readonly_fields = ['id_programador',]
     

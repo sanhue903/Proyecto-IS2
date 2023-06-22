@@ -7,13 +7,19 @@ from database.models import ReporteBug, Bug, Usuario
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from .forms import CustomUserCreationForm
+from datetime import datetime, timedelta
+from django.utils import timezone
+import pandas as pd
+import plotly.express as px
+from plotly.offline import plot
+from django.db.models import Count
 # Create your views here.
 
 
 def home(request):
 
-    if(request.user.is_authenticated == True and request.user.is_superuser == False):
-        
+    if(request.user.is_authenticated == True):
+        if(request.user.is_superuser == False):
             usuario = Usuario.objects.get(id_user=request.user)
             reportes_usuario = ReporteBug.objects.filter(id_usuario = usuario)
             
@@ -30,6 +36,34 @@ def home(request):
                 "reportes_enproceso": reportes_enproceso
             }
             return render(request,'home/start.html',context)
+        else:
+            reportes = reportes = ReporteBug.objects.filter(fecha_reporte__gte=timezone.now()-timedelta(days=7)).values('fecha_reporte__date').annotate(cantidad_reportes=Count('id_reporte'))
+            cant_reportes_pendientes = ReporteBug.objects.filter(estado="PENDIENTE").count()
+            cant_reportes_asignados = ReporteBug.objects.filter(estado="ASIGNADO").count()
+            cant_bugs_revision = Bug.objects.filter(estado="REVISION").count()
+            reportes_data = []
+            for reporte in reportes:
+                fecha = reporte['fecha_reporte__date']
+                cantidad = reporte['cantidad_reportes']
+                reportes_data.append({'fecha': fecha, 'cantidad': cantidad})
+                print(f"Fecha: {fecha}, Cantidad: {cantidad}")
+
+            df = pd.DataFrame(reportes_data)
+            fig = px.scatter(df, x='fecha', y='cantidad')
+            fig.update_layout(
+                autosize=True,
+                margin=dict(l=50,r=50,b=100,t=100,pad=4),
+                paper_bgcolor="white",
+            )
+            gantt_plot = plot(fig, output_type='div')
+            context = {
+                'plot_div': gantt_plot,
+                'cant_reportes_pendientes': cant_reportes_pendientes,
+                'cant_reportes_asignados': cant_reportes_asignados,
+                'cant_bugs_revision': cant_bugs_revision,
+            }
+            return render(request,'home/start.html', context)
+            
     else:
         listar_reportes = ReporteBug.objects.order_by("-fecha_reporte")[:5].select_related("id_proyecto")
         total_report = ReporteBug.objects.count()
