@@ -2,6 +2,7 @@ from typing import Optional
 from django.contrib import admin
 from django.contrib.auth.models import User, Group
 from django.http.request import HttpRequest
+from django.http import HttpResponseRedirect
 from .models import *
 from django.db.models import Count
 from django import forms
@@ -16,6 +17,18 @@ from django.utils.html import format_html
 admin.site.unregister(User)
 admin.site.unregister(Group)
 
+def notificar(user, type, nuevo_estado):
+    notificacion = Notificaciones.objects.create(id_user=user)
+    
+    if type == ReporteBug:
+        pass
+    
+    if type == Bug:
+        pass
+    
+    if type == Reasignacion:
+        pass    
+
 class general(admin.ModelAdmin):
     def render_change_form(self, request, context, add, change, form_url='', obj=None):
         context.update({
@@ -24,6 +37,7 @@ class general(admin.ModelAdmin):
         })
         
         return super().render_change_form(request, context, add, change, form_url, obj)
+
 
 #TODO ver tema de no poder editar usuarios
 #al crear usuarios tengan por defecto is_staff=True, especificar que al registrarse desde la pagina se tiene que especificar is_staff=False
@@ -55,6 +69,9 @@ class UsuarioAdmin(general):
         return False
     
     def has_change_permission(self, request,obj=None):
+        return False
+    
+    def has_delete_permission(self, request,obj=None):
         return False
     
     
@@ -163,8 +180,10 @@ class BugAdmin(general):
                 kwargs['queryset'] = Programador.objects.filter(cargo__id_proyecto=self.instance.id_proyecto)
                 kwargs['form_class'] = ProgramadorChoiceField
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
-
-
+    
+    def has_delete_permission(self, request,obj=None):
+        return False
+    
        
     #readonly_fields = ['id_programador',]
     
@@ -199,15 +218,26 @@ class ReporteBugAdmin(general):
     def save_model(self, request, obj, form, change):
         if obj.id_bug:
             obj.estado = ReporteBug.ESTADOS_CHOICES[1][0]
+            
         
         super().save_model(request, obj, form, change)
-
-    def delete_model(self, request, obj=None):
-        obj.estado = ReporteBug.ESTADOS_CHOICES[2][0]
-        obj.save()
     
     def has_add_permission(self, request,obj=None):      
         return False
+    
+    def has_delete_permission(self, request,obj=None):
+        return False
+    
+    def response_change(self, request, obj):
+        if '_continue' in request.POST:
+            return HttpResponseRedirect(obj.get_admin_url())
+        elif '_desaprobar' in request.POST:
+            obj.estado = ReporteBug.ESTADOS_CHOICES[2][0]
+            obj.save()
+            
+            redirect_url = "admin:{}_{}_changelist".format(self.opts.app_label, self.opts.model_name)
+            
+            return HttpResponseRedirect(reverse(redirect_url))
 
 
     list_display = ('id_reporte','titulo', 'fecha_reporte', 'id_proyecto', 'estado', 'id_bug')
@@ -237,6 +267,8 @@ class AvancesAdmin(general):
     def has_change_permission(self, request,obj=None):
         return False
             
+    def has_delete_permission(self, request,obj=None):
+        return False
             
     list_display = ('titulo', 'id_bug', 'get_proyecto','fecha_avance')
     
@@ -248,6 +280,8 @@ class NotificacionesAdmin(general):
     def has_change_permission(self, request,obj=None):
         return False
     
+    def has_delete_permission(self, request,obj=None):
+        return False
     
 
 @admin.register(Reasignacion)
@@ -289,31 +323,16 @@ class ReasignacionBugAdmin(general):
     def has_delete_permission(self, request,obj=None):
         return False
     
-    def desaprobar(self,obj):
-        url = reverse('admin:desaprobar_url', kwargs={'id': obj.id_reasignacion})
-        return format_html('<a href="{% url opts|admin_urlname:\'changelist\' %}" class="btn {{ jazzmin_ui.button_classes.danger }} form-control">{% trans \'Desaprobar\' %}</a>', url)
-    
-    def get_urls(self):
-        urls = super().get_urls()
-        custom_urls = [
-            path('desaprobar/<int:id>', self.desaprobar_app, name='desaprobar_url')
-        ]
-        
-        return custom_urls + urls
-    
-    def desaprobar_app(self,request,id):
-        obj = Reasignacion.objects.get(id_reasignacion=id)
-        
-        
-        obj.estado = Reasignacion.ESTADOS_CHOICES[2][0]
-        obj.save()
-        
-        redirect_url = "admin:{}_{}_changelist".format(self.opts.app_label, self.opts.model_name)
-        return redirect(reverse(redirect_url))
-        
-        
-        
-        
+    def response_change(self, request, obj):
+        if '_continue' in request.POST:
+            return HttpResponseRedirect(obj.get_admin_url())
+        elif '_desaprobar' in request.POST:
+            obj.estado = Reasignacion.ESTADOS_CHOICES[2][0]
+            obj.save()
+            
+            redirect_url = "admin:{}_{}_changelist".format(self.opts.app_label, self.opts.model_name)
+            
+            return HttpResponseRedirect(reverse(redirect_url))
     
     
     change_form_template = 'admin/database/reasignacion/change_form.html'
@@ -331,8 +350,6 @@ class ReasignacionBugAdmin(general):
         })
     ]
 
-    
-    
     
 
 class ProgramadorChoiceField(ModelChoiceField):
