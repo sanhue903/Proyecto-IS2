@@ -14,3 +14,7 @@ psycopg2 (adapta postgreSQL a python)
 Pillow
 multiupload (pip install django-multiupload)
 Jazzmin (pip install -U django-jazzmin)
+django-filter (pip install django-filter)
+Plotly (pip install plotly)
+Pandas (pip install pandas)
+
