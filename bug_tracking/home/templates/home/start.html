@@ -138,8 +138,11 @@
   {%autoescape off%}
   <div class="graph">
     <h2>Gráfico de reportes por día</h2>
-    
-    {{plot_div}}
+    {%if plot_div %}
+    {{plot_div|safe}}
+    {%else%}
+    <p>No hay datos para mostrar</p>
+    {%endif%}
   </div>
   {%endautoescape%}
   <footer>

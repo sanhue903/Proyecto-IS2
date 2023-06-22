@@ -49,12 +49,15 @@ def home(request):
                 print(f"Fecha: {fecha}, Cantidad: {cantidad}")
 
             df = pd.DataFrame(reportes_data)
+            if df.empty:
+                messages.warning(request, "No hay reportes en los últimos 7 días")
+                context = {
+                'cant_reportes_pendientes': cant_reportes_pendientes,
+                'cant_reportes_asignados': cant_reportes_asignados,
+                'cant_bugs_revision': cant_bugs_revision,
+                }
+                return render(request,'home/start.html', context)
             fig = px.scatter(df, x='fecha', y='cantidad')
-            fig.update_layout(
-                autosize=True,
-                margin=dict(l=50,r=50,b=100,t=100,pad=4),
-                paper_bgcolor="white",
-            )
             gantt_plot = plot(fig, output_type='div')
             context = {
                 'plot_div': gantt_plot,
