@@ -217,7 +217,7 @@ class ReporteBug(models.Model):
 
     def __str__(self):
         return self.titulo
-    
+
 @receiver(pre_save, sender=ReporteBug)
 def actualizar_id_bug(sender, instance, **kwargs):
     if instance.estado == ReporteBug.ESTADOS_CHOICES[0][0] and instance.id_bug:
@@ -356,19 +356,25 @@ class Reasignacion(models.Model):
 
 class Notificaciones(models.Model):
     class Meta:
-        verbose_name = 'notificación'
+        verbose_name        = 'notificación'
         verbose_name_plural = 'notificaciones'
+  
+    id_notificacion   = models.AutoField(primary_key=True)
 
-    id_notificacion = models.AutoField(primary_key=True)
-
+    descripcion       = models.TextField(null=False)
     
-    descripcion     = models.TextField(null=False)
-    
-    id_user         = models.ForeignKey(
+    id_user           = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         null=False,
     )
+    
+    fecha_notificacion = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='fecha',
+    )
+    
+    fue_leido          = models.BooleanField(default=False)
 
     def __str__(self):
         return '{0.id_notificacion}'.format(self)
