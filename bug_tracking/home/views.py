@@ -13,29 +13,36 @@ import pandas as pd
 import plotly.express as px
 from plotly.offline import plot
 from django.db.models import Count
+import plotly.graph_objects as go
 # Create your views here.
 
 
 def home(request):
 
     if(request.user.is_authenticated == True):
+        """ Inicio sesion """
         if(request.user.is_superuser == False):
-            usuario = Usuario.objects.get(id_user=request.user)
-            reportes_usuario = ReporteBug.objects.filter(id_usuario = usuario)
-            
+            """ No es admin """
+            if(request.user.is_staff == True):
+                """ Es programador """
+                return render(request,'home/start.html')
+            else:
+                usuario = Usuario.objects.get(id_user=request.user)
+                reportes_usuario = ReporteBug.objects.filter(id_usuario = usuario)
+                
 
-            reportes_usario_id = reportes_usuario.values_list('id_reporte', flat=True)
-            reportes_solucionados = Bug.objects.filter(id_bug__in=reportes_usario_id, estado="SOLUCIONADO").count()
+                reportes_usario_id = reportes_usuario.values_list('id_reporte', flat=True)
+                reportes_solucionados = Bug.objects.filter(id_bug__in=reportes_usario_id, estado="SOLUCIONADO").count()
 
-            reportes_asignados= Bug.objects.filter(id_bug__in=reportes_usario_id, estado="ASIGNADO").count()
-            reportes_enproceso= Bug.objects.filter(id_bug__in=reportes_usario_id, estado="EN PROCESO").count()
-            context = {
-                "reportes_usuario": reportes_usuario,
-                "reportes_solucionados": reportes_solucionados,
-                "reportes_asignados": reportes_asignados,
-                "reportes_enproceso": reportes_enproceso
-            }
-            return render(request,'home/start.html',context)
+                reportes_asignados= Bug.objects.filter(id_bug__in=reportes_usario_id, estado="ASIGNADO").count()
+                reportes_enproceso= Bug.objects.filter(id_bug__in=reportes_usario_id, estado="EN PROCESO").count()
+                context = {
+                    "reportes_usuario": reportes_usuario,
+                    "reportes_solucionados": reportes_solucionados,
+                    "reportes_asignados": reportes_asignados,
+                    "reportes_enproceso": reportes_enproceso
+                }
+                return render(request,'home/start.html',context)
         else:
             reportes = reportes = ReporteBug.objects.filter(fecha_reporte__gte=timezone.now()-timedelta(days=7)).values('fecha_reporte__date').annotate(cantidad_reportes=Count('id_reporte'))
             cant_reportes_pendientes = ReporteBug.objects.filter(estado="PENDIENTE").count()
@@ -57,7 +64,9 @@ def home(request):
                 'cant_bugs_revision': cant_bugs_revision,
                 }
                 return render(request,'home/start.html', context)
-            fig = px.scatter(df, x='fecha', y='cantidad')
+            fig = px.scatter(df, x='fecha', y='cantidad', width=1000)
+            fig.update_layout(paper_bgcolor='rgba(0,0,0,0)',plot_bgcolor='rgba(0,0,0,0)',font=dict(family='Segoe UI', color='white'))
+            fig.update_traces(marker=dict(color='yellow', size=10))
             gantt_plot = plot(fig, output_type='div')
             context = {
                 'plot_div': gantt_plot,
