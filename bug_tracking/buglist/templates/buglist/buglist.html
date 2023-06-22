@@ -49,6 +49,8 @@
                 {% else %}
                 <a href="#" onclick="loadBugFilter(event, 'fecha')"><i class='bx bx-sort-down'></i></a>
                 {% endif %}
+
+                <a href="#"></a>
               </th>
               <th>
                 Estado
@@ -169,22 +171,22 @@
               </th>
               <th>
                 Fecha
-                {% if report_order == 'fecha_reporte' and request.GET.report_order_direction == 'asc' %}
-                <a href="#" onclick="loadReportFilter(event, 'fecha_reporte')"><i class='bx bx-sort-down'></i></a>
-                {% elif report_order == 'fecha_reporte' and request.GET.report_order_direction == 'desc' %}
-                <a href="#" onclick="loadReportFilter(event, 'fecha_reporte')"><i class='bx bx-sort-up'></i></a>
+                {% if report_order == 'fecha' and request.GET.report_order_direction == 'asc' %}
+                <a href="#" onclick="loadReportFilter(event, 'fecha')"><i class='bx bx-sort-down'></i></a>
+                {% elif report_order == 'fecha' and request.GET.report_order_direction == 'desc' %}
+                <a href="#" onclick="loadReportFilter(event, 'fecha')"><i class='bx bx-sort-up'></i></a>
                 {% else %}
-                <a href="#" onclick="loadReportFilter(event, 'fecha_reporte')"><i class='bx bx-sort-down'></i></a>
+                <a href="#" onclick="loadReportFilter(event, 'fecha')"><i class='bx bx-sort-down'></i></a>
                 {% endif %}
               </th>
               <th>
                 Proyecto
-                {% if report_order == 'id_proyecto' and request.GET.report_order_direction == 'asc' %}
-                <a href="#" onclick="loadReportFilter(event, 'id_proyecto')"><i class='bx bx-sort-down'></i></a>
-                {% elif report_order == 'id_proyecto' and request.GET.report_order_direction == 'desc' %}
-                <a href="#" onclick="loadReportFilter(event, 'id_proyecto')"><i class='bx bx-sort-up'></i></a>
+                {% if report_order == 'proyecto' and request.GET.report_order_direction == 'asc' %}
+                <a href="#" onclick="loadReportFilter(event, 'proyecto')"><i class='bx bx-sort-down'></i></a>
+                {% elif report_order == 'proyecto' and request.GET.report_order_direction == 'desc' %}
+                <a href="#" onclick="loadReportFilter(event, 'proyecto')"><i class='bx bx-sort-up'></i></a>
                 {% else %}
-                <a href="#" onclick="loadReportFilter(event, 'id_proyecto')"><i class='bx bx-sort-down'></i></a>
+                <a href="#" onclick="loadReportFilter(event, 'proyecto')"><i class='bx bx-sort-down'></i></a>
                 {% endif %}
               </th>
             </th>
@@ -239,6 +241,11 @@
       </div>
     </div>
   </div>
+
+  <div class="modal-fecha">
+
+  </div>
+
 
   <script>
     var currentBugOrder = getCurrentBugOrder(window.location.href); // Orden inicial

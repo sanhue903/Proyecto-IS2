@@ -37,6 +37,8 @@ def index(request):
             bug_list = bug_list.order_by("id_proyecto__nombre_proyecto")
         else:
             bug_list = bug_list.order_by("-id_proyecto__nombre_proyecto")
+    else:
+        bug_list = bug_list.order_by("-fecha_reporte")
 
     if report_order == 'id':
         if report_order_direction == 'asc':
@@ -53,16 +55,13 @@ def index(request):
             report_list = report_list.order_by("fecha_reporte")
         else:
             report_list = report_list.order_by("-fecha_reporte")
-    elif report_order == 'estado':
-        if report_order_direction == 'asc':
-            report_list = report_list.order_by("estado")
-        else:
-            report_list = report_list.order_by("-estado")
     elif report_order == 'proyecto':
         if report_order_direction == 'asc':
             report_list = report_list.order_by("id_proyecto__nombre_proyecto")
         else:
             report_list = report_list.order_by("-id_proyecto__nombre_proyecto")
+    else:
+        report_list = report_list.order_by("-fecha_reporte")
 
     bug_paginator = Paginator(bug_list, 5)
     bug_page_number = request.GET.get('bug_page')
