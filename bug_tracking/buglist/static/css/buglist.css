@@ -123,3 +123,58 @@
 .pagination-row .pagination-container:hover .pagination a:hover:not(.active) {
   background-color: var(--body-color);
 }
+
+/* Estilo de la pestaña */
+.modal-pestaña {
+  position: relative;
+  display: inline-block;
+}
+
+ /* Estilo del botón de flecha */
+.flecha {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+/* Estilo del botón de flecha */
+.flecha {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+/* Estilo del icono de flecha */
+.flecha i {
+  font-size: 13px; /* Tamaño del icono */
+  color: blue; /* Color azul */
+  line-height: 1; /* Ajuste del espaciado vertical */
+}
+
+/* Estilo del icono de flecha cuando el modal está abierto */
+.flecha.abierto i {
+  transform: rotate(180deg); /* Rota el icono 180 grados */
+}
+
+/* Estilo del contenido de la pestaña */
+.modal-contenido {
+  display: none;
+  position: absolute;
+  width: 200px; /* Ajusta el ancho del contenido según tus necesidades */
+  background-color: #fefefe;
+  border: 1px solid #888;
+  z-index: 2;
+  top: calc(100% + 1px); /* Coloca el contenido debajo del botón de flecha */
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px;
+}
+
+/* Estilo del contenido visible cuando se abre la pestaña */
+.modal-contenido.visible {
+  display: block;
+}

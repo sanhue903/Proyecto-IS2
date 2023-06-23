@@ -2,6 +2,7 @@
 
 <link rel="stylesheet" href='{%static "css/buglist.css"%}'>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/buglist.js' %}"></script>
 
 <section class="home">
 
@@ -65,6 +66,29 @@
                 {% else %}
                 <a href="#" onclick="loadBugFilter(event, 'estado')"><i class='bx bx-sort-down'></i></a>
                 {% endif %}
+
+                <div id="modal-estados" class="modal-pestaña">
+                  <button id="abrir-estados" class="flecha"><i class="bx bx-down-arrow"></i></button>
+                  <div class="modal-contenido">
+                    {% if estados_bug %}
+                    <div class="filter-option">
+                      {% for estado in estados_bug %}
+                      <div class="checkbox">
+                        <input type="checkbox" checked="True" id="estado-{{ estado.id }}" name="estado-{{ estado.id }}" value="{{ estado.id }}" onclick="">
+                        <label for="estado-{{ estado.id }}">{{ estado.estado }}</label>
+                      </div>
+                      {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="filter-option">
+                      <div class="checkbox">
+                        <label for="estado-0">Sin estados</label>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+                
+
               </th>
               <th>
                 Proyecto
@@ -75,6 +99,28 @@
                 {% else %}
                 <a href="#" onclick="loadBugFilter(event, 'proyecto')"><i class='bx bx-sort-down'></i></a>
                 {% endif %}
+
+                <div id="modal-proyectos" class="modal-pestaña">
+                  <button id="abrir-modal" class="flecha"><i class='bx bx-down-arrow'></i></button>
+                  <div class="modal-contenido">
+                    {% if proyectos_bug %}
+                    <div class="filter-option">
+                      {% for proyecto in proyectos_bug %}
+                      <div class="checkbox">
+                        <input type="checkbox" checked="True" id="proyecto-{{ proyecto.id }}" name="proyecto-{{ proyecto.id }}" value="{{ proyecto.id }}" onclick="">
+                        <label for="proyecto-{{ proyecto.id }}">{{ proyecto.nombre_proyecto }}</label>
+                      </div>
+                      {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="filter-option">
+                      <div class="checkbox">
+                        <label for="proyecto-0">Sin proyectos</label>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+                
               </th>
             </tr>
           </thead>
@@ -416,6 +462,7 @@
       }
       return url;
     }
+
   </script>
 
   
