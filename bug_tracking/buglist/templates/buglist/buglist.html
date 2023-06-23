@@ -27,24 +27,24 @@
           </thead>
           <tbody>
             {% if bug_list %}
-            <tr>
-              {% for Bug in bug_list %}
+            {% for Bug in bug_list %}
+            <tr onclick="window.location.href = '{% url 'detail:index' Bug.id_bug %}';">
               <td>
-                <a href="{% url 'detail:index' Bug.id_bug %}"> {{ Bug.id_bug }} </a>
+                {{ Bug.id_bug }}
                 <img src={%static "images/logo.png"%}>
               </td>
               <td>
-                <p>{{ Bug.descripcion }}</p>
+                <p>{{ Bug.titulo | truncatechars:90 }}</p>
               </td>
               <td>{{ Bug.fecha_reporte | naturaltime}}</td>
-              {%if Bug.estado == "en proceso"%}
-                <td><span class="status process">{{ Bug.estado }}</span></td>
+              {%if Bug.estado == "ASIGNADO"%}
+                <td><span class="status process">Asignado</span></td>
               {%endif%}
-              {%if Bug.estado == "solucionado"%}
-                <td><span class="status completed">{{ Bug.estado }}</span></td>
+              {%if Bug.estado == "SOLUCIONADO"%}
+                <td><span class="status completed">Solucionado</span></td>
               {%endif%}
-              {%if Bug.estado == "nuevo"%}
-                <td><span class="status pending">{{ Bug.estado }}</span></td>
+              {%if Bug.estado == "EN PROCESO"%}
+                <td><span class="status pending">En proceso</span></td>
               {%endif%}
               <td>{{ Bug.id_proyecto }}</td>
             </tr>
@@ -92,9 +92,9 @@
                 <p>{{ ReporteBug.id_reporte }}</p>
                 <img src={%static "images/logo.png"%}>
               </td>
-              <td>{{ ReporteBug.reporte }}</td>
-              <td>{{ ReporteBug.fecha_reporte }}</td>
-              <td>{{ Bug.id_proyecto }}</td>
+              <td>{{ ReporteBug.titulo | truncatechars:90 }}</td>
+              <td>{{ ReporteBug.fecha_reporte | naturaltime }}</td>
+              <td>{{ ReporteBug.id_proyecto.nombre_proyecto }}</td>
             </tr>
               {%endfor%}
             {%else%}

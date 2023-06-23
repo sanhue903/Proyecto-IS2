@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 # Create your views here.
-@login_required
+
 def reportar_bug(request):
     form_bug = ReporteBugForm()
     form_proyecto = ProyectoForm()
@@ -30,7 +30,7 @@ def reportar_bug(request):
             reporte_bug.titulo = form_resumen.cleaned_data['titulo']
 
 
-            usuario = Usuario.objects.get(user_id=request.user.id)
+            usuario = Usuario.objects.get(id_user=request.user)
             reporte_bug.id_usuario = usuario
 
             reporte_bug.id_proyecto = id_proyecto2
