@@ -82,7 +82,7 @@ class Command(BaseCommand):
         programador5 = User.objects.create_user(username='MVilla',first_name='Miguel',last_name='Villa',password='1234',email='mvilla@udec.cl',is_staff=True)
         programador5.save()
 
-        programador6 = User.objects.create(username='YReyes',first_name='Yerko',last_name='Reyes',password='1234',email='yreyes@udec.cl',is_staff=True)
+        programador6 = User.objects.create_user(username='YReyes',first_name='Yerko',last_name='Reyes',password='1234',email='yreyes@udec.cl',is_staff=True)
         programador6.save()
 
         # Insertar proyectos
@@ -111,6 +111,19 @@ class Command(BaseCommand):
         cargo6 = Cargo.objects.create(id_programador=programador6.programador, id_proyecto=proyecto2, cargo='Tester')
         cargo6.save()
 
+        # Insertar reportes de bugs
+        reporte1 = ReporteBug.objects.create(titulo='Reporte 1', reporte='Reporte del Bug 1',id_usuario=usuario.usuario, id_proyecto=proyecto1)
+
+
+        reporte2 = ReporteBug.objects.create(titulo='Reporte 2', reporte='Reporte del Bug 2', estado=ReporteBug.ESTADOS_CHOICES[2][0], id_usuario=usuario2.usuario, id_proyecto=proyecto2)
+    
+
+        reporte3 = ReporteBug.objects.create(titulo='Reporte 3', reporte='Reporte del Bug 3', estado=ReporteBug.ESTADOS_CHOICES[1][0], id_usuario=usuario3.usuario, id_bug=bug3, id_proyecto=proyecto1)
+        
+
+        reporte4 = ReporteBug.objects.create(titulo='Reporte 4', reporte='Reporte del Bug 4', estado=ReporteBug.ESTADOS_CHOICES[1][0], id_usuario=usuario3.usuario, id_bug=bug4, id_proyecto=proyecto2)
+        
+        
         # Insertar bugs
         bug1 = Bug.objects.create(titulo='Bug 1', descripcion='Cuando voy a agregar una cocacola al carrito, me da error', prioridad=Bug.PRIORIDADES_CHOICES[2][0], estado=Bug.ESTADOS_CHOICES[0][0], id_proyecto=proyecto1, id_programador=programador1.programador)
         bug1.save()
@@ -123,19 +136,6 @@ class Command(BaseCommand):
 
         bug4 = Bug.objects.create(titulo='Bug 4', descripcion='Al adjuntar archivos, los de tipo pdf no se agregan', prioridad=Bug.PRIORIDADES_CHOICES[1][0], estado=Bug.ESTADOS_CHOICES[1][0], id_proyecto=proyecto2, id_programador=programador5.programador)
         bug4.save()
-
-        # Insertar reportes de bugs
-        reporte1 = ReporteBug.objects.create(titulo='Reporte 1', reporte='Reporte del Bug 1',id_usuario=usuario.usuario, id_proyecto=proyecto1)
-        reporte1.save()
-
-        reporte2 = ReporteBug.objects.create(titulo='Reporte 2', reporte='Reporte del Bug 2', estado=ReporteBug.ESTADOS_CHOICES[2][0], id_usuario=usuario2.usuario, id_proyecto=proyecto2)
-        reporte2.save()
-
-        reporte3 = ReporteBug.objects.create(titulo='Reporte 3', reporte='Reporte del Bug 3', estado=ReporteBug.ESTADOS_CHOICES[1][0], id_usuario=usuario3.usuario, id_bug=bug3, id_proyecto=proyecto1)
-        reporte3.save()
-
-        reporte4 = ReporteBug.objects.create(titulo='Reporte 4', reporte='Reporte del Bug 4', estado=ReporteBug.ESTADOS_CHOICES[1][0], id_usuario=usuario3.usuario, id_bug=bug4, id_proyecto=proyecto2)
-        reporte4.save()
 
 
         #Insertar avances
@@ -170,6 +170,9 @@ class Command(BaseCommand):
         
         reasignacion1 = Reasignacion.objects.create(id_programador_inicial=programador1.programador,id_bug=bug1)
         reasignacion1.save()
+        
+        reasignacion2 = Reasignacion.objects.create(id_programador_inicial=programador5.programador,id_bug=bug4)
+        reasignacion2.save()
         
         self.stdout.write(self.style.SUCCESS('La base de datos se ha llenado correctamente.'))
         
