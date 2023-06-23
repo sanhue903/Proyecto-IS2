@@ -13,13 +13,13 @@ from django.contrib import messages
 
 class Usuario(models.Model):
     class Meta:
-        verbose_name = 'usuario'
-        verbose_name_plural = 'usuarios'
+        verbose_name = 'cliente'
+        verbose_name_plural = 'clientes'
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    id_user = models.OneToOneField(User,primary_key=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.user.username
+        return self.id_user.username
 
 
 class Programador(models.Model):
@@ -27,21 +27,21 @@ class Programador(models.Model):
         verbose_name = 'programador'
         verbose_name_plural = 'programadores'
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    id_user = models.OneToOneField(User,primary_key=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.user.username
+        return self.id_user.first_name + ' ' + self.id_user.last_name
 
 
 @receiver(post_save, sender=User)
 def crear_perfil_usuario_empleado(sender, instance, created, **kwargs):
     if created:
         if not instance.is_staff:
-            Usuario.objects.create(user=instance)
+            Usuario.objects.create(id_user=instance)
             return
 
         if not instance.is_superuser:
-            Programador.objects.create(user=instance)
+            Programador.objects.create(id_user=instance)
             
             grupo = Group.objects.get(name='empleados')
             grupo.user_set.add(instance)
@@ -96,16 +96,16 @@ class Bug(models.Model):
         verbose_name_plural = 'casos de bugs'
 
     PRIORIDADES_CHOICES = (
-        ('BAJA', 'bug de baja prioridad'),
-        ('MEDIA', 'bug de media prioridad'),
-        ('ALTA', 'bug de alta prioridad'),
-        ('URGENTE', 'bug de urgente prioridad'),
+        ('BAJA', 'Baja'),
+        ('MEDIA', 'Media'),
+        ('ALTA', 'Alta'),
+        ('URGENTE', 'Urgente'),
     )
 
     ESTADOS_CHOICES = (
-        ('ASIGNADO', 'bug recien asignado'),
-        ('EN PROCESO', 'bug esta proceso de revisión'),
-        ('SOLUCIONADO', 'bug solucionado'),
+        ('ASIGNADO', 'Asignado'),
+        ('EN PROCESO', 'En revisión'),
+        ('SOLUCIONADO', 'Solucionado'),
     )
 
     id_bug = models.AutoField(primary_key=True)
@@ -129,7 +129,7 @@ class Bug(models.Model):
 
     estado = models.CharField(
         max_length=50,
-        default=ESTADOS_CHOICES[0],
+        default=ESTADOS_CHOICES[0][0],
         choices=ESTADOS_CHOICES,
         verbose_name='estado',
     )
@@ -152,18 +152,18 @@ class Bug(models.Model):
     )
 
     def __str__(self):
-        return '{0.id_proyecto}_{0.id_bug}'.format(self)
+        return self.titulo
 
 
 class ReporteBug(models.Model):
     class Meta:
-        verbose_name = 'reporte de bug'
-        verbose_name_plural = 'reportes de bugs'
+        verbose_name = 'ticket'
+        verbose_name_plural = 'tickets'
 
     ESTADOS_CHOICES = (
-        ('PENDIENTE', 'reporte en estado pendiente'),
-        ('APROBADO', 'reporte aprobado'),
-        ('DESAPROBADO', 'reporte desaprobado'),
+        ('PENDIENTE', 'Pendiente'),
+        ('APROBADO', 'Arobado'),
+        ('DESAPROBADO', 'Desaprobado'),
     )
 
     id_reporte = models.AutoField(primary_key=True)
@@ -187,7 +187,7 @@ class ReporteBug(models.Model):
     estado         = models.CharField(
         max_length=50, 
         # 
-        default=ESTADOS_CHOICES[0], 
+        default=ESTADOS_CHOICES[0][0], 
         choices=ESTADOS_CHOICES, 
 
         verbose_name='estado del reporte'
@@ -217,16 +217,16 @@ class ReporteBug(models.Model):
 
     def __str__(self):
         return self.titulo
-    
+
 @receiver(pre_save, sender=ReporteBug)
 def actualizar_id_bug(sender, instance, **kwargs):
-    if instance.estado == 'PENDIENTE' and instance.id_bug:
+    if instance.estado == ReporteBug.ESTADOS_CHOICES[0][0] and instance.id_bug:
         raise ValidationError("No se puede asignar caso del bug en estado pendiente")
     
-    if instance.estado == 'APROBADO' and not instance.id_bug:
+    if instance.estado == ReporteBug.ESTADOS_CHOICES[1][0] and not instance.id_bug:
         raise ValidationError("No se puede guardar un reporte aprobado sin un caso de bug")
     
-    if instance.estado == 'DESAPROBADO' and instance.id_bug:
+    if instance.estado == ReporteBug.ESTADOS_CHOICES[2][0] and instance.id_bug:
         raise ValidationError("No se puede guardar un caso de bug en un reporte desaprobado")
 
 def custom_upload_to(instance, filename):
@@ -258,8 +258,8 @@ class Imagen(models.Model):
 
 class Avances(models.Model):
     class Meta:
-        verbose_name = 'avance'
-        verbose_name_plural = 'avances'
+        verbose_name = 'reporte'
+        verbose_name_plural = 'reportes'
 
     id_avance = models.AutoField(primary_key=True)
 
@@ -297,16 +297,20 @@ class Reasignacion(models.Model):
         verbose_name_plural = 'reasignaciones'
 
     ESTADOS_CHOICES = (
-        ('PENDIENTE', 'reasignación pendiente'),
-        ('APROBADO', 'reasignación aprobada'),
-        ('DESAPROBADO', 'reasignación desaprobada'),
+        ('PENDIENTE', 'Pendiente'),
+        ('APROBADO', 'Aprobada'),
+        ('DESAPROBADO', 'Desaprobada'),
     )
 
     id_reasignacion = models.AutoField(primary_key=True)
+    
+    comment = models.TextField(
+        verbose_name='razones de la reasignación'
+    )
 
     estado = models.CharField(
         max_length=50,
-        default=ESTADOS_CHOICES[0],
+        default=ESTADOS_CHOICES[0][0],
         choices=ESTADOS_CHOICES,
         verbose_name='estado de la reasignación'
     )
@@ -329,6 +333,7 @@ class Reasignacion(models.Model):
         Programador,
         on_delete=models.CASCADE,
         null=True,
+        blank=True,
         related_name='programadores_reasignados',
         related_query_name='programador_reasignado',
         verbose_name='programador reasignado',
@@ -348,52 +353,28 @@ class Reasignacion(models.Model):
         if self.id_programador_inicial == self.id_programador_final:
             raise ValidationError("No se puede reasignar a la misma persona.")
 
-# @receiver(pre_save, sender=Reasignacion)
-
-    # def es_reasignacion_aprobada(self):
-    #     return self.estado == 'APROBADO' and self.id_programador_final == self.id_programador_inicial
-
-    # def save(self, *args, **kwargs):
-    #     if self.id_programador_final == self.id_programador_inicial:
-    #         raise SamePersonReasignException(
-    #             "No se puede reasignar a la misma persona, inténtelo de nuevo.")
-    #     super().save(*args, **kwargs)
-
-
-# def actualizar_id_programador_final(sender, instance, **kwargs):
-#     #     if instance.estado == 'DESAPROBADO':
-#     #         instance.id_programador_final = instance.id_programador_inicial
-
-#     #     elif instance.estado == 'PENDIENTE' and instance.id_programador_final is not None:
-#     #         raise ValidationError("No se puede asignar si el estado es pendiente")
-
-#     if instance.estado == 'APROBADO' and instance.id_programador_final == instance.id_programador_inicial:
-#         raise ValidationError(
-#             "No se puede reasignar el caso a una misma persona")
-
 
 class Notificaciones(models.Model):
     class Meta:
-        verbose_name = 'notificación'
+        verbose_name        = 'notificación'
         verbose_name_plural = 'notificaciones'
+  
+    id_notificacion   = models.AutoField(primary_key=True)
 
-    id_notificacion = models.AutoField(primary_key=True)
-
+    descripcion       = models.TextField(null=False)
     
-    descripcion     = models.TextField(null=False)
-    
-    id_user         = models.ForeignKey(
+    id_user           = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         null=False,
     )
-
-    id_bug = models.ForeignKey(
-        Bug,
-        on_delete=models.CASCADE,
-        null=False,
-        verbose_name='caso del bug'
+    
+    fecha_notificacion = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='fecha',
     )
+    
+    fue_leido          = models.BooleanField(default=False)
 
     def __str__(self):
-        return '{0.id_bug}_{0.id_notificacion}'.format(self)
+        return '{0.id_notificacion}'.format(self)
