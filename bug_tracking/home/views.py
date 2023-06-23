@@ -64,9 +64,9 @@ def home(request):
                 'cant_bugs_revision': cant_bugs_revision,
                 }
                 return render(request,'home/start.html', context)
-            fig = px.scatter(df, x='fecha', y='cantidad', width=1000)
+            fig = px.bar(df, x='fecha', y='cantidad', width=1000)
             fig.update_layout(paper_bgcolor='rgba(0,0,0,0)',plot_bgcolor='rgba(0,0,0,0)',font=dict(family='Segoe UI', color='white'))
-            fig.update_traces(marker=dict(color='yellow', size=10))
+            """ fig.update_traces(marker=dict(color='yellow', size=10)) """
             gantt_plot = plot(fig, output_type='div')
             context = {
                 'plot_div': gantt_plot,
@@ -111,13 +111,3 @@ def signup(request):
         form = CustomUserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
 
-# def home_inicio(request):
-#     listar_reportes = ReporteBug.objects.order_by("id_reporte")[:20]
-
-#     listar_bug = Bug.objects.order_by("id_bug")[:20]
-
-#     context = {
-#         "listar_reportes": listar_reportes,
-#         "listar_bug": listar_bug
-#     }
-#     return render(request, "home/index.html", context)

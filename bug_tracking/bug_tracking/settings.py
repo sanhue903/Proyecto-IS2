@@ -158,6 +158,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 """ LOGIN_REDIRECT_URL = 'home/start.html'
 LOGOUT_REDIRECT_URL = 'principal' """
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'Bugtracking IS2'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'bugtrackingudec@gmail.com'
+EMAIL_HOST_PASSWORD = 'Perros12'
+
+
 JAZZMIN_SETTINGS = {
     "site_title": "Bug Tracking",
     "site_header": "Bug Tracking",
