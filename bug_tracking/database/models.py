@@ -3,9 +3,9 @@ from django.core.exceptions import ValidationError
 import os
 import uuid
 from django.contrib.auth.models import User, Group
-from django.db.models.signals import pre_save, post_save
+from django.db.models.signals import pre_save, post_save, pre_init
 from django.dispatch import receiver
-from django.contrib import messages
+
 # ver datetime para las fechas
 
 
@@ -70,6 +70,7 @@ class Proyecto(models.Model):
         return self.nombre_proyecto
 
 
+
 class Cargo(models.Model):
     id_programador = models.ForeignKey(
         Programador,
@@ -88,6 +89,7 @@ class Cargo(models.Model):
         blank=False,
         verbose_name='cargo del proyecto',
     )
+
 
 
 class Bug(models.Model):
@@ -153,7 +155,9 @@ class Bug(models.Model):
 
     def __str__(self):
         return self.titulo
-
+@receiver(pre_init, sender=Bug)
+def pasar_proyecto(sender, args, **kwargs):
+    pass
 
 class ReporteBug(models.Model):
     class Meta:
