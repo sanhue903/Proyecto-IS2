@@ -310,7 +310,7 @@
       bugListUrl = updateURLParameter(bugListUrl, 'bug_order', filter);
       bugListUrl = updateURLParameter(bugListUrl, 'bug_order_direction', newOrder);
 
-      history.pushState(null, null, bugListUrl);
+      //history.pushState(null, null, bugListUrl);
 
       $('#bug-table').load(bugListUrl + ' #bug-table', function() {
         // Actualizar la paginación también si es necesario
@@ -326,7 +326,7 @@
       var bugListUrl = updateURLParameter(window.location.href, 'bug_page', pageNumber);
       bugListUrl = updateURLParameter(bugListUrl, 'bug_order_direction', currentBugOrder);
 
-      history.pushState(null, null, bugListUrl);
+      //history.pushState(null, null, bugListUrl);
 
       $('#bug-table').load(bugListUrl + ' #bug-table', function() {
         // Actualizar la paginación también si es necesario
@@ -348,7 +348,7 @@
         bugListUrl = removeURLParameter(bugListUrl, 'bug_search');
       }
 
-      history.pushState(null, null, bugListUrl);
+      //history.pushState(null, null, bugListUrl);
 
       $('#bug-table').load(bugListUrl + ' #bug-table', function() {
         // Actualizar la paginación también si es necesario
@@ -365,7 +365,7 @@
       reportListUrl = updateURLParameter(reportListUrl, 'report_order', filter);
       reportListUrl = updateURLParameter(reportListUrl, 'report_order_direction', newOrder);
 
-      history.pushState(null, null, reportListUrl);
+      //history.pushState(null, null, reportListUrl);
 
       $('#report-table').load(reportListUrl + ' #report-table', function() {
         // Actualizar la paginación también si es necesario
@@ -381,7 +381,7 @@
       var reportListUrl = updateURLParameter(window.location.href, 'report_page', pageNumber);
       reportListUrl = updateURLParameter(reportListUrl, 'report_order_direction', currentReportOrder);
 
-      history.pushState(null, null, reportListUrl);
+      //history.pushState(null, null, reportListUrl);
 
       $('#report-table').load(reportListUrl + ' #report-table', function() {
         // Actualizar la paginación también si es necesario
@@ -403,7 +403,7 @@
         reportListUrl = removeURLParameter(reportListUrl, 'report_search');
       }
 
-      history.pushState(null, null, reportListUrl);
+      //history.pushState(null, null, reportListUrl);
 
       $('#report-table').load(reportListUrl + ' #report-table', function() {
         // Actualizar la paginación también si es necesario
