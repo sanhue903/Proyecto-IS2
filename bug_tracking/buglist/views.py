@@ -93,24 +93,10 @@ def index(request):
     report_page_obj = report_paginator.get_page(report_page_number)
     report_page_obj.adjusted_elided_pages = report_paginator.get_elided_page_range(report_page_obj.number, on_each_side=1, on_ends=1)
 
-    # Obtener los proyectos que solo tienen bugs
-    proyectos_bug = Proyecto.objects.filter(bug__isnull=False).distinct()
-
-    # Obtener los proyectos que solo tienen reportes
-    proyectos_reporte = Proyecto.objects.filter(reportebug__isnull=False).distinct()
-
-    #Obtener todos los estados de los bugs que tengo
-    estados_bug = Bug.objects.values_list('estado', flat=True).distinct()
-    print(estados_bug)
-    
-
     context = {
         'bug_page_obj': bug_page_obj,
         'report_page_obj': report_page_obj,
         'bug_order': bug_order,
         'report_order': report_order,
-        'proyectos_bug': proyectos_bug,
-        'proyectos_reporte': proyectos_reporte,
-        'estados_bug': estados_bug,
     }
     return render(request, 'buglist/buglist.html', context)

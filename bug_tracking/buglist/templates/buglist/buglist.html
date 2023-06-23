@@ -2,7 +2,6 @@
 
 <link rel="stylesheet" href='{%static "css/buglist.css"%}'>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="{% static 'js/buglist.js' %}"></script>
 
 <section class="home">
 
@@ -67,7 +66,7 @@
                 <a href="#" onclick="loadBugFilter(event, 'estado')"><i class='bx bx-sort-down'></i></a>
                 {% endif %}
 
-                <div id="modal-estados" class="modal-pestaña">
+                <!-- <div id="modal-estados" class="modal-pestaña">
                   <button id="abrir-estados" class="flecha"><i class="bx bx-down-arrow"></i></button>
                   <div class="modal-contenido">
                     {% if estados_bug %}
@@ -86,7 +85,7 @@
                       </div>
                     {% endif %}
                   </div>
-                </div>
+                </div> -->
                 
 
               </th>
@@ -100,7 +99,7 @@
                 <a href="#" onclick="loadBugFilter(event, 'proyecto')"><i class='bx bx-sort-down'></i></a>
                 {% endif %}
 
-                <div id="modal-proyectos" class="modal-pestaña">
+                <!-- <div id="modal-proyectos" class="modal-pestaña">
                   <button id="abrir-modal" class="flecha"><i class='bx bx-down-arrow'></i></button>
                   <div class="modal-contenido">
                     {% if proyectos_bug %}
@@ -119,7 +118,7 @@
                       </div>
                     {% endif %}
                   </div>
-                </div>
+                </div> -->
                 
               </th>
             </tr>
@@ -136,13 +135,13 @@
                 <p>{{ Bug.titulo | truncatechars:90 }}</p>
               </td>
               <td>{{ Bug.fecha_reporte | naturaltime }}</td>
-              {% if Bug.estado == "('ASIGNADO', 'bug recien asignado')" %}
+              {% if Bug.estado == "ASIGNADO" %}
                 <td><span class="status process">Asignado</span></td>
               {% endif %}
-              {% if Bug.estado == "('SOLUCIONADO', 'bug solucionado')" %}
+              {% if Bug.estado == "SOLUCIONADO" %}
                 <td><span class="status completed">Solucionado</span></td>
               {% endif %}
-              {% if Bug.estado == "('EN PROCESO', 'bug esta proceso de revisión')" %}
+              {% if Bug.estado == "EN PROCESO" %}
                 <td><span class="status pending">En proceso</span></td>
               {% endif %}
               <td>{{ Bug.id_proyecto }}</td>
