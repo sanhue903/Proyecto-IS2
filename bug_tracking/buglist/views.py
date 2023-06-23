@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from database.models import Bug, ReporteBug, Proyecto
+from django.db.models import Q
 
 def index(request):
 
@@ -8,6 +9,8 @@ def index(request):
     report_order = request.GET.get('report_order', '')
     bug_order_direction = request.GET.get('bug_order_direction', '')
     report_order_direction = request.GET.get('report_order_direction', '')
+    bug_search = request.GET.get('bug_search', '')
+    report_search = request.GET.get('report_search', '')
 
     bug_list = Bug.objects.all()
     report_list = ReporteBug.objects.all()
@@ -62,6 +65,21 @@ def index(request):
             report_list = report_list.order_by("-id_proyecto__nombre_proyecto")
     else:
         report_list = report_list.order_by("-fecha_reporte")
+
+    if bug_search:
+        bug_list = bug_list.filter(
+            Q(id_bug__icontains=bug_search) |
+            Q(titulo__icontains=bug_search) |
+            Q(estado__icontains=bug_search) |
+            Q(id_proyecto__nombre_proyecto__icontains=bug_search)
+        )
+
+    if report_search:
+        report_list = report_list.filter(
+            Q(id_reporte__icontains=report_search) |
+            Q(titulo__icontains=report_search) |
+            Q(id_proyecto__nombre_proyecto__icontains=report_search)
+        )
 
     bug_paginator = Paginator(bug_list, 5)
     bug_page_number = request.GET.get('bug_page')
