@@ -498,6 +498,11 @@ body.dark .home .text {
 	background: var(--orange);
 }
 
+.table-data .order table tr td span.status.rejected {
+	background: var(--red);
+}
+
+
 @media (max-width:600px) {
     .sidebar.close header i {
         display: none;
