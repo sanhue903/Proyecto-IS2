@@ -135,16 +135,28 @@
       </span>
     </li>
   </ul>
-  {%autoescape off%}
+
+  {% autoescape off %}
+
   <div class="graph">
-    <h2>Gráfico de reportes por día</h2>
-    {%if plot_div %}
-    {{plot_div|safe}}
-    {%else%}
+    {% if bar_fig %}
+    {{ bar_fig|safe }}
+    {% else %}
     <p>No hay datos para mostrar</p>
-    {%endif%}
+    {% endif %}
   </div>
-  {%endautoescape%}
+
+  <div class="graph">
+    {% if plot_div %}
+    {{ plot_div|safe }}
+    {% else %}
+    <p>No hay datos para mostrar</p>
+    {% endif %}
+  </div>
+  {% endautoescape %}
+  
+  
+  
   <footer>
     <div class="text" style="text-align: center;">
       Hemos detectado que eres administrador, te recomendamos utilizar el panel de administración
