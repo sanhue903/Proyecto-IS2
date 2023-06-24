@@ -60,7 +60,7 @@ def signup(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save() #guarda el usuario
-            return redirect('home:login')
+            # return redirect('home:login')
     else:
         form = CustomUserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
