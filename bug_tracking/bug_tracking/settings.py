@@ -164,7 +164,7 @@ EMAIL_HOST_USER = 'Bugtracking IS2'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'bugtrackingudec@gmail.com'
-EMAIL_HOST_PASSWORD = 'Perros12'
+EMAIL_HOST_PASSWORD = 'bgovgpystfsxeoyn'
 
 
 JAZZMIN_SETTINGS = {
