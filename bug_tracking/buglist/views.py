@@ -60,6 +60,11 @@ def index(request):
             report_list = report_list.order_by("fecha_reporte")
         else:
             report_list = report_list.order_by("-fecha_reporte")
+    elif report_order == 'estado':
+        if report_order_direction == 'asc':
+            report_list = report_list.order_by("estado")
+        else:
+            report_list = report_list.order_by("-estado")
     elif report_order == 'proyecto':
         if report_order_direction == 'asc':
             report_list = report_list.order_by("id_proyecto__nombre_proyecto")
@@ -80,6 +85,7 @@ def index(request):
         report_list = report_list.filter(
             Q(id_reporte__icontains=report_search) |
             Q(titulo__icontains=report_search) |
+            Q(estado__icontains=report_search) |
             Q(id_proyecto__nombre_proyecto__icontains=report_search)
         )
 

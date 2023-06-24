@@ -144,16 +144,6 @@
               {%if Bug.estado == "EN PROCESO"%}
                 <td><span class="status pending">En proceso</span></td>
               {%endif%}
-              <td>{{ Bug.fecha_reporte | naturaltime }}</td>
-              {% if Bug.estado == "ASIGNADO" %}
-                <td><span class="status process">Asignado</span></td>
-              {% endif %}
-              {% if Bug.estado == "SOLUCIONADO" %}
-                <td><span class="status completed">Solucionado</span></td>
-              {% endif %}
-              {% if Bug.estado == "EN PROCESO" %}
-                <td><span class="status pending">En proceso</span></td>
-              {% endif %}
               <td>{{ Bug.id_proyecto }}</td>
             </tr>
             {%endfor%}
@@ -245,6 +235,16 @@
                 {% endif %}
               </th>
               <th>
+                Estado
+                {% if report_order == 'estado' and request.GET.report_order_direction == 'asc' %}
+                <a href="#" onclick="loadReportFilter(event, 'estado')"><i class='bx bx-sort-down'></i></a>
+                {% elif report_order == 'estado' and request.GET.report_order_direction == 'desc' %}
+                <a href="#" onclick="loadReportFilter(event, 'estado')"><i class='bx bx-sort-up'></i></a>
+                {% else %}
+                <a href="#" onclick="loadReportFilter(event, 'estado')"><i class='bx bx-sort-down'></i></a>
+                {% endif %}
+              </th>
+              <th>
                 Proyecto
                 {% if report_order == 'proyecto' and request.GET.report_order_direction == 'asc' %}
                 <a href="#" onclick="loadReportFilter(event, 'proyecto')"><i class='bx bx-sort-down'></i></a>
@@ -259,7 +259,7 @@
           <tbody>
             {% if report_page_obj %}
             {% for ReporteBug in report_page_obj %}
-            <tr>
+            <tr onclick="{% if ReporteBug.id_bug %}window.location.href = '{% url 'detail:index' ReporteBug.id_bug.id_bug %}'{% endif %}">
               <td>
                 {{ ReporteBug.id_reporte }}
                 <img src="{% static 'images/logo.png' %}">
@@ -268,6 +268,7 @@
                 <p>{{ ReporteBug.titulo | truncatechars:90 }}</p>
               </td>
               <td>{{ ReporteBug.fecha_reporte | naturaltime }}</td>
+              <td> {{ ReporteBug.estado }} </td>
               <td>{{ ReporteBug.id_proyecto }}</td>
             </tr>
             {% endfor %}
