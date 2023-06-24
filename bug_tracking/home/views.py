@@ -22,15 +22,37 @@ def home(request):
     if(request.user.is_authenticated == True):
         """ Inicio sesion """
         if(request.user.is_superuser == False):
-            """ No es admin """
             if(request.user.is_staff == True):
                 """ Es programador """
-                return render(request,'home/start.html')
+                bugs_asignados = Bug.objects.filter(id_programador=request.user, estado="ASIGNADO" or "EN PROCESO")
+                bugs_datas = []
+                for bug in bugs_asignados:
+                    Titulo = bugs_asignados["titulo"],
+                    Proyecto = bugs_asignados["id_proyecto"],
+                    bugs_datas.append({'Titulo': Titulo,'Proyecto': Proyecto})           
+                df = pd.DataFrame(bugs_datas)
+                if df.empty:
+                    messages.warning(request, "No tienes errores asignados")
+                    context = {
+                        "bugs_asignados": bugs_asignados
+                    }
+                    return render(request,'home/start.html', context)
+                else:
+                    fig = px.bar(df, x='Titulo', y='Proyecto', width=1000)
+                    fig.update_layout(paper_bgcolor='rgba(0,0,0,0)',plot_bgcolor='rgba(0,0,0,0)',font=dict(family='Segoe UI', color='white'))
+                    gantt_plot = plot(fig, output_type='div')
+                    context = {
+                        "bugs_asignados": bugs_asignados,
+                        "gantt_plot": gantt_plot
+                        
+                    }
+                    
+                    return render(request,'home/start.html', context)
+                
             else:
+                """ Es usuario registrado """
                 usuario = Usuario.objects.get(id_user=request.user)
                 reportes_usuario = ReporteBug.objects.filter(id_usuario = usuario)
-                
-
                 reportes_usario_id = reportes_usuario.values_list('id_reporte', flat=True)
                 reportes_solucionados = Bug.objects.filter(id_bug__in=reportes_usario_id, estado="SOLUCIONADO").count()
 
@@ -44,6 +66,7 @@ def home(request):
                 }
                 return render(request,'home/start.html',context)
         else:
+            """ Es administrador """
             reportes = reportes = ReporteBug.objects.filter(fecha_reporte__gte=timezone.now()-timedelta(days=7)).values('fecha_reporte__date').annotate(cantidad_reportes=Count('id_reporte'))
             cant_reportes_pendientes = ReporteBug.objects.filter(estado="PENDIENTE").count()
             cant_reportes_asignados = ReporteBug.objects.filter(estado="ASIGNADO").count()
@@ -64,9 +87,9 @@ def home(request):
                 'cant_bugs_revision': cant_bugs_revision,
                 }
                 return render(request,'home/start.html', context)
-            fig = px.bar(df, x='fecha', y='cantidad', width=1000)
+            fig = px.bar(df, x='fecha', y='cantidad', width=1000, color='cantidad')
             fig.update_layout(paper_bgcolor='rgba(0,0,0,0)',plot_bgcolor='rgba(0,0,0,0)',font=dict(family='Segoe UI', color='white'))
-            """ fig.update_traces(marker=dict(color='yellow', size=10)) """
+            
             gantt_plot = plot(fig, output_type='div')
             context = {
                 'plot_div': gantt_plot,
