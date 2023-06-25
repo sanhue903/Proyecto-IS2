@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.contrib import messages
 from .models import ReporteBug, Bug
-from database.models import ReporteBug, Bug, Usuario
+from database.models import ReporteBug, Bug, Usuario, Notificaciones
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from .forms import CustomUserCreationForm
@@ -58,11 +58,13 @@ def home(request):
 
                 reportes_asignados= Bug.objects.filter(id_bug__in=reportes_usario_id, estado="ASIGNADO").count()
                 reportes_enproceso= Bug.objects.filter(id_bug__in=reportes_usario_id, estado="EN PROCESO").count()
+                notificaciones = Notificaciones.objects.filter(id_user=request.user)
                 context = {
                     "reportes_usuario": reportes_usuario,
                     "reportes_solucionados": reportes_solucionados,
                     "reportes_asignados": reportes_asignados,
-                    "reportes_enproceso": reportes_enproceso
+                    "reportes_enproceso": reportes_enproceso,
+                    "notificaciones_usuario": notificaciones
                 }
                 return render(request,'home/start.html',context)
         else:

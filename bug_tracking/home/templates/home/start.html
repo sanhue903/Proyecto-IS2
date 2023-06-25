@@ -40,18 +40,32 @@
             <tr>
               <th>N°</th>
               <th>Mensaje</th>
+              <th>Fecha</th>
             </tr>
           </thead>
+          {% if notificaciones_usuario %}
+          
           <tbody>
+            {% for notificacion in notificaciones_usuario %}
             <tr>
               <td>
-                <p>0</p>
+                {{ notificacion.id_notificacion }}
               </td>
               <td>
-                <p>No hay notificaciones</p>
+                {{ notificacion.descripcion }}
+              </td>
+              <td>
+                {{ notificacion.fecha_notificacion }}
               </td>
             </tr>
-          </tbody>
+            {%endfor%}
+          
+          {%else%}
+          <td></td>
+          <td>No hay notificaciones disponibles</td>
+          {%endif%}
+        </tbody>
+          
         </table>
       </div>
     </div>
@@ -89,6 +103,7 @@
             {%endfor%}
             {%else%}
             <tr>
+              <td></td>
               <td>No hay errores disponibles</p>
             </tr>
             {%endif%}
