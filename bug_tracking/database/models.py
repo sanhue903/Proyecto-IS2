@@ -125,14 +125,14 @@ class Bug(models.Model):
     prioridad = models.CharField(
         max_length=50,
         choices=PRIORIDADES_CHOICES,
-        verbose_name='prioridad',
+        verbose_name='Prioridad',
     )
 
     estado = models.CharField(
         max_length=50,
         default=ESTADOS_CHOICES[0][0],
         choices=ESTADOS_CHOICES,
-        verbose_name='estado',
+        verbose_name='Estado',
     )
 
     fecha_reporte = models.DateTimeField(
@@ -144,6 +144,7 @@ class Bug(models.Model):
         Proyecto,
         on_delete=models.CASCADE,
         null=True,
+        verbose_name='Proyecto',
     )
 
     id_programador = models.ForeignKey(
@@ -163,7 +164,7 @@ class ReporteBug(models.Model):
 
     ESTADOS_CHOICES = (
         ('PENDIENTE', 'Pendiente'),
-        ('APROBADO', 'Arobado'),
+        ('APROBADO', 'Aprobado'),
         ('DESAPROBADO', 'Desaprobado'),
     )
 
@@ -213,7 +214,7 @@ class ReporteBug(models.Model):
         on_delete=models.CASCADE,
         blank=True,
         null=True,
-        verbose_name='caso del bug'
+        verbose_name='caso asociado'
     )
 
     def __str__(self):
@@ -295,6 +296,9 @@ class Avances(models.Model):
 
     def __str__(self):
         return '{0.id_bug}_{0.id_avance}'.format(self)
+    
+    # def __str__(self):
+    #     return self.titulo
 
 
 class Reasignacion(models.Model):
@@ -311,14 +315,14 @@ class Reasignacion(models.Model):
     id_reasignacion = models.AutoField(primary_key=True)
 
     comment = models.TextField(
-        verbose_name='razones de la reasignación'
+        verbose_name='razones de la solicitud de reasignación'
     )
 
     estado = models.CharField(
         max_length=50,
         default=ESTADOS_CHOICES[0][0],
         choices=ESTADOS_CHOICES,
-        verbose_name='estado de la reasignación'
+        verbose_name='Estado'
     )
 
     fecha_reasignacion = models.DateTimeField(
@@ -332,7 +336,7 @@ class Reasignacion(models.Model):
         null=True,
         related_name='programadores_iniciales',
         related_query_name='programador_inicial',
-        verbose_name='programador que pidio reasignación'
+        verbose_name='programador que solicita reasignación'
     )
 
     id_programador_final = models.ForeignKey(
@@ -349,14 +353,14 @@ class Reasignacion(models.Model):
         Bug,
         on_delete=models.CASCADE,
         null=True,
-        verbose_name='caso del bug asociado',
+        verbose_name='caso asociado',
     )
 
     def __str__(self):
         return '{0.id_programador_inicial}_{0.id_bug}_{0.id_reasignacion}'.format(self)
 
     def clean(self):
-        if self.id_programador_inicial == self.id_programador_final:
+        if self.id_programador_inicial and self.id_programador_inicial == self.id_programador_final:
             raise ValidationError("No se puede reasignar a la misma persona.")
 
 
