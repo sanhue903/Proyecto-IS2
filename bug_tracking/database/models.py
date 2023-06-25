@@ -35,7 +35,7 @@ class Programador(models.Model):
 
 @receiver(post_save, sender=User)
 def crear_perfil_usuario_empleado(sender, instance, created, **kwargs):
-    if created:
+    if len(instance.groups.all()) == 0:
         if not instance.is_staff:
             Usuario.objects.create(id_user=instance)
             return
@@ -157,7 +157,8 @@ class Bug(models.Model):
         return self.titulo
 @receiver(pre_init, sender=Bug)
 def pasar_proyecto(sender, args, **kwargs):
-    pass
+    kwargs
+
 
 class ReporteBug(models.Model):
     class Meta:
