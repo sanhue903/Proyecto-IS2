@@ -1,4 +1,4 @@
-// Obtener referencias a los campos de entrada y mensajes de advertencia
+// Referencias
 const usernameInput = document.getElementById('user');
 const passwordInput = document.getElementById('pass');
 const confirmPasswordInput = document.getElementById('pass2');
@@ -13,14 +13,17 @@ const confirmPasswordWarningMessage = document.getElementById('confirm-password-
 const emailWarningIcon = document.getElementById('email-warning-icon');
 const emailWarningMessage = document.getElementById('email-warning-message');
 
-// Obtener referencia boton "Registrarme"
 const registerButton = document.getElementById('register-button');
 
+// Variables para guardar los errores
+let usernameError = false;
+let emailError = false;
+
 // Listeners
-usernameInput.addEventListener('input', validateForm);
-passwordInput.addEventListener('input', validateForm);
-confirmPasswordInput.addEventListener('input', validateForm);
-emailInput.addEventListener('input', validateForm);
+usernameInput.addEventListener('input', validateUsername);
+passwordInput.addEventListener('input', validatePassword);
+confirmPasswordInput.addEventListener('input', validateConfirmPassword);
+emailInput.addEventListener('input', validateEmail);
 
 // Mostrar advertencia
 function showWarning(icon, message) {
@@ -34,18 +37,77 @@ function hideWarning(icon, message) {
   message.style.display = 'none';
 }
 
-// Validación para nombre de usuario
+// Validación nombre de usuario
 function validateUsername() {
   const value = usernameInput.value;
   const isValidUsername = /^[A-Za-z0-9@.+_-]+$/.test(value);
+
   if (value.length > 0 && (!isValidUsername || value.length < 8)) {
     showWarning(usernameWarningIcon, usernameWarningMessage);
     usernameWarningMessage.innerText = 'El usuario debe tener al menos 8 caracteres.';
+    usernameError = true;
   } else {
     hideWarning(usernameWarningIcon, usernameWarningMessage);
+    if (value.length >= 8) {
+      checkUsernameAvailability(value)
+        .then(isAvailable => {
+          if (!isAvailable) {
+            showWarning(usernameWarningIcon, usernameWarningMessage);
+            usernameWarningMessage.innerText = 'Ya existe un usuario con este nombre.';
+            registerButton.disabled = true;
+            usernameError = true;
+          } else {
+            hideWarning(usernameWarningIcon, usernameWarningMessage);
+            usernameError = false;
+            checkFormValidity();
+          }
+        })
+        .catch(error => {
+          console.error('Error al verificar la disponibilidad del nombre de usuario:', error);
+        });
+    } else {
+      usernameError = false;
+      checkFormValidity();
+    }
   }
 }
 
+// Validación correo electrónico
+function validateEmail() {
+  const value = emailInput.value;
+  const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
+  if (value.length > 0 && !isValidEmail) {
+    showWarning(emailWarningIcon, emailWarningMessage);
+    emailWarningMessage.innerText = 'Por favor, introduce un correo electrónico válido.';
+    emailError = true;
+  } else {
+    hideWarning(emailWarningIcon, emailWarningMessage);
+    if (isValidEmail) {
+      checkEmailAvailability(value)
+        .then(isAvailable => {
+          if (!isAvailable) {
+            showWarning(emailWarningIcon, emailWarningMessage);
+            emailWarningMessage.innerText = 'Ya existe un usuario con este correo electrónico.';
+            registerButton.disabled = true;
+            emailError = true;
+          } else {
+            hideWarning(emailWarningIcon, emailWarningMessage);
+            emailError = false;
+            checkFormValidity();
+          }
+        })
+        .catch(error => {
+          console.error('Error al verificar la disponibilidad del correo electrónico:', error);
+        });
+    } else {
+      emailError = false;
+      checkFormValidity();
+    }
+  }
+}
+
+// Validar contraseña
 function validatePassword() {
   const value = passwordInput.value;
   const hasNumber = /\d/.test(value);
@@ -70,6 +132,7 @@ function validatePassword() {
   }
 }
 
+// Validar confirmación de contraseña
 function validateConfirmPassword() {
   const passwordValue = passwordInput.value;
   const confirmPasswordValue = confirmPasswordInput.value;
@@ -81,90 +144,60 @@ function validateConfirmPassword() {
   }
 }
 
-function validateEmail() {
-  const value = emailInput.value;
-  const isValidEmail = /\S+@\S+\.\S+/.test(value);
-  if (value.length > 0 && (!isValidEmail || value.length < 1)) {
-    showWarning(emailWarningIcon, emailWarningMessage);
-    emailWarningMessage.innerText = 'Ingrese un correo válido.';
-  } else {
-    hideWarning(emailWarningIcon, emailWarningMessage);
-  }
-}
-
 function isCommonlyUsedPassword(password) {
-  // ver si la contraseña es usada comunmente
+  // Ver si contraseña es comunmente usada
   return false;
 }
 
-// Validar el formulario completo
-function validateForm() {
-  validateUsername();
-  validatePassword();
-  validateConfirmPassword();
-  validateEmail();
+// Verificar disponibilidad de nombre de usuario en la base de datos
+function checkUsernameAvailability(username) {
+  const formData = new FormData();
+  formData.append('username', username);
 
-  // Habilitar/deshabilitar boton "Registrarme"
-  if (
-    usernameWarningMessage.style.display === 'none' &&
-    passwordWarningMessage.style.display === 'none' &&
-    confirmPasswordWarningMessage.style.display === 'none' &&
-    emailWarningMessage.style.display === 'none'
-  ) {
+  return fetch('/check-username-availability/', {
+    method: 'POST',
+    headers: {
+      'X-CSRFToken': getCSRFToken()
+    },
+    body: formData
+  })
+    .then(response => response.json())
+    .then(data => {
+      return data.available;
+    });
+}
+
+// Verificar disponibilidad de correo electrónico en la base de datos
+function checkEmailAvailability(email) {
+  const formData = new FormData();
+  formData.append('email', email);
+  return fetch('/check-email-availability/', {
+    method: 'POST',
+    headers: {
+      'X-CSRFToken': getCSRFToken()
+    },
+    body: formData
+  })
+    .then(response => response.json())
+    .then(data => {
+      return data.available;
+    });
+}
+
+// Obtener el token CSRF
+function getCSRFToken() {
+  const cookieValue = document.cookie
+    .split('; ')
+    .find(cookie => cookie.startsWith('csrftoken='))
+    .split('=')[1];
+  return cookieValue;
+}
+
+// Verificar la validez del formulario completo
+function checkFormValidity() {
+  if (!usernameError && !emailError) {
     registerButton.disabled = false;
   } else {
     registerButton.disabled = true;
   }
 }
-
-document.addEventListener('DOMContentLoaded', function() {
-  var modal = document.querySelector('.modal');
-  var closeModalButton = document.querySelector('#closeModalButton');
-  var submitButton = document.querySelector('#register-button');
-  var form = document.querySelector('#myForm');
-  var formularioEnviadoValue = document.getElementById('formularioEnviadoValue').getAttribute('data-formulario-enviado');
-  var formularioEnviado = JSON.parse(formularioEnviadoValue);
-
-  if (formularioEnviado) {
-    modal.style.display = 'block';
-  }
-
-  submitButton.addEventListener('click', function(e) {
-    e.preventDefault();
-
-    var formFields = form.querySelectorAll('input, textarea, select');
-    var formValid = true;
-
-    // Validar cada campo del formulario
-    formFields.forEach(function(field) {
-      if (!field.checkValidity()) {
-        field.reportValidity();
-        formValid = false;
-      }
-    });
-
-    if (formValid) {
-      fetch(form.action, {
-        method: form.method,
-        body: new FormData(form)
-      })
-      .then(function(response) {
-        modal.style.display = 'block';
-        form.reset();
-      })
-      .catch(function(error) {
-        console.error('Error:', error);
-      });
-    }
-  });
-
-  closeModalButton.addEventListener('click', function() {
-    modal.style.display = 'none';
-  });
-
-  window.addEventListener('click', function(event) {
-    if (event.target === modal) {
-      modal.style.display = 'none';
-    }
-  });
-});
