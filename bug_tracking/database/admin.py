@@ -16,6 +16,7 @@ from django.utils.translation import gettext, gettext_lazy as _
 admin.site.unregister(User)
 admin.site.unregister(Group)
 
+
 def notificar(obj,change=False):
     obj_type = type(obj)
     
@@ -245,6 +246,13 @@ class BugAdmin(general):
 #TODO asignar bugs que esten relacionados con el proyecto
 @admin.register(ReporteBug)
 class ReporteBugAdmin(general):
+    def get_form(self, request, obj=None, **kwargs):
+        self.instance = None
+        if obj:
+            self.instance = obj
+            
+        return super(ReporteBugAdmin, self).get_form(request, obj, **kwargs)
+    
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         return qs.filter(estado=ReporteBug.ESTADOS_CHOICES[0][0])
@@ -281,8 +289,25 @@ class ReporteBugAdmin(general):
             redirect_url = "admin:{}_{}_changelist".format(self.opts.app_label, self.opts.model_name)
             
             return HttpResponseRedirect(reverse(redirect_url))
+        
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if self.instance:
+            if db_field.name == 'id_bug':
+                kwargs['queryset'] = Bug.objects.filter(id_proyecto=self.instance.id_proyecto)
+      
+                
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+    """  
+    def formfield_for_dbfield(self, db_field, request, **kwargs):
+        if db_field.name == "id_bug":
+            widget = super(BugAdmin, self.instance).formfield_for_dbfield(db_field, request, **kwargs).widget
+            widget.template_name = 'admin/reportebug/widgets/related_widget_wrapper_with_id.html'
+            widget.attrs.update({'id_proyecto': 1})
+        
+            return db_field.formfield(widget=widget)
+        return super(BugAdmin, self.instance).formfield_for_dbfield(db_field, request, **kwargs)
 
-
+    """
     list_display = ('id_reporte','titulo', 'fecha_reporte', 'id_proyecto', 'estado', 'id_bug')
     
     readonly_fields = ['titulo', 'reporte', 'id_usuario', 'estado' , 'id_proyecto']
