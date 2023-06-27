@@ -188,14 +188,16 @@ class AvancesInline(admin.TabularInline):
 
     
 
-#TODO definir que fields dejar en readonly
+#TODO definir que fields dejar en readonly (id_proyecto si logro pasara información de reporteBug a Bug)
 #TODO ver forma de pasar información de reporteBug a Bug(necesario para que se puedan filtar los programadores)
 @admin.register(Bug)
 class BugAdmin(general):
     def get_form(self, request, obj=None, **kwargs):
-        self.instance = None
+        self.instance = None## eso hace que funcione por ahora
         if obj:
             self.instance = obj
+            
+        #signal with the value of id_proyecto
             
         return super(BugAdmin, self).get_form(request, obj, **kwargs)
 
@@ -218,8 +220,23 @@ class BugAdmin(general):
     
     def has_change_permission(self, request,obj=None):
         return False
+    
+    def response_change(self, request, obj):
+        if '_save' in request.POST:
+            redirect_url = "admin:{}_{}_changelist".format(self.opts.app_label, self.opts.model_name)
+            
+            return HttpResponseRedirect(reverse(redirect_url))
+        elif '_solucionado' in request.POST:
+            obj.estado = Bug.ESTADOS_CHOICES[2][0]
+            obj.save()
+            
+            notificar(obj)
+            
+            
+            redirect_url = "admin:{}_{}_changelist".format(self.opts.app_label, self.opts.model_name)
+            
+            return HttpResponseRedirect(reverse(redirect_url))
        
-    #readonly_fields = ['id_programador',]
     
     list_display  = ('id_bug', 'titulo', 'id_proyecto',
                     'estado', 'prioridad', 'id_programador')
@@ -243,7 +260,6 @@ class BugAdmin(general):
     
 
 #TODO cambiar forma de asignar un caso de bug a reporteBug
-#TODO asignar bugs que esten relacionados con el proyecto
 @admin.register(ReporteBug)
 class ReporteBugAdmin(general):
     def get_form(self, request, obj=None, **kwargs):

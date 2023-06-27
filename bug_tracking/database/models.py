@@ -111,7 +111,7 @@ class Bug(models.Model):
     )
 
     id_bug = models.AutoField(primary_key=True)
-    # TODO cambiar nombre de titulo
+    
     titulo = models.CharField(
         max_length=255,
         blank=False,
