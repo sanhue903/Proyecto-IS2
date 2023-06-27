@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.core.paginator import Paginator
 from database.models import Bug, ReporteBug, Proyecto
 from django.db.models import Q
+from urllib.parse import unquote
 
 def index(request):
 
@@ -13,6 +14,8 @@ def index(request):
 
     bug_search = request.GET.get('bug_search', '')
     report_search = request.GET.get('report_search', '')
+
+    print(bug_search)
 
     bug_list = Bug.objects.all()
     report_list = ReporteBug.objects.all()
