@@ -82,7 +82,7 @@ def check_username_availability(request):
 def check_email_availability(request):
     if request.method == 'POST':
         email = request.POST.get('email')
-        print('Email:', email)
+        ## print('Email:', email)
         try:
             user = User.objects.get(email=email)
             available = False
