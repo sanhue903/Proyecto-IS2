@@ -2,7 +2,7 @@
 *,:after,:before{box-sizing:border-box}
 .clearfix:after,.clearfix:before{content:'';display:table}
 .clearfix:after{clear:both;display:block}
-a{color:inherit;text-decoration:none}
+a{color:var(--text-color);text-decoration:none}
 
 .container_session .text{
     text-align: center;
@@ -21,7 +21,7 @@ a{color:inherit;text-decoration:none}
 	height:100%;
 	position:absolute;
 	padding:90px 70px 50px 70px;
-	background:rgba(105,92,254, 0.96);
+	background:var(--sidebar-color);
     border-radius: 12px;
 }
 .login-html .sign-in-htm,
@@ -57,8 +57,8 @@ a{color:inherit;text-decoration:none}
 }
 .login-html .sign-in:checked + .tab,
 .login-html .sign-up:checked + .tab{
-	color:#fff;
-	border-color: white;
+	color: var(--text-color);
+	border-color: var(--primary-color);
 }
 .login-form{
 	min-height:345px;
@@ -81,33 +81,43 @@ a{color:inherit;text-decoration:none}
 	border:none;
 	padding:15px 20px;
 	border-radius:25px;
-	background:rgba(255,255,255,.1);
+	background:var(--body-color);
 }
 .login-form .group input[data-type="password"]{
 	-webkit-text-security:circle;
 }
 .login-form .group .label{
-	color:#aaa;
+	color:var(--text-color);
 	font-size:12px;
 }
 .login-form .group .button{
-	background: var(--sidebar-color);
+	background: var(--body-color);
     color: var(--text-color);
 }
+
+.login-form .group .button:hover{
+	background: var(--primary-color);
+	color: white;
+	transition-duration: 0.3s;
+}
+
 .login-form .group label .icon{
 	width:15px;
 	height:15px;
 	border-radius:2px;
 	position:relative;
 	display:inline-block;
-	background:rgba(255,255,255,.1);
+	background:var(--primary-color);
 }
+
+/* Seguir con el cuadro despues del cambio */
 .login-form .group label .icon:before,
 .login-form .group label .icon:after{
 	content:'';
 	width:10px;
 	height:2px;
-	background:var(--sidebar-color);
+	background:white;
+
 	position:absolute;
 	transition:all .2s ease-in-out 0s;
 }
@@ -122,18 +132,20 @@ a{color:inherit;text-decoration:none}
 	right:0;
 	transform:scale(0) rotate(0);
 }
-.login-form .group .check:checked + label{
-	color: white
+.login-form .group .check:checked ~ .label {
+	color: var(--primary-color);
 }
-.login-form .group .check:checked + label .icon{
-	background: grey;
-}
-.login-form .group .check:checked + label .icon:before{
-	transform:scale(1) rotate(45deg);
-}
-.login-form .group .check:checked + label .icon:after{
-	transform:scale(1) rotate(-45deg);
-}
+.login-form .group .check:checked ~ label .icon {
+	background: var(--primary-color);
+  }
+  
+  .login-form .group .check:checked ~ label .icon:before {
+	transform: scale(1) rotate(45deg);
+  }
+  
+  .login-form .group .check:checked ~ label .icon:after {
+	transform: scale(1) rotate(-45deg);
+  }
 .login-html .sign-in:checked + .tab + .sign-up + .tab + .login-form .sign-in-htm{
 	transform:rotate(0);
 }
