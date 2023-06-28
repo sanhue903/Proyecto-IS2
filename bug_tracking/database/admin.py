@@ -132,17 +132,6 @@ class CargoAdmin(general):
         })
     ]
 
-# class ReasignacionInline(admin.TabularInline):
-
-
-# class AvancesInlineForm(forms.ModelForm):
-#     class Meta:
-#         model = Avances
-#         fields = ['titulo', 'descripcion']
-#         widgets = {
-#             'titulo': forms.TextInput(),
-#             'descripcion': forms.Textarea(),
-#         }
 
 class AvancesInlineForm(forms.ModelForm):
     class Meta:
@@ -228,7 +217,6 @@ class ReasignacionInlineForm(forms.ModelForm):
 
         if bug_instance and programador and bug_instance.reasignacion_set.filter(id_programador_inicial=programador).exists():
             self.add_error('id_programador_inicial', 'Ya has solicitado una reasignación para este caso de bug.')
-            #raise forms.ValidationError("Ya has solicitado una reasignación para este caso de bug.")
 
         return cleaned_data
 
@@ -271,8 +259,7 @@ class ReasignacionInline(admin.TabularInline):
         super().__init__(*args, **kwargs)
         if user:
             self.fields['id_programador_inicial'].queryset = Programador.objects.filter(id_user=self.request.user)
-            #self.fields['id_programador_inicial'].widget.attrs['disabled'] = 'disabled'
-
+            
 
 class IdProyectoBugFilter(admin.SimpleListFilter):
     title = 'Proyecto'
@@ -651,31 +638,16 @@ class AvancesAdmin(general):
         form = super().get_form(request, obj, **kwargs)
         
         class CustomForm(form):
-            # SIREVE PARA CAMBIAR LA ETIQUETA
             id_bug = forms.ModelChoiceField(
-                # queryset=form.base_fields['id_bug'].queryset,
-                # queryset=Bug.objects.filter(
-                #     id_programador__id_user=request.user),
                 queryset=Bug.objects.none(),
                 label='Caso Asociado',
-                # widget=forms.Select(
-                #     attrs={'data-placeholder': 'Seleccione un bug'}),
-                # to_field_name='id_bug',
-                #empty_label= 'No hay casos asociados disponibles',
             )
             titulo = forms.CharField(label='Título')
             descripcion = forms.CharField(
                 label='Descripción', widget=forms.Textarea)
 
             def __init__(self, *args, **kwargs):
-                # super().__init__(*args, **kwargs)
-                # if not self.instance:  # Modo de creación
-                #     self.fields['id_bug'].queryset = Bug.objects.filter(
-                #     id_programador__id_user=request.user, estado__in=[Bug.ESTADOS_CHOICES[0][0], Bug.ESTADOS_CHOICES[1][0]])
-                # else:
-                #     self.fields['id_bug'].queryset = Bug.objects.filter(
-                #     id_programador__id_user=request.user)
-                # self.fields['id_bug'].label_from_instance = lambda obj: f'{obj.id_proyecto} - {obj.titulo}'
+                
                 super().__init__(*args, **kwargs)
                 bugs_filtrados = Bug.objects.filter(
                     id_programador__id_user=request.user, estado__in=[Bug.ESTADOS_CHOICES[0][0], Bug.ESTADOS_CHOICES[1][0]])
@@ -683,18 +655,9 @@ class AvancesAdmin(general):
                 self.fields['id_bug'].label_from_instance = lambda obj: f'{obj.id_proyecto} - {obj.titulo}'
             
                 if not bugs_filtrados.exists():
-                    #kwargs['widget'] = forms.HiddenInput()
-                    #kwargs['label'] = 'Caso Asociado (No hay casos disponibles)'
+        
                     self.fields['id_bug'].queryset = bugs_filtrados
                     self.fields['id_bug'].empty_label = 'No hay Casos Asociados disponibles'
-            
-            #     if self.instance:
-            # # Modo de edición: Permitir todos los bugs, independientemente de su estado
-            #       self.fields['id_bug'].queryset = Bug.objects.filter(id_programador__id_user=request.user)
-            #     else:
-            #         self.fields['id_bug'].queryset = Bug.objects.filter(
-            #         id_programador__id_user=request.user, estado__in=[Bug.ESTADOS_CHOICES[0][0], Bug.ESTADOS_CHOICES[1][0]])
-            #     self.fields['id_bug'].label_from_instance = lambda obj: f'{obj.id_proyecto} - {obj.titulo}'
 
             
             class Meta:
@@ -772,9 +735,6 @@ class ReasignacionBugAdmin(general):
             return qs.filter(estado=Reasignacion.ESTADOS_CHOICES[0][0])
 
     def get_form(self, request, obj=None, **kwargs):
-        # if obj:
-        #     self.instance = obj
-        # return super(ReasignacionBugAdmin, self).get_form(request, obj, **kwargs)
         if obj:
             self.instance = obj
         form = super().get_form(request, obj, **kwargs)
