@@ -73,7 +73,7 @@ a{color:var(--text-color);text-decoration:none}
 .login-form .group .input,
 .login-form .group .button{
 	width:100%;
-	color:#fff;
+	color:var(--text-color);
 	display:block;
 }
 .login-form .group .input,
