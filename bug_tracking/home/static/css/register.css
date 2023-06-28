@@ -160,11 +160,11 @@ input:-webkit-autofill{
 /* Mejorar este css */
 .warning-icon {
     display: none;
-    color: red;
+    color: white;
   }
   
   .warning-message {
     display: none;
-    color: red;
+    color: white;
     font-size: 12px;
   }
