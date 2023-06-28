@@ -2,6 +2,7 @@ from typing import Optional
 from django.contrib import admin
 from django.contrib.auth.models import User, Group
 from django.http.request import HttpRequest
+from django.http import HttpResponseRedirect
 from .models import *
 from django.db.models import Count
 from django import forms
@@ -22,6 +23,17 @@ from django.views.generic.edit import CreateView
 admin.site.unregister(User)
 admin.site.unregister(Group)
 
+def notificar(user, type, nuevo_estado):
+    notificacion = Notificaciones.objects.create(id_user=user)
+    
+    if type == ReporteBug:
+        pass
+    
+    if type == Bug:
+        pass
+    
+    if type == Reasignacion:
+        pass    
 
 class general(admin.ModelAdmin):
     def render_change_form(self, request, context, add, change, form_url='', obj=None):
@@ -29,20 +41,19 @@ class general(admin.ModelAdmin):
             'show_save_and_continue': False,
             'show_save_and_add_another': False,
         })
-
+        
         return super().render_change_form(request, context, add, change, form_url, obj)
 
-# TODO ver tema de no poder editar usuarios
-# al crear usuarios tengan por defecto is_staff=True, especificar que al registrarse desde la pagina se tiene que especificar is_staff=False
 
-
+#TODO ver tema de no poder editar usuarios
+#al crear usuarios tengan por defecto is_staff=True, especificar que al registrarse desde la pagina se tiene que especificar is_staff=False
 @admin.register(User)
 class UserAdmin(general):
     def has_change_permissions(self, request, obj=None):
         return False
-
+    
     list_display = ('username', 'email', 'is_staff')
-
+    
     fieldsets = (
         ('Información de Usuario', {
             "fields": (
@@ -55,24 +66,29 @@ class UserAdmin(general):
             )
         })
     )
-
+    
+     
 
 @admin.register(Usuario)
 class UsuarioAdmin(general):
     def has_add_permission(self, request, obj=None):
         return False
-
-    def has_change_permission(self, request, obj=None):
+    
+    def has_change_permission(self, request,obj=None):
         return False
-
+    
+    def has_delete_permission(self, request,obj=None):
+        return False
+    
+    
 
 class CargoInline(admin.TabularInline):
     model = Proyecto.programadores.through
-
+    
     extra = 0
-
+    
     list_display = ('id_programador', 'cargo')
-
+    
     def has_change_permissions(self, request, obj=None):
         return False
 
@@ -80,49 +96,51 @@ class CargoInline(admin.TabularInline):
 @admin.register(Programador)
 class ProgramadorAdmin(general):
     @admin.display(description='Nombre')
-    def get_name(self, obj=None):
+    def get_name(self,obj=None):
         return obj.id_user.first_name + ' ' + obj.id_user.last_name
 
     @admin.display(description='Email')
-    def get_email(self, obj=None):
+    def get_email(self,obj=None):
         return obj.id_user.email
-
+    
     def has_add_permission(self, request, obj=None):
         return False
-
+    
     def has_delete_permission(self, request, obj=None):
         return False
-
+    
+    
     readonly_fields = ['get_name', 'get_email']
-
+    
     list_display = ('get_name', 'get_email')
-
+    
     inlines = [
         CargoInline,
     ]
-
+    
     fieldsets = [
         ('Información personal', {
             'fields': readonly_fields
         }),
     ]
-
+    
+    
 
 @admin.register(Proyecto)
 class ProyectoAdmin(general):
     list_display = ('nombre_proyecto',)
-
+    
     exclude = ('programadores',)
-
+    
     inlines = [
         CargoInline,
     ]
-
+    
+    
 
 @admin.register(Cargo)
 class CargoAdmin(general):
     list_display = ('id_programador', 'cargo', 'id_proyecto')
-
     fieldsets = [
         ('Proyecto', {
             'fields': ['id_proyecto',]
@@ -131,18 +149,6 @@ class CargoAdmin(general):
             'fields': ['id_programador', 'cargo']
         })
     ]
-
-# class ReasignacionInline(admin.TabularInline):
-
-
-# class AvancesInlineForm(forms.ModelForm):
-#     class Meta:
-#         model = Avances
-#         fields = ['titulo', 'descripcion']
-#         widgets = {
-#             'titulo': forms.TextInput(),
-#             'descripcion': forms.Textarea(),
-#         }
 
 class AvancesInlineForm(forms.ModelForm):
     class Meta:
@@ -290,12 +296,11 @@ class IdProyectoBugFilter(admin.SimpleListFilter):
             return queryset.filter(id_proyecto=self.value())
         return queryset
 
-# TODO definir que fields dejar en readonly
+    
 
-
+#TODO definir que fields dejar en readonly
 @admin.register(Bug)
 class BugAdmin(general):
-    
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         if not request.user.is_superuser and request.user.is_staff:
@@ -385,6 +390,7 @@ class BugAdmin(general):
     list_filter = ('id_proyecto', 'estado')
 
     fieldsets = [
+
         ('Informacion del Bug', {
             'fields': ['titulo', 'descripcion', 'id_proyecto', 'estado', 'prioridad']
         }),
@@ -506,13 +512,6 @@ class ReporteBugAdmin(general):
 
         super().save_model(request, obj, form, change)
 
-    def delete_model(self, request, obj=None):
-        obj.estado = ReporteBug.ESTADOS_CHOICES[2][0]
-        obj.save()
-
-    def has_add_permission(self, request, obj=None):
-        return False
-
     def get_list_display(self, request):
         if not request.user.is_superuser and request.user.is_staff:
             return ('titulo_ticket', 'caso_asociado', 'proyecto_ticket')
@@ -543,12 +542,27 @@ class ReporteBugAdmin(general):
         if not request.user.is_superuser and request.user.is_staff:
             return (ProyectoFiltro, BugFiltro)
         return ()
-
     
+    def has_add_permission(self, request,obj=None):      
+        return False
     
+    def has_delete_permission(self, request,obj=None):
+        return False
+    
+    def response_change(self, request, obj):
+        if '_continue' in request.POST:
+            return HttpResponseRedirect(obj.get_admin_url())
+        elif '_desaprobar' in request.POST:
+            obj.estado = ReporteBug.ESTADOS_CHOICES[2][0]
+            obj.save()
+            
+            redirect_url = "admin:{}_{}_changelist".format(self.opts.app_label, self.opts.model_name)
+            
+            return HttpResponseRedirect(reverse(redirect_url))
 
 
 # Clase para obtener proyectos asociados al programador
+
 
 
 class IdProyectoFilter(admin.SimpleListFilter):
@@ -604,7 +618,7 @@ class EstadoBugFilter(admin.SimpleListFilter):
             return queryset.filter(id_bug__estado=Bug.ESTADOS_CHOICES[1][0])
         elif self.value() == 'solucionado':
             return queryset.filter(id_bug__estado=Bug.ESTADOS_CHOICES[2][0])
-        
+      
 @admin.register(Avances)
 class AvancesAdmin(general):
     @admin.display(ordering='id_bug__proyecto', description='Proyecto')
@@ -617,8 +631,10 @@ class AvancesAdmin(general):
     def proyecto(self, obj):
         return obj.id_bug.id_proyecto.nombre_proyecto
 
+
     def get_proyecto(self, obj=None):
         return obj.id_bug.id_proyecto
+
 
     def formatted_fecha_avance(self, obj):
         return obj.fecha_avance.strftime('%Y-%m-%d %H:%M:%S')
@@ -718,12 +734,6 @@ class AvancesAdmin(general):
     
 
 
-@admin.register(Notificaciones)
-class NotificacionesAdmin(general):
-    def has_change_permission(self, request, obj=None):
-        return False
-
-
 class ReasignacionProgramadorForm(forms.ModelForm):
     
     class Meta:
@@ -742,6 +752,15 @@ class ReasignacionProgramadorForm(forms.ModelForm):
 def is_superuser(user):
     return user.is_superuser
 
+
+@admin.register(Notificaciones)
+class NotificacionesAdmin(general):
+    def has_change_permission(self, request,obj=None):
+        return False
+    
+    def has_delete_permission(self, request,obj=None):
+        return False
+    
 
 @admin.register(Reasignacion)
 class ReasignacionBugAdmin(general):
@@ -762,7 +781,7 @@ class ReasignacionBugAdmin(general):
     caso_bug.short_description = 'Caso Asociado'
     estado_r.short_description = 'Estado'
     programador_inicial.short_description = 'Programador'
-
+    
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         if not request.user.is_superuser and request.user.is_staff:
@@ -772,9 +791,6 @@ class ReasignacionBugAdmin(general):
             return qs.filter(estado=Reasignacion.ESTADOS_CHOICES[0][0])
 
     def get_form(self, request, obj=None, **kwargs):
-        # if obj:
-        #     self.instance = obj
-        # return super(ReasignacionBugAdmin, self).get_form(request, obj, **kwargs)
         if obj:
             self.instance = obj
         form = super().get_form(request, obj, **kwargs)
@@ -786,8 +802,7 @@ class ReasignacionBugAdmin(general):
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'id_programador_final':
-            kwargs['queryset'] = Programador.objects.filter(
-                cargo__id_proyecto=self.instance.id_bug.id_proyecto).exclude(id_user=self.instance.id_programador_inicial)
+            kwargs['queryset'] = Programador.objects.filter(cargo__id_proyecto=self.instance.id_bug.id_proyecto).exclude(id_user=self.instance.id_programador_inicial)
             kwargs['form_class'] = ProgramadorChoiceField
         elif db_field.name == 'id_bug':
             if not request.user.is_superuser and request.user.is_staff:
@@ -829,34 +844,6 @@ class ReasignacionBugAdmin(general):
                     pass
         super().save_model(request, obj, form, change)
 
-    def has_add_permission(self, request, obj=None):
-        return not request.user.is_superuser
-
-    def has_delete_permission(self, request, obj=None):
-        return False
-
-    def desaprobar(self, obj):
-        url = reverse('admin:desaprobar_url', kwargs={
-                      'id': obj.id_reasignacion})
-        return format_html('<a href="{% url opts|admin_urlname:\'changelist\' %}" class="btn {{ jazzmin_ui.button_classes.danger }} form-control">{% trans \'Desaprobar\' %}</a>', url)
-
-    def get_urls(self):
-        urls = super().get_urls()
-        custom_urls = [
-            path('desaprobar/<int:id>', self.desaprobar_app, name='desaprobar_url')
-        ]
-
-        return custom_urls + urls
-
-    def desaprobar_app(self, request, id):
-        obj = Reasignacion.objects.get(id_reasignacion=id)
-
-        obj.estado = Reasignacion.ESTADOS_CHOICES[2][0]
-        obj.save()
-
-        redirect_url = "admin:{}_{}_changelist".format(
-            self.opts.app_label, self.opts.model_name)
-        return redirect(reverse(redirect_url))
 
     def get_list_display(self, request):
         if not request.user.is_superuser and request.user.is_staff:
@@ -897,6 +884,24 @@ class ReasignacionBugAdmin(general):
         if not request.user.is_superuser and request.user.is_staff:
             return ('estado',)
         return ()
+      
+    def has_add_permission(self, request,obj=None):
+        return False
+    
+    def has_delete_permission(self, request,obj=None):
+        return False
+    
+    def response_change(self, request, obj):
+        if '_continue' in request.POST:
+            return HttpResponseRedirect(obj.get_admin_url())
+        elif '_desaprobar' in request.POST:
+            obj.estado = Reasignacion.ESTADOS_CHOICES[2][0]
+            obj.save()
+            
+            redirect_url = "admin:{}_{}_changelist".format(self.opts.app_label, self.opts.model_name)
+            
+            return HttpResponseRedirect(reverse(redirect_url))
+    
 
     list_display = ('id_reasignacion', 'id_bug',
                     'id_programador_inicial', 'fecha_reasignacion')
@@ -913,20 +918,22 @@ class ReasignacionBugAdmin(general):
     ]
 
 
+    
 class ProgramadorChoiceField(ModelChoiceField):
     def label_from_instance(self, obj):
         total_bugs = obj.bug_set.count()
-
+        
         bugs_baja = obj.bug_set.filter(
             id_programador=obj).filter(prioridad=Bug.PRIORIDADES_CHOICES[0][0]).count()
-
+        
         bugs_media = obj.bug_set.filter(
             id_programador=obj).filter(prioridad=Bug.PRIORIDADES_CHOICES[1][0]).count()
-
+        
         bugs_alta = obj.bug_set.filter(
             id_programador=obj).filter(prioridad=Bug.PRIORIDADES_CHOICES[2][0]).count()
-
+        
         bugs_urgente = obj.bug_set.filter(
             id_programador=obj).filter(prioridad=Bug.PRIORIDADES_CHOICES[3][0]).count()
 
         return f'{obj.id_user.username} -  TOTAL BUGS: {total_bugs} | BAJA: {bugs_baja} | MEDIA: {bugs_media} | ALTA: {bugs_alta} | URGENTE: {bugs_urgente}'
+

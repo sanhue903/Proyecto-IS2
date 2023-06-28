@@ -108,7 +108,7 @@
                             <span class="text nav-text">Cerrar sesión</span>
                         </a>
                     {%else%}
-                        <a href="login">
+                        <a href="{% url 'home:login' %}">
                             <i class='bx bx-log-in icon' ></i>
                             <span class="text nav-text">Iniciar sesión</span>
                         </a>
