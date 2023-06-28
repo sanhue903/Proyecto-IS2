@@ -157,3 +157,14 @@ input:-webkit-autofill{
     -webkit-text-fill-color: white;
     transition: background-color 5000s ease-in-out 0s; /* Evita que el color de fondo cambie a blanco */
 }
+/* Mejorar este css */
+.warning-icon {
+    display: none;
+    color: red;
+  }
+  
+  .warning-message {
+    display: none;
+    color: red;
+    font-size: 12px;
+  }

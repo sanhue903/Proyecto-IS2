@@ -3,9 +3,12 @@ from django.http import HttpResponse
 from django.template import loader
 from django.contrib import messages
 from .models import ReporteBug, Bug
-from database.models import ReporteBug, Bug, Usuario, Notificaciones
+from database.models import ReporteBug, Bug, Usuario
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+
+from django.contrib.auth.models import User
+
 from .forms import CustomUserCreationForm
 from datetime import datetime, timedelta
 from django.utils import timezone
@@ -131,8 +134,18 @@ def signup(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save() #guarda el usuario
-            return redirect('home:login')
+            # return redirect('home:login')
     else:
         form = CustomUserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
 
+# def home_inicio(request):
+#     listar_reportes = ReporteBug.objects.order_by("id_reporte")[:20]
+
+#     listar_bug = Bug.objects.order_by("id_bug")[:20]
+
+#     context = {
+#         "listar_reportes": listar_reportes,
+#         "listar_bug": listar_bug
+#     }
+#     return render(request, "home/index.html", context)
