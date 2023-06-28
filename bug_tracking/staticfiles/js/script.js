@@ -29,6 +29,7 @@ function onload() {
     localStorage.setItem("darkmode", !WasDarkMode);
     const element = document.body;
     element.classList.toggle("dark");
+    sendDarkMode(darkMode); // Envía la notificación al servidor
   });
 
   document.body.classList.toggle(
@@ -73,6 +74,30 @@ function onload() {
       }
     }
   });
+
+  // Agrega el siguiente código en la función 'onload'
+
+  function sendDarkMode(darkMode) {
+    fetch('', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': '{{ csrf_token }}'  // Asegúrate de tener la etiqueta CSRF en tu formulario
+      },
+      body: JSON.stringify({ dark_mode: darkMode })
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          console.log('Modo oscuro cambiado correctamente');
+        } else {
+          console.error('Error al cambiar el modo oscuro');
+        }
+      })
+      .catch(error => {
+        console.error('Error de red:', error);
+      });
+  }
 }
 
 document.addEventListener("DOMContentLoaded", onload);

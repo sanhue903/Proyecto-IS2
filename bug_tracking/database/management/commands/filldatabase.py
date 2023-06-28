@@ -67,22 +67,22 @@ class Command(BaseCommand):
 
 
         # Insertar programadores
-        programador1 = User.objects.create_user(username='SSanhueza',password='1234',email='ssanhueza@udec.cl',is_staff=True)
+        programador1 = User.objects.create_user(username='SSanhueza',first_name='Sebastian',last_name='Sanhueza',password='1234',email='ssanhueza@udec.cl',is_staff=True)
         programador1.save()
 
-        programador2 = User.objects.create_user(username='NHerrera',password='1234',email='nherrera@udec.cl',is_staff=True)
+        programador2 = User.objects.create_user(username='NHerrera',first_name='Nicolas',last_name='Herrera',password='1234',email='nherrera@udec.cl',is_staff=True)
         programador2.save()
 
-        programador3 = User.objects.create_user(username='RZurita',password='1234',email='rzurita@udec.cl',is_staff=True)
+        programador3 = User.objects.create_user(username='RZurita',first_name='Romina',last_name='Zurita',password='1234',email='rzurita@udec.cl',is_staff=True)
         programador3.save()
 
-        programador4 = User.objects.create_user(username='DMichel',password='1234',email='dmichel@udec.cl',is_staff=True)
+        programador4 = User.objects.create_user(username='DMichel',first_name='Daniel',last_name='Michel',password='1234',email='dmichel@udec.cl',is_staff=True)
         programador4.save()
 
-        programador5 = User.objects.create_user(username='MVilla',password='1234',email='mvilla@udec.cl',is_staff=True)
+        programador5 = User.objects.create_user(username='MVilla',first_name='Miguel',last_name='Villa',password='1234',email='mvilla@udec.cl',is_staff=True)
         programador5.save()
 
-        programador6 = User.objects.create(username='YReyes',password='1234',email='yreyes@udec.cl',is_staff=True)
+        programador6 = User.objects.create(username='YReyes',first_name='Yerko',last_name='Reyes',password='1234',email='yreyes@udec.cl',is_staff=True)
         programador6.save()
 
         # Insertar proyectos
@@ -112,29 +112,29 @@ class Command(BaseCommand):
         cargo6.save()
 
         # Insertar bugs
-        bug1 = Bug.objects.create(titulo='Bug 1', descripcion='Cuando voy a agregar una cocacola al carrito, me da error', prioridad=('ALTA', 'bug de alta prioridad'), estado=('ASIGNADO', 'bug recien asignado'), id_proyecto=proyecto1, id_programador=programador1.programador)
+        bug1 = Bug.objects.create(titulo='Bug 1', descripcion='Cuando voy a agregar una cocacola al carrito, me da error', prioridad=Bug.PRIORIDADES_CHOICES[2][0], estado=Bug.ESTADOS_CHOICES[0][0], id_proyecto=proyecto1, id_programador=programador1.programador)
         bug1.save()
 
-        bug2 = Bug.objects.create(titulo='Bug 2', descripcion='No puedo iniciar sesion desde un nuevo dispositivo, pero desde los viejos funciona bien', prioridad=('BAJA', 'bug de baja prioridad'), estado=('EN PROCESO', 'bug esta proceso de revisión'), id_proyecto=proyecto2, id_programador=programador1.programador)
+        bug2 = Bug.objects.create(titulo='Bug 2', descripcion='No puedo iniciar sesion desde un nuevo dispositivo, pero desde los viejos funciona bien', prioridad=Bug.PRIORIDADES_CHOICES[0][0], estado=Bug.ESTADOS_CHOICES[1][0], id_proyecto=proyecto2, id_programador=programador1.programador)
         bug2.save()
 
-        bug3 = Bug.objects.create(titulo='Bug 3', descripcion='al momento de agregar mas inventario, la sprite no suman', prioridad=('URGENTE', 'bug de urgente prioridad'), estado=('SOLUCIONADO', 'bug solucionado'), id_proyecto=proyecto1, id_programador=programador3.programador)
+        bug3 = Bug.objects.create(titulo='Bug 3', descripcion='al momento de agregar mas inventario, la sprite no suman', prioridad=Bug.PRIORIDADES_CHOICES[3][0], estado=Bug.ESTADOS_CHOICES[2][0], id_proyecto=proyecto1, id_programador=programador3.programador)
         bug3.save()
 
-        bug4 = Bug.objects.create(titulo='Bug 4', descripcion='Al adjuntar archivos, los de tipo pdf no se agregan', prioridad=('MEDIA', 'bug de media prioridad'), estado=('EN PROCESO', 'bug esta proceso de revisión'), id_proyecto=proyecto2, id_programador=programador5.programador)
+        bug4 = Bug.objects.create(titulo='Bug 4', descripcion='Al adjuntar archivos, los de tipo pdf no se agregan', prioridad=Bug.PRIORIDADES_CHOICES[1][0], estado=Bug.ESTADOS_CHOICES[1][0], id_proyecto=proyecto2, id_programador=programador5.programador)
         bug4.save()
 
         # Insertar reportes de bugs
-        reporte1 = ReporteBug.objects.create(titulo='Reporte 1', reporte='Reporte del Bug 1', estado=('PENDIENTE', 'reporte en estado pendiente'),id_usuario=usuario.usuario, id_proyecto=proyecto1)
+        reporte1 = ReporteBug.objects.create(titulo='Reporte 1', reporte='Reporte del Bug 1',id_usuario=usuario.usuario, id_proyecto=proyecto1)
         reporte1.save()
 
-        reporte2 = ReporteBug.objects.create(titulo='Reporte 2', reporte='Reporte del Bug 2', estado=('DESAPROBADO', 'reporte desaprobado'), id_usuario=usuario2.usuario, id_proyecto=proyecto2)
+        reporte2 = ReporteBug.objects.create(titulo='Reporte 2', reporte='Reporte del Bug 2', estado=ReporteBug.ESTADOS_CHOICES[2][0], id_usuario=usuario2.usuario, id_proyecto=proyecto2)
         reporte2.save()
 
-        reporte3 = ReporteBug.objects.create(titulo='Reporte 3', reporte='Reporte del Bug 3', estado=('APROBADO', 'reporte aprobado'), id_usuario=usuario3.usuario, id_bug=bug3, id_proyecto=proyecto1)
+        reporte3 = ReporteBug.objects.create(titulo='Reporte 3', reporte='Reporte del Bug 3', estado=ReporteBug.ESTADOS_CHOICES[1][0], id_usuario=usuario3.usuario, id_bug=bug3, id_proyecto=proyecto1)
         reporte3.save()
 
-        reporte4 = ReporteBug.objects.create(titulo='Reporte 4', reporte='Reporte del Bug 4', estado=('APROBADO', 'reporte aprobado'), id_usuario=usuario3.usuario, id_bug=bug4, id_proyecto=proyecto2)
+        reporte4 = ReporteBug.objects.create(titulo='Reporte 4', reporte='Reporte del Bug 4', estado=ReporteBug.ESTADOS_CHOICES[1][0], id_usuario=usuario3.usuario, id_bug=bug4, id_proyecto=proyecto2)
         reporte4.save()
 
 
