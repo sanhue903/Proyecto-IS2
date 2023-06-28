@@ -31,6 +31,7 @@ def home(request):
 
                 bugs_asignados = Bug.objects.filter(id_programador=request.user, estado="ASIGNADO" or "EN PROCESO")
 
+
                 bugs_datas = []
                 for bug in bugs_asignados:
                     Titulo = bugs_asignados["titulo"],
