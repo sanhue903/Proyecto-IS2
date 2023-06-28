@@ -2,10 +2,8 @@ from django.shortcuts import render
 from django.core.paginator import Paginator
 from database.models import Bug, ReporteBug, Proyecto
 from django.db.models import Q
-from urllib.parse import unquote
 
 def index(request):
-
     bug_order = request.GET.get('bug_order', '')
     report_order = request.GET.get('report_order', '')
 
@@ -15,64 +13,32 @@ def index(request):
     bug_search = request.GET.get('bug_search', '')
     report_search = request.GET.get('report_search', '')
 
-    print(bug_search)
-
     bug_list = Bug.objects.all()
     report_list = ReporteBug.objects.all()
 
     if bug_order == 'id':
-        if bug_order_direction == 'asc':
-            bug_list = bug_list.order_by("id_bug")
-        else:
-            bug_list = bug_list.order_by("-id_bug")
+        bug_list = bug_list.order_by("id_bug" if bug_order_direction == 'asc' else "-id_bug")
     elif bug_order == 'titulo':
-        if bug_order_direction == 'asc':
-            bug_list = bug_list.order_by("titulo")
-        else:
-            bug_list = bug_list.order_by("-titulo")
+        bug_list = bug_list.order_by("titulo" if bug_order_direction == 'asc' else "-titulo")
     elif bug_order == 'fecha':
-        if bug_order_direction == 'asc':
-            bug_list = bug_list.order_by("fecha_reporte")
-        else:
-            bug_list = bug_list.order_by("-fecha_reporte")
+        bug_list = bug_list.order_by("fecha_reporte" if bug_order_direction == 'asc' else "-fecha_reporte")
     elif bug_order == 'estado':
-        if bug_order_direction == 'asc':
-            bug_list = bug_list.order_by("estado")
-        else:
-            bug_list = bug_list.order_by("-estado")
+        bug_list = bug_list.order_by("estado" if bug_order_direction == 'asc' else "-estado")
     elif bug_order == 'proyecto':
-        if bug_order_direction == 'asc':
-            bug_list = bug_list.order_by("id_proyecto__nombre_proyecto")
-        else:
-            bug_list = bug_list.order_by("-id_proyecto__nombre_proyecto")
+        bug_list = bug_list.order_by("id_proyecto__nombre_proyecto" if bug_order_direction == 'asc' else "-id_proyecto__nombre_proyecto")
     else:
         bug_list = bug_list.order_by("-fecha_reporte")
 
     if report_order == 'id':
-        if report_order_direction == 'asc':
-            report_list = report_list.order_by("id_reporte")
-        else:
-            report_list = report_list.order_by("-id_reporte")
+        report_list = report_list.order_by("id_reporte" if report_order_direction == 'asc' else "-id_reporte")
     elif report_order == 'titulo':
-        if report_order_direction == 'asc':
-            report_list = report_list.order_by("titulo")
-        else:
-            report_list = report_list.order_by("-titulo")
+        report_list = report_list.order_by("titulo" if report_order_direction == 'asc' else "-titulo")
     elif report_order == 'fecha':
-        if report_order_direction == 'asc':
-            report_list = report_list.order_by("fecha_reporte")
-        else:
-            report_list = report_list.order_by("-fecha_reporte")
+        report_list = report_list.order_by("fecha_reporte" if report_order_direction == 'asc' else "-fecha_reporte")
     elif report_order == 'estado':
-        if report_order_direction == 'asc':
-            report_list = report_list.order_by("estado")
-        else:
-            report_list = report_list.order_by("-estado")
+        report_list = report_list.order_by("estado" if report_order_direction == 'asc' else "-estado")
     elif report_order == 'proyecto':
-        if report_order_direction == 'asc':
-            report_list = report_list.order_by("id_proyecto__nombre_proyecto")
-        else:
-            report_list = report_list.order_by("-id_proyecto__nombre_proyecto")
+        report_list = report_list.order_by("id_proyecto__nombre_proyecto" if report_order_direction == 'asc' else "-id_proyecto__nombre_proyecto")
     else:
         report_list = report_list.order_by("-fecha_reporte")
 
