@@ -139,6 +139,26 @@ def signup(request):
         form = CustomUserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
 
+def check_username_availability(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        try:
+            user = User.objects.get(username=username)
+            available = False
+        except User.DoesNotExist:
+            available = True
+        return JsonResponse({'available': available})
+
+def check_email_availability(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        ## print('Email:', email)
+        try:
+            user = User.objects.get(email=email)
+            available = False
+        except User.DoesNotExist:
+            available = True
+        return JsonResponse({'available': available})
 # def home_inicio(request):
 #     listar_reportes = ReporteBug.objects.order_by("id_reporte")[:20]
 
