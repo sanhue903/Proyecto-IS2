@@ -211,14 +211,17 @@
 	padding: 24px;
 	background: var(--sidebar-color);
 	border-radius: 10px;
+
 	display: flex;
 	align-items: center;
 	grid-gap: 24px;
 }
 
 .box-info li .bx {
+
 	width: 80px;
 	height: 80px;
+
 	border-radius: 10px;
 	font-size: 36px;
 	display: flex;
@@ -242,6 +245,7 @@
 .box-info li:nth-child(3) .bx {
 	background: var(--light-orange);
 	color: var(--orange);
+
 }
 
 .graph{
@@ -258,5 +262,6 @@
 .graph .plot-container.plotly{
     background-color: var(--sidebar-color);
     border-radius: 10px;
+
 
 }

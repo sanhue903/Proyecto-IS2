@@ -15,6 +15,7 @@
         </div>
     {% endif %}
 
+
     {% if show_save_as_new %}
         <div class="form-group">
             <input type="submit" class="btn {{ jazzmin_ui.button_classes.info }} form-control" value="{% trans 'Save as new' %}" name="_saveasnew">
@@ -36,11 +37,16 @@
         </div>
     {% endif %}
 
+
     {% block extra-actions %}
     <div class="form-group">
-        <input type="submit" class="btn {{ jazzmin_ui.button_classes.danger }} form-control" value="{% trans 'Desaprobar' %}" name="_desaprobar">
+        {% if user.is_superuser %}
+            <a href="{% url opts|admin_urlname:'changelist' %}" class="btn {{ jazzmin_ui.button_classes.danger }} form-control">{% trans 'Desaprobar' %}</a>
+            <input type="submit" class="btn {{ jazzmin_ui.button_classes.info }} form-control" value="{% trans 'Desaprobar' %}" name="_desaprobar">
+        {% endif %}
     </div>
     {% endblock %}
+
 
 </div>
 {% endblock %}

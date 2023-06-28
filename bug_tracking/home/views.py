@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import ReporteBug, Bug
+
 from django.http import JsonResponse
+
 from database.models import ReporteBug, Bug, Usuario
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
@@ -146,6 +148,7 @@ def home(request):
             labels_bugs = ['Asignados', 'En proceso', 'Solucionados']
             values_bugs = [cant_bugs_asignados, cant_bugs_enproceso, cant_bugs_solucionados]
 
+
             # Crear el segundo gráfico de torta
             pie_fig2 = go.Figure(data=go.Pie(
                 labels=labels_bugs,
@@ -220,11 +223,13 @@ def home(request):
 
             return render(request, 'home/start.html', context)
 
+
     else:
         listar_reportes = ReporteBug.objects.order_by("-fecha_reporte")[:5].select_related("id_proyecto")
         total_report = ReporteBug.objects.count()
         total_bug = Bug.objects.count()
         listar_bug = Bug.objects.order_by("-fecha_reporte")[:5].select_related("id_proyecto")
+
 
         context = {
             "listar_reportes": listar_reportes,

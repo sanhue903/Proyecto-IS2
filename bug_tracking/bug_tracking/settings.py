@@ -35,7 +35,9 @@ CACHE_MIDDLEWARE_SECONDS = 0
 # Application definition
 
 INSTALLED_APPS = [
-    
+    'jazzmin',
+    'django.contrib.admin',
+
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -49,9 +51,6 @@ INSTALLED_APPS = [
     'bug_report',
     'bug_detail',
     'multiupload',
-    'bug_tracking',
-    'jazzmin',
-    'django.contrib.admin',
 
 ]
 
@@ -158,6 +157,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 """ LOGIN_REDIRECT_URL = 'home/start.html'
 LOGOUT_REDIRECT_URL = 'principal' """
 
+
+
+JAZZMIN_SETTINGS = {
+    "show_sidebar": True,
+    "show_ui_builder": True,
+
+
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'Bugtracking IS2'
@@ -227,3 +234,4 @@ JAZZMIN_UI_TWEAKS = {
         "success": "btn-success"
     }
 }
+

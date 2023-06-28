@@ -3,6 +3,7 @@ from django.core.paginator import Paginator
 from database.models import Bug, ReporteBug, Proyecto
 from django.db.models import Q
 
+
 def index(request):
     bug_order = request.GET.get('bug_order', '')
     report_order = request.GET.get('report_order', '')
@@ -12,6 +13,7 @@ def index(request):
 
     bug_search = request.GET.get('bug_search', '')
     report_search = request.GET.get('report_search', '')
+
 
     bug_list = Bug.objects.all()
     report_list = ReporteBug.objects.all()
@@ -62,6 +64,7 @@ def index(request):
     bug_page_number = request.GET.get('bug_page')
     bug_page_obj = bug_paginator.get_page(bug_page_number)
     bug_page_obj.adjusted_elided_pages = bug_paginator.get_elided_page_range(bug_page_obj.number, on_each_side=1, on_ends=1)
+
 
     report_paginator = Paginator(report_list, 5)
     report_page_number = request.GET.get('report_page')

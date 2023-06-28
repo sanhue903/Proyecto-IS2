@@ -124,12 +124,14 @@
             </tr>
           </thead>
           <tbody>
+
             {% if bug_page_obj %}
             {% for Bug in bug_page_obj %}
             <tr onclick="window.location.href = '{% url 'detail:index' Bug.id_bug %}';">
               <td>
                 {{ Bug.id_bug }}
                 <img src="{% static 'images/logo.png' %}">
+
               </td>
               <td>
                 <p>{{ Bug.titulo | truncatechars:90 }}</p>
@@ -264,12 +266,14 @@
                 {{ ReporteBug.id_reporte }}
                 <img src="{% static 'images/logo.png' %}">
               </td>
+
               <td>
                 <p>{{ ReporteBug.titulo | truncatechars:90 }}</p>
               </td>
               <td>{{ ReporteBug.fecha_reporte | naturaltime }}</td>
               <td> {{ ReporteBug.estado }} </td>
               <td>{{ ReporteBug.id_proyecto }}</td>
+
             </tr>
             {% endfor %}
             {% else %}
