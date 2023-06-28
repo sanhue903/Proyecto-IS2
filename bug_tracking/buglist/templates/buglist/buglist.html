@@ -27,43 +27,43 @@
           <thead>
             <tr>
               <th>
-                  ID
+                  
                   {% if bug_order == 'id' and request.GET.bug_order_direction == 'asc' %}
-                  <a href="#" onclick="loadBugFilter(event, 'id')"><i class='bx bx-sort-down'></i></a>
+                  <a href="#" onclick="loadBugFilter(event, 'id')">ID<i class='bx bx-sort-down icon-color'></i></a>
                   {% elif bug_order == 'id' and request.GET.bug_order_direction == 'desc' %}
-                  <a href="#" onclick="loadBugFilter(event, 'id')"><i class='bx bx-sort-up'></i></a>
+                  <a href="#" onclick="loadBugFilter(event, 'id')">ID<i class='bx bx-sort-up icon-color'></i></a>
                   {% else %}
-                  <a href="#" onclick="loadBugFilter(event, 'id')"><i class='bx bx-sort-down'></i></a>
+                  <a href="#" onclick="loadBugFilter(event, 'id')">ID<i class='bx bx-sort-down icon-color'></i></a>
                   {% endif %}
               </th>
               <th>
-                Titulo
+                
                 {% if bug_order == 'titulo' and request.GET.bug_order_direction == 'asc' %}
-                <a href="#" onclick="loadBugFilter(event, 'titulo')"><i class='bx bx-sort-down'></i></a>
+                <a href="#" onclick="loadBugFilter(event, 'titulo')">Título<i class='bx bx-sort-down icon-color'></i></a>
                 {% elif bug_order == 'titulo' and request.GET.bug_order_direction == 'desc' %}
-                <a href="#" onclick="loadBugFilter(event, 'titulo')"><i class='bx bx-sort-up'></i></a>
+                <a href="#" onclick="loadBugFilter(event, 'titulo')">Título<i class='bx bx-sort-up icon-color'></i></a>
                 {% else %}
-                <a href="#" onclick="loadBugFilter(event, 'titulo')"><i class='bx bx-sort-down'></i></a>
+                <a href="#" onclick="loadBugFilter(event, 'titulo')">Título<i class='bx bx-sort-down icon-color'></i></a>
                 {% endif %}
               </th>
               <th>
-                Fecha
+                
                 {% if bug_order == 'fecha' and request.GET.bug_order_direction == 'asc' %}
-                <a href="#" onclick="loadBugFilter(event, 'fecha')"><i class='bx bx-sort-down'></i></a>
+                <a href="#" onclick="loadBugFilter(event, 'fecha')">Fecha<i class='bx bx-sort-down icon-color'></i></a>
                 {% elif bug_order == 'fecha' and request.GET.bug_order_direction == 'desc' %}
-                <a href="#" onclick="loadBugFilter(event, 'fecha')"><i class='bx bx-sort-up'></i></a>
+                <a href="#" onclick="loadBugFilter(event, 'fecha')">Fecha<i class='bx bx-sort-up icon-color'></i></a>
                 {% else %}
-                <a href="#" onclick="loadBugFilter(event, 'fecha')"><i class='bx bx-sort-down'></i></a>
+                <a href="#" onclick="loadBugFilter(event, 'fecha')">Fecha<i class='bx bx-sort-down icon-color'></i></a>
                 {% endif %}
               </th>
               <th>
-                Estado
+                
                 {% if bug_order == 'estado' and request.GET.bug_order_direction == 'asc' %}
-                <a href="#" onclick="loadBugFilter(event, 'estado')"><i class='bx bx-sort-down'></i></a>
+                <a href="#" onclick="loadBugFilter(event, 'estado')">Estado<i class='bx bx-sort-down icon-color'></i></a>
                 {% elif bug_order == 'estado' and request.GET.bug_order_direction == 'desc' %}
-                <a href="#" onclick="loadBugFilter(event, 'estado')"><i class='bx bx-sort-up'></i></a>
+                <a href="#" onclick="loadBugFilter(event, 'estado')">Estado<i class='bx bx-sort-up icon-color'></i></a>
                 {% else %}
-                <a href="#" onclick="loadBugFilter(event, 'estado')"><i class='bx bx-sort-down'></i></a>
+                <a href="#" onclick="loadBugFilter(event, 'estado')">Estado<i class='bx bx-sort-down icon-color'></i></a>
                 {% endif %}
 
                 <!-- <div id="modal-estados" class="modal-pestaña">
@@ -90,13 +90,13 @@
 
               </th>
               <th>
-                Proyecto
+                
                 {% if bug_order == 'proyecto' and request.GET.bug_order_direction == 'asc' %}
-                <a href="#" onclick="loadBugFilter(event, 'proyecto')"><i class='bx bx-sort-down'></i></a>
+                <a href="#" onclick="loadBugFilter(event, 'proyecto')">Proyecto<i class='bx bx-sort-down icon-color'></i></a>
                 {% elif bug_order == 'proyecto' and request.GET.bug_order_direction == 'desc' %}
-                <a href="#" onclick="loadBugFilter(event, 'proyecto')"><i class='bx bx-sort-up'></i></a>
+                <a href="#" onclick="loadBugFilter(event, 'proyecto')">Proyecto<i class='bx bx-sort-up icon-color'></i></a>
                 {% else %}
-                <a href="#" onclick="loadBugFilter(event, 'proyecto')"><i class='bx bx-sort-down'></i></a>
+                <a href="#" onclick="loadBugFilter(event, 'proyecto')">Proyecto<i class='bx bx-sort-down icon-color'></i></a>
                 {% endif %}
 
                 <!-- <div id="modal-proyectos" class="modal-pestaña">
@@ -205,53 +205,52 @@
           <thead>
             <tr>
               <th>
-                ID
                 {% if report_order == 'id' and request.GET.report_order_direction == 'asc' %}
-                <a href="#" onclick="loadReportFilter(event, 'id')"><i class='bx bx-sort-down'></i></a>
+                <a href="#" onclick="loadReportFilter(event, 'id')">ID<i class='bx bx-sort-down icon-color'></i></a>
                 {% elif report_order == 'id' and request.GET.report_order_direction == 'desc' %}
-                <a href="#" onclick="loadReportFilter(event, 'id')"><i class='bx bx-sort-up'></i></a>
+                <a href="#" onclick="loadReportFilter(event, 'id')">ID<i class='bx bx-sort-up icon-color'></i></a>
                 {% else %}
-                <a href="#" onclick="loadReportFilter(event, 'id')"><i class='bx bx-sort-down'></i></a>
+                <a href="#" onclick="loadReportFilter(event, 'id')">ID<i class='bx bx-sort-down icon-color'></i></a>
                 {% endif %}
               </th>
               <th>
-                Titulo
+                
                 {% if report_order == 'titulo' and request.GET.report_order_direction == 'asc' %}
-                <a href="#" onclick="loadReportFilter(event, 'titulo')"><i class='bx bx-sort-down'></i></a>
+                <a href="#" onclick="loadReportFilter(event, 'titulo')">Titulo<i class='bx bx-sort-down icon-color'></i></a>
                 {% elif report_order == 'titulo' and request.GET.report_order_direction == 'desc' %}
-                <a href="#" onclick="loadReportFilter(event, 'titulo')"><i class='bx bx-sort-up'></i></a>
+                <a href="#" onclick="loadReportFilter(event, 'titulo')">Titulo<i class='bx bx-sort-up icon-color'></i></a>
                 {% else %}
-                <a href="#" onclick="loadReportFilter(event, 'titulo')"><i class='bx bx-sort-down'></i></a>
+                <a href="#" onclick="loadReportFilter(event, 'titulo')">Titulo<i class='bx bx-sort-down icon-color'></i></a>
                 {% endif %}
               </th>
               <th>
-                Fecha
+                
                 {% if report_order == 'fecha' and request.GET.report_order_direction == 'asc' %}
-                <a href="#" onclick="loadReportFilter(event, 'fecha')"><i class='bx bx-sort-down'></i></a>
+                <a href="#" onclick="loadReportFilter(event, 'fecha')">Fecha<i class='bx bx-sort-down icon-color'></i></a>
                 {% elif report_order == 'fecha' and request.GET.report_order_direction == 'desc' %}
-                <a href="#" onclick="loadReportFilter(event, 'fecha')"><i class='bx bx-sort-up'></i></a>
+                <a href="#" onclick="loadReportFilter(event, 'fecha')">Fecha<i class='bx bx-sort-up icon-color'></i></a>
                 {% else %}
-                <a href="#" onclick="loadReportFilter(event, 'fecha')"><i class='bx bx-sort-down'></i></a>
+                <a href="#" onclick="loadReportFilter(event, 'fecha')">Fecha<i class='bx bx-sort-down icon-color'></i></a>
                 {% endif %}
               </th>
               <th>
-                Estado
+                
                 {% if report_order == 'estado' and request.GET.report_order_direction == 'asc' %}
-                <a href="#" onclick="loadReportFilter(event, 'estado')"><i class='bx bx-sort-down'></i></a>
+                <a href="#" onclick="loadReportFilter(event, 'estado')">Estado<i class='bx bx-sort-down icon-color'></i></a>
                 {% elif report_order == 'estado' and request.GET.report_order_direction == 'desc' %}
-                <a href="#" onclick="loadReportFilter(event, 'estado')"><i class='bx bx-sort-up'></i></a>
+                <a href="#" onclick="loadReportFilter(event, 'estado')">Estado<i class='bx bx-sort-up icon-color'></i></a>
                 {% else %}
-                <a href="#" onclick="loadReportFilter(event, 'estado')"><i class='bx bx-sort-down'></i></a>
+                <a href="#" onclick="loadReportFilter(event, 'estado')">Estado<i class='bx bx-sort-down icon-color'></i></a>
                 {% endif %}
               </th>
               <th>
-                Proyecto
+                
                 {% if report_order == 'proyecto' and request.GET.report_order_direction == 'asc' %}
-                <a href="#" onclick="loadReportFilter(event, 'proyecto')"><i class='bx bx-sort-down'></i></a>
+                <a href="#" onclick="loadReportFilter(event, 'proyecto')">Proyecto<i class='bx bx-sort-down icon-color'></i></a>
                 {% elif report_order == 'proyecto' and request.GET.report_order_direction == 'desc' %}
-                <a href="#" onclick="loadReportFilter(event, 'proyecto')"><i class='bx bx-sort-up'></i></a>
+                <a href="#" onclick="loadReportFilter(event, 'proyecto')">Proyecto<i class='bx bx-sort-up icon-color'></i></a>
                 {% else %}
-                <a href="#" onclick="loadReportFilter(event, 'proyecto')"><i class='bx bx-sort-down'></i></a>
+                <a href="#" onclick="loadReportFilter(event, 'proyecto')">Proyecto<i class='bx bx-sort-down icon-color'></i></a>
                 {% endif %}
               </th>
             </th>
@@ -268,7 +267,15 @@
                 <p>{{ ReporteBug.titulo | truncatechars:90 }}</p>
               </td>
               <td>{{ ReporteBug.fecha_reporte | naturaltime }}</td>
-              <td> {{ ReporteBug.estado }} </td>
+              {%if ReporteBug.estado == "PENDIENTE"%}
+                <td><span class="status pending">Pendiente</span></td>
+              {%endif%}
+              {%if ReporteBug.estado == "DESAPROBADO"%}
+                <td><span class="status rejected">Desaprobado</span></td>
+              {%endif%}
+              {%if ReporteBug.estado == "APROBADO"%}
+                <td><span class="status completed">Aprobado</span></td>
+              {%endif%}
               <td>{{ ReporteBug.id_proyecto }}</td>
             </tr>
             {% endfor %}
@@ -278,6 +285,7 @@
             </tr>
             {% endif %}
           </tbody>
+          
         </table>
         <div class="pagination-container">
           <div class="pagination report-pagination">

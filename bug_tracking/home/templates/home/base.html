@@ -93,7 +93,7 @@
             </div>
 
             <div class="bottom-content">
-                {% if user.is_superuser %}
+                {% if user.is_staff %}
                     <li class="nav-link">
                         <a href="{% url 'admin:index' %}">
                             <i class='bx bx-cog icon' ></i>

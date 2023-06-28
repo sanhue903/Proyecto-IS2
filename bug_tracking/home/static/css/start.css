@@ -260,3 +260,20 @@
     border-radius: 10px;
 
 }
+
+.footer{
+    position: fixed;
+    display: flex;
+    bottom: 10px;
+    width: inherit;
+    justify-content: center;
+
+}
+
+.footer .text{
+    width: 85%;
+    color: white;
+    background-color: var(--primary-color);
+    padding: 20px;
+    border-radius: 10px;
+}

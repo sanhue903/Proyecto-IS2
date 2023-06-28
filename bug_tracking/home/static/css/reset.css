@@ -56,6 +56,34 @@ input[type="email"] {
   background: rgba(255, 255, 255, 0.1);
   width: 100%;
 }
+
+.hidden {
+  display: none;
+}
+input[type="password"] {
+  color: white;
+  border: none;
+  padding: 15px 20px;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.1);
+  width: 100%;
+}
+
+button {
+  width: 100%;
+  border: none;
+  padding: 15px 20px;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.1);
+  background-color: var(--sidebar-color);
+  color: var(--text-color);
+  margin-top: 10px;
+}
+
+a {
+  color: var(--text-color);
+  text-decoration: none;
+}
 .hr {
   height: 2px;
   margin: 30px 0 0px 0;

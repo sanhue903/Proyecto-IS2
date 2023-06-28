@@ -2,7 +2,7 @@
 *,:after,:before{box-sizing:border-box}
 .clearfix:after,.clearfix:before{content:'';display:table}
 .clearfix:after{clear:both;display:block}
-a{color:inherit;text-decoration:none}
+a{color:white;text-decoration:none}
 
 .container_session .text{
     text-align: center;
@@ -45,6 +45,7 @@ a{color:inherit;text-decoration:none}
 .login-form .group .label,
 .login-form .group .button{
 	text-transform:uppercase;
+	color: white;
 
 }
 .login-html .tab{
@@ -156,16 +157,15 @@ input:-webkit-autofill{
     -webkit-text-fill-color: white;
     transition: background-color 5000s ease-in-out 0s; /* Evita que el color de fondo cambie a blanco */
 }
-
 /* Mejorar este css */
 .warning-icon {
     display: none;
-    color: red;
+    color: white;
   }
   
   .warning-message {
     display: none;
-    color: red;
+    color: white;
     font-size: 12px;
   }
-
+>>>>>>>>> Temporary merge branch 2
