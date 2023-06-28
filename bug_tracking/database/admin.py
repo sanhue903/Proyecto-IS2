@@ -226,7 +226,7 @@ class BugAdmin(general):
             redirect_url = "admin:{}_{}_changelist".format(self.opts.app_label, self.opts.model_name)
             
             return HttpResponseRedirect(reverse(redirect_url))
-        elif '_solucionado' in request.POST:
+        elif '_solucionado' in request.POST and not request.user.is_superuser:
             obj.estado = Bug.ESTADOS_CHOICES[2][0]
             obj.save()
             
