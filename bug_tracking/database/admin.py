@@ -336,6 +336,7 @@ class BugAdmin(general):
         return qs
     
     def get_form(self, request, obj=None, **kwargs):
+        self.instance = None
         if obj:
             self.instance = obj
         return super(BugAdmin, self).get_form(request, obj, **kwargs)
@@ -415,6 +416,22 @@ class BugAdmin(general):
         if not request.user.is_superuser and request.user.is_staff:
             return True  # Permitir que los programadores editen el bug
         return False
+    
+    def response_change(self, request, obj):
+        if '_save' in request.POST:
+            redirect_url = "admin:{}_{}_changelist".format(self.opts.app_label, self.opts.model_name)
+            
+            return HttpResponseRedirect(reverse(redirect_url))
+        elif '_solucionado' in request.POST and not request.user.is_superuser:
+            obj.estado = Bug.ESTADOS_CHOICES[2][0]
+            obj.save()
+            
+            notificar(obj)
+            
+            
+            redirect_url = "admin:{}_{}_changelist".format(self.opts.app_label, self.opts.model_name)
+            
+            return HttpResponseRedirect(reverse(redirect_url))
        
     #readonly_fields = ['id_programador',]
     
