@@ -145,13 +145,13 @@ class Command(BaseCommand):
         reporte8 = ReporteBug.objects.create(titulo='Reporte 8', reporte='Reporte del momento de recibir un pago',estado=ReporteBug.ESTADOS_CHOICES[1][0], id_usuario=usuario3.usuario, id_bug=bug8, id_proyecto=proyecto1)
         reporte8.save()
 
-        reporte9 = ReporteBug.objects.create(titulo='Reporte 9', reporte='Reporte de reestablecer contraseña',  id_usuario=usuario1.usuario, id_bug=bug9, id_proyecto=proyecto4)
+        reporte9 = ReporteBug.objects.create(titulo='Reporte 9', reporte='Reporte de reestablecer contraseña',  id_usuario=usuario1.usuario, id_proyecto=proyecto4)
         reporte9.save()
 
         reporte10 = ReporteBug.objects.create(titulo='Reporte 10', reporte='Reporte De la funcionalidad de busqueda', estado=ReporteBug.ESTADOS_CHOICES[1][0], id_usuario=usuario2.usuario, id_bug=bug10, id_proyecto=proyecto1)
         reporte10.save()
 
-        reporte11 = ReporteBug.objects.create(titulo='Reporte 11', reporte='Reporte de la imagen de perfil  ',  id_usuario=usuario3.usuario, id_bug=bug11, id_proyecto=proyecto4)
+        reporte11 = ReporteBug.objects.create(titulo='Reporte 11', reporte='Reporte de la imagen de perfil  ',  id_usuario=usuario3.usuario, id_proyecto=proyecto4)
         reporte11.save()
 
         reporte12 = ReporteBug.objects.create(titulo='Reporte 12', reporte='Reporte sobre agregar productos al carrito ', estado=ReporteBug.ESTADOS_CHOICES[1][0], id_usuario=usuario.usuario, id_bug=bug12, id_proyecto=proyecto1)
@@ -160,7 +160,7 @@ class Command(BaseCommand):
         reporte13 = ReporteBug.objects.create(titulo='Reporte 13', reporte='Reporte en el proceso del pago ', estado=ReporteBug.ESTADOS_CHOICES[2][0], id_usuario=usuario1.usuario, id_bug=bug13, id_proyecto=proyecto1)
         reporte13.save()
 
-        reporte14 = ReporteBug.objects.create(titulo='Reporte 14', reporte='Reporte sobre el inicio de sesión con cuenta google ',  id_usuario=usuario2.usuario, id_bug=bug14, id_proyecto=proyecto4)
+        reporte14 = ReporteBug.objects.create(titulo='Reporte 14', reporte='Reporte sobre el inicio de sesión con cuenta google ',  id_usuario=usuario2.usuario,  id_proyecto=proyecto4)
         reporte14.save()
 
         reporte15 = ReporteBug.objects.create(titulo='Reporte 15', reporte='Reporte compartir el enlace a otras redes sociales ', estado=ReporteBug.ESTADOS_CHOICES[1][0], id_usuario=usuario3.usuario, id_bug=bug15, id_proyecto=proyecto4)
@@ -175,7 +175,7 @@ class Command(BaseCommand):
         reporte18 = ReporteBug.objects.create(titulo='Reporte 18', reporte='Reporte sobre el boton de inicio', estado=ReporteBug.ESTADOS_CHOICES[1][0], id_usuario=usuario3.usuario, id_bug=bug18, id_proyecto=proyecto3)
         reporte18.save()
 
-        reporte19 = ReporteBug.objects.create(titulo='Reporte 19', reporte='Reporte sobre el boton de guardar los cambios', id_usuario=usuario.usuario, id_bug=bug19, id_proyecto=proyecto1)
+        reporte19 = ReporteBug.objects.create(titulo='Reporte 19', reporte='Reporte sobre el boton de guardar los cambios', id_usuario=usuario.usuario, id_proyecto=proyecto1)
         reporte19.save()
 
         reporte20 = ReporteBug.objects.create(titulo='Reporte 20', reporte='Reporte de la pagina de inicio duplivada', estado=ReporteBug.ESTADOS_CHOICES[1][0], id_usuario=usuario1.usuario, id_bug=bug20, id_proyecto=proyecto4)
@@ -193,7 +193,7 @@ class Command(BaseCommand):
         reporte24 = ReporteBug.objects.create(titulo='Reporte 24', reporte='Reporte en el mensaje de notificaciones', estado=ReporteBug.ESTADOS_CHOICES[1][0], id_usuario=usuario1.usuario, id_bug=bug24, id_proyecto=proyecto4)
         reporte24.save()
 
-        reporte25 = ReporteBug.objects.create(titulo='Reporte 25', reporte='Reporte no validan los campos obligatorios ',  id_usuario=usuario2.usuario, id_bug=bug25, id_proyecto=proyecto2)
+        reporte25 = ReporteBug.objects.create(titulo='Reporte 25', reporte='Reporte no validan los campos obligatorios ',  id_usuario=usuario2.usuario, id_proyecto=proyecto2)
         reporte25.save()
 
         reporte26 = ReporteBug.objects.create(titulo='Reporte 26', reporte='Reporte en la interfaz de usuarios', estado=ReporteBug.ESTADOS_CHOICES[2][0], id_usuario=usuario3.usuario, id_bug=bug26, id_proyecto=proyecto4)
@@ -211,7 +211,7 @@ class Command(BaseCommand):
         reporte30 = ReporteBug.objects.create(titulo='Reporte 30', reporte='Reporte en el momento de la compra', estado=ReporteBug.ESTADOS_CHOICES[1][0], id_usuario=usuario3.usuario, id_bug=bug30, id_proyecto=proyecto1)
         reporte30.save()
 
-        reporte31 = ReporteBug.objects.create(titulo='Reporte 31', reporte='Reporte en el historial del usuario ',  id_usuario=usuario.usuario, id_bug=bug31, id_proyecto=proyecto3)
+        reporte31 = ReporteBug.objects.create(titulo='Reporte 31', reporte='Reporte en el historial del usuario ',  id_usuario=usuario.usuario,  id_proyecto=proyecto3)
         reporte31.save()
 
         reporte32 = ReporteBug.objects.create(titulo='Reporte 32', reporte='Reporte al subir una imagen de avatar ', estado=ReporteBug.ESTADOS_CHOICES[1][0], id_usuario=usuario1.usuario, id_bug=bug32, id_proyecto=proyecto4)
@@ -229,7 +229,7 @@ class Command(BaseCommand):
         reporte36 = ReporteBug.objects.create(titulo='Reporte 36', reporte='Reporte de que no muestra los caracteres de manera correcta ', estado=ReporteBug.ESTADOS_CHOICES[1][0], id_usuario=usuario1.usuario, id_bug=bug36, id_proyecto=proyecto2)
         reporte36.save()
 
-        reporte37 = ReporteBug.objects.create(titulo='Reporte 37', reporte='Reporte al momento de eliminar un elemento',  id_usuario=usuario2.usuario, id_bug=bug37, id_proyecto=proyecto3)
+        reporte37 = ReporteBug.objects.create(titulo='Reporte 37', reporte='Reporte al momento de eliminar un elemento',  id_usuario=usuario2.usuario,  id_proyecto=proyecto3)
         reporte37.save()
 
         reporte38 = ReporteBug.objects.create(titulo='Reporte 38', reporte='Reporte en la exportacion de datos ', estado=ReporteBug.ESTADOS_CHOICES[1][0], id_usuario=usuario3.usuario, id_bug=bug38, id_proyecto=proyecto4)
@@ -238,7 +238,7 @@ class Command(BaseCommand):
         reporte39 = ReporteBug.objects.create(titulo='Reporte 39', reporte='Reporte que no salen bien las fechas ', estado=ReporteBug.ESTADOS_CHOICES[1][0], id_usuario=usuario.usuario, id_bug=bug39, id_proyecto=proyecto3)
         reporte39.save()
 
-        reporte40 = ReporteBug.objects.create(titulo='Reporte 40', reporte='Reporte sobre la no carga de un video en el sistema',  id_usuario=usuario1.usuario, id_bug=bug40, id_proyecto=proyecto4)
+        reporte40 = ReporteBug.objects.create(titulo='Reporte 40', reporte='Reporte sobre la no carga de un video en el sistema',  id_usuario=usuario1.usuario,  id_proyecto=proyecto4)
         reporte40.save()
 
         reporte41 = ReporteBug.objects.create(titulo='Reporte 41', reporte='Reporte sobre que el sistema genera archivos en los que omite información ', estado=ReporteBug.ESTADOS_CHOICES[1][0], id_usuario=usuario2.usuario, id_bug=bug41, id_proyecto=proyecto2)
@@ -253,10 +253,10 @@ class Command(BaseCommand):
         reporte44 = ReporteBug.objects.create(titulo='Reporte 44', reporte='Reporte en los que no se registran los productos', estado=ReporteBug.ESTADOS_CHOICES[2][0], id_usuario=usuario1.usuario, id_bug=bug44, id_proyecto=proyecto1)
         reporte44.save()
 
-        reporte45 = ReporteBug.objects.create(titulo='Reporte 45', reporte='Reporte sobre que no se guarda el idioma seleccionado ',  id_usuario=usuario2.usuario, id_bug=bug45, id_proyecto=proyecto3)
+        reporte45 = ReporteBug.objects.create(titulo='Reporte 45', reporte='Reporte sobre que no se guarda el idioma seleccionado ',  id_usuario=usuario2.usuario,  id_proyecto=proyecto3)
         reporte45.save()
 
-        reporte46 = ReporteBug.objects.create(titulo='Reporte 46', reporte='Reporte de crear un nuevo usuario ',  id_usuario=usuario3.usuario, id_bug=bug46, id_proyecto=proyecto4)
+        reporte46 = ReporteBug.objects.create(titulo='Reporte 46', reporte='Reporte de crear un nuevo usuario ',  id_usuario=usuario3.usuario,  id_proyecto=proyecto4)
         reporte46.save()
 
         reporte47 = ReporteBug.objects.create(titulo='Reporte 47', reporte='Reporte agregar una nueva publicacion al blog ', estado=ReporteBug.ESTADOS_CHOICES[1][0], id_usuario=usuario.usuario, id_bug=bug47, id_proyecto=proyecto4)
@@ -271,7 +271,7 @@ class Command(BaseCommand):
         reporte50 = ReporteBug.objects.create(titulo='Reporte 50', reporte='Reporte sobre la importacion masiva de datos', estado=ReporteBug.ESTADOS_CHOICES[1][0], id_usuario=usuario3.usuario, id_bug=bug50, id_proyecto=proyecto2)
         reporte50.save()
 
-        reporte51 = ReporteBug.objects.create(titulo='Reporte 51', reporte='Reporte sobre la seleccion de un menu desplegable',  id_usuario=usuario1.usuario, id_bug=bug51, id_proyecto=proyecto4)
+        reporte51 = ReporteBug.objects.create(titulo='Reporte 51', reporte='Reporte sobre la seleccion de un menu desplegable',  id_usuario=usuario1.usuario, id_proyecto=proyecto4)
         reporte51.save()
 
         # Insertar bugs
