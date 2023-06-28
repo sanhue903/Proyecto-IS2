@@ -3,9 +3,9 @@ from django.core.exceptions import ValidationError
 import os
 import uuid
 from django.contrib.auth.models import User, Group
-from django.db.models.signals import pre_save, post_save
+from django.db.models.signals import pre_save, post_save, pre_init
 from django.dispatch import receiver
-from django.contrib import messages
+
 # ver datetime para las fechas
 
 
@@ -16,8 +16,7 @@ class Usuario(models.Model):
         verbose_name = 'cliente'
         verbose_name_plural = 'clientes'
 
-    id_user = models.OneToOneField(
-        User, primary_key=True, on_delete=models.CASCADE)
+    id_user = models.OneToOneField(User,primary_key=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.id_user.username
@@ -28,8 +27,7 @@ class Programador(models.Model):
         verbose_name = 'programador'
         verbose_name_plural = 'programadores'
 
-    id_user = models.OneToOneField(
-        User, primary_key=True, on_delete=models.CASCADE)
+    id_user = models.OneToOneField(User,primary_key=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.id_user.first_name + ' ' + self.id_user.last_name
@@ -37,16 +35,17 @@ class Programador(models.Model):
 
 @receiver(post_save, sender=User)
 def crear_perfil_usuario_empleado(sender, instance, created, **kwargs):
-    if created:
+    if len(instance.groups.all()) == 0:
         if not instance.is_staff:
             Usuario.objects.create(id_user=instance)
             return
 
         if not instance.is_superuser:
             Programador.objects.create(id_user=instance)
-
+            
             grupo = Group.objects.get(name='empleados')
             grupo.user_set.add(instance)
+            
 
 
 class Proyecto(models.Model):
@@ -71,6 +70,7 @@ class Proyecto(models.Model):
         return self.nombre_proyecto
 
 
+
 class Cargo(models.Model):
     id_programador = models.ForeignKey(
         Programador,
@@ -89,6 +89,7 @@ class Cargo(models.Model):
         blank=False,
         verbose_name='cargo del proyecto',
     )
+
 
 
 class Bug(models.Model):
@@ -125,14 +126,14 @@ class Bug(models.Model):
     prioridad = models.CharField(
         max_length=50,
         choices=PRIORIDADES_CHOICES,
-        verbose_name='Prioridad',
+        verbose_name='prioridad',
     )
 
     estado = models.CharField(
         max_length=50,
         default=ESTADOS_CHOICES[0][0],
         choices=ESTADOS_CHOICES,
-        verbose_name='Estado',
+        verbose_name='estado',
     )
 
     fecha_reporte = models.DateTimeField(
@@ -144,7 +145,6 @@ class Bug(models.Model):
         Proyecto,
         on_delete=models.CASCADE,
         null=True,
-        verbose_name='Proyecto',
     )
 
     id_programador = models.ForeignKey(
@@ -155,6 +155,9 @@ class Bug(models.Model):
 
     def __str__(self):
         return self.titulo
+@receiver(pre_init, sender=Bug)
+def pasar_proyecto(sender, args, **kwargs):
+    kwargs
 
 
 class ReporteBug(models.Model):
@@ -164,7 +167,7 @@ class ReporteBug(models.Model):
 
     ESTADOS_CHOICES = (
         ('PENDIENTE', 'Pendiente'),
-        ('APROBADO', 'Aprobado'),
+        ('APROBADO', 'Arobado'),
         ('DESAPROBADO', 'Desaprobado'),
     )
 
@@ -185,12 +188,12 @@ class ReporteBug(models.Model):
         auto_now_add=True,
         verbose_name='fecha de reporte'
     )
-
-    estado = models.CharField(
-        max_length=50,
-        #
-        default=ESTADOS_CHOICES[0][0],
-        choices=ESTADOS_CHOICES,
+    
+    estado         = models.CharField(
+        max_length=50, 
+        # 
+        default=ESTADOS_CHOICES[0][0], 
+        choices=ESTADOS_CHOICES, 
 
         verbose_name='estado del reporte'
     )
@@ -214,27 +217,22 @@ class ReporteBug(models.Model):
         on_delete=models.CASCADE,
         blank=True,
         null=True,
-        verbose_name='caso asociado'
+        verbose_name='caso del bug'
     )
 
     def __str__(self):
         return self.titulo
 
-
 @receiver(pre_save, sender=ReporteBug)
 def actualizar_id_bug(sender, instance, **kwargs):
     if instance.estado == ReporteBug.ESTADOS_CHOICES[0][0] and instance.id_bug:
-        raise ValidationError(
-            "No se puede asignar caso del bug en estado pendiente")
-
+        raise ValidationError("No se puede asignar caso del bug en estado pendiente")
+    
     if instance.estado == ReporteBug.ESTADOS_CHOICES[1][0] and not instance.id_bug:
-        raise ValidationError(
-            "No se puede guardar un reporte aprobado sin un caso de bug")
-
+        raise ValidationError("No se puede guardar un reporte aprobado sin un caso de bug")
+    
     if instance.estado == ReporteBug.ESTADOS_CHOICES[2][0] and instance.id_bug:
-        raise ValidationError(
-            "No se puede guardar un caso de bug en un reporte desaprobado")
-
+        raise ValidationError("No se puede guardar un caso de bug en un reporte desaprobado")
 
 def custom_upload_to(instance, filename):
     extension = filename.split('.')[-1]
@@ -296,9 +294,6 @@ class Avances(models.Model):
 
     def __str__(self):
         return '{0.id_bug}_{0.id_avance}'.format(self)
-    
-    # def __str__(self):
-    #     return self.titulo
 
 
 class Reasignacion(models.Model):
@@ -313,16 +308,16 @@ class Reasignacion(models.Model):
     )
 
     id_reasignacion = models.AutoField(primary_key=True)
-
+    
     comment = models.TextField(
-        verbose_name='razones de la solicitud de reasignación'
+        verbose_name='razones de la reasignación'
     )
 
     estado = models.CharField(
         max_length=50,
         default=ESTADOS_CHOICES[0][0],
         choices=ESTADOS_CHOICES,
-        verbose_name='Estado'
+        verbose_name='estado de la reasignación'
     )
 
     fecha_reasignacion = models.DateTimeField(
@@ -333,10 +328,10 @@ class Reasignacion(models.Model):
     id_programador_inicial = models.ForeignKey(
         Programador,
         on_delete=models.CASCADE,
-        null=True,
+        null=False,
         related_name='programadores_iniciales',
         related_query_name='programador_inicial',
-        verbose_name='programador que solicita reasignación'
+        verbose_name='programador que pidio reasignación'
     )
 
     id_programador_final = models.ForeignKey(
@@ -353,31 +348,38 @@ class Reasignacion(models.Model):
         Bug,
         on_delete=models.CASCADE,
         null=True,
-        verbose_name='caso asociado',
+        verbose_name='caso del bug asociado',
     )
 
     def __str__(self):
         return '{0.id_programador_inicial}_{0.id_bug}_{0.id_reasignacion}'.format(self)
 
     def clean(self):
-        if self.id_programador_inicial and self.id_programador_inicial == self.id_programador_final:
+        if self.id_programador_inicial == self.id_programador_final:
             raise ValidationError("No se puede reasignar a la misma persona.")
 
 
 class Notificaciones(models.Model):
     class Meta:
-        verbose_name = 'notificación'
+        verbose_name        = 'notificación'
         verbose_name_plural = 'notificaciones'
+  
+    id_notificacion   = models.AutoField(primary_key=True)
 
-    id_notificacion = models.AutoField(primary_key=True)
-
-    descripcion = models.TextField(null=False)
-
-    id_user = models.ForeignKey(
+    descripcion       = models.TextField(null=False)
+    
+    id_user           = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         null=False,
     )
+    
+    fecha_notificacion = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='fecha',
+    )
+    
+    fue_leido          = models.BooleanField(default=False)
 
     def __str__(self):
         return '{0.id_notificacion}'.format(self)

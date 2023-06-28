@@ -1,14 +1,60 @@
-{% extends "home/base.html" %} {%load static%}
-
-
+{% extends "home/base.html" %}
+{% load static %}
 {% block content %}
-<link rel="stylesheet" href='{%static "css/register.css"%}'>
+<!-- No tengo idea porque no toma el .css pero si el style-->
+<link rel="stylesheet" href='{% static "css/register.css"%}'>
+<div id="formularioEnviadoValue" data-formulario-enviado="{{ formularioEnviado|default:'false' }}"></div>
 <style>
   .home {
     background-image: url("{% static 'images/treesSnow.png' %}");
     background-repeat: no-repeat;
   }
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  .modal-footer {
+    margin-right: 50px;
+  }
+  .modal-footer a {
+    margin-right: 30px;
+  }
+  .modal-footer a:hover {
+    text-decoration: underline;
+  }
+  .modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    max-width: 600px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+  }
+  .close {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
 </style>
+
 <section class="home">
   <div class="container_session">
     <div class="text">Gestión de sesión</div>
@@ -21,31 +67,39 @@
 
           </div>
           <div class="sign-up-htm">
-            <form action="" method="post">
+            <form id="myForm" method="post" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="group">
                 <label for="user" class="label">Usuario</label>
-                <input name="username" id="user" type="text" class="input">
+                <input name="username" id="user" type="text" class="input" required>
+                <i id="username-warning-icon" class="warning-icon">⚠️</i>
+                <span id="username-warning-message" class="warning-message">El usuario debe tener al menos 8 caracteres.</span>
               </div>
               <div class="group">
                 <label for="pass" class="label">Contraseña</label>
-                <input id="pass" name="password1" type="password" class="input" data-type="password">
+                <input id="pass" name="password1" type="password" class="input" data-type="password" required>
+                <i id="password-warning-icon" class="warning-icon">⚠️</i>
+                <span id="password-warning-message" class="warning-message">La contraseña debe tener al menos 8 caracteres y 1 número.</span>
               </div>
               <div class="group">
                 <label for="pass" class="label">Repite la contraseña</label>
-                <input id="pass" name="password2" type="password" class="input" data-type="password">
+                <input id="pass2" name="password2" type="password" class="input" data-type="password" required>
+                <i id="confirm-password-warning-icon" class="warning-icon">⚠️</i>
+                <span id="confirm-password-warning-message" class="warning-message">Las contraseñas no coinciden.</span>
               </div>
               <div class="group">
                 <label for="pass" class="label">Email</label>
-                <input id="pass" name="email" type="text" class="input">
+                <input id="email" name="email" type="text" class="input" required>
+                <i id="email-warning-icon" class="warning-icon">⚠️</i>
+                <span id="email-warning-message" class="warning-message">Ingrese un correo válido.</span>
               </div>
+
               <div class="group">
-                <button class="button" type="submit">Registrarme</button>
-                <!-- <input type="submit" class="button" value="Registrarme"> -->
+                <button id="register-button" class="button" type="submit" disabled>Registrarme</button>
               </div>
               <div class="hr"></div>
               <div class="foot-lnk">
-                <label for="tab-1"><a href="{% url 'home:login' %}">¿Ya estás registrado?</a> </a>
+                <label for="tab-1"><a href="{% url 'home:login' %}">¿Ya estás registrado?</a> </label>
               </div>
             </form>
           </div>
@@ -54,6 +108,25 @@
     </div>
   </div>
 
+  <div class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Cuenta creada</h2>
+        <span id="closeModalButton" class="close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <p>
+          Tu cuenta ha sido creada exitosamente!
+        </p>
+      </div>
+  
+      <div class="modal-footer">
+        <a style="color:#2980B9" href="{% url 'home:principal' %}">Volver al inicio</a>
+        <a style="color:#2980B9" href="{% url 'home:login' %}">Ir a iniciar sesión</a>
+      </div>
+  </div>
+  
+  <script src="{% static 'js/register-validation.js' %}"></script>
 </section>
 
 {% endblock %}
