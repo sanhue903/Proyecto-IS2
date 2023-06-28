@@ -1,9 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import ReporteBug, Bug
+from django.http import JsonResponse
 from database.models import ReporteBug, Bug, Usuario
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+
+from django.contrib.auth.models import User
+
 from .forms import CustomUserCreationForm
 from datetime import timedelta
 from django.utils import timezone
@@ -245,9 +249,36 @@ def signup(request):
         if form.is_valid():
             form.save()  # guarda el usuario
             return redirect('home:login')
+
     else:
         form = CustomUserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
+
+
+def check_username_availability(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        try:
+            user = User.objects.get(username=username)
+            available = False
+        except User.DoesNotExist:
+            available = True
+        return JsonResponse({'available': available})
+
+def check_email_availability(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        ## print('Email:', email)
+        try:
+            user = User.objects.get(email=email)
+            available = False
+        except User.DoesNotExist:
+            available = True
+        return JsonResponse({'available': available})
+
+
+# def home_inicio(request):
+#     listar_reportes = ReporteBug.objects.order_by("id_reporte")[:20]
 
 
 def obtenerDarkMode(request):
