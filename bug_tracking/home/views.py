@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.contrib import messages
 from .models import ReporteBug, Bug
-from database.models import ReporteBug, Bug, Usuario
+from database.models import ReporteBug, Bug, Usuario, Notificaciones
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 
