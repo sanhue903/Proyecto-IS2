@@ -45,7 +45,7 @@ def crear_perfil_usuario_empleado(sender, instance, created, **kwargs):
             
             grupo = Group.objects.get(name='empleados')
             grupo.user_set.add(instance)
-            
+ 
 
 
 class Proyecto(models.Model):

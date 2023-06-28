@@ -8,6 +8,7 @@ from django.forms import ModelChoiceField
 from django.contrib import messages
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext, gettext_lazy as _
+
 from django.utils.html import format_html
 from django.forms import BaseInlineFormSet
 from django.contrib.admin.views.decorators import staff_member_required
@@ -15,6 +16,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.contrib.admin.widgets import ForeignKeyRawIdWidget
 from django.views.generic.edit import CreateView
 from django import forms
+
 
 
 # Register your models here.
@@ -80,6 +82,12 @@ class UserAdmin(UserAdmin):
     def has_change_permissions(self, request, obj=None):
         return False
     
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.is_staff = True
+            super().save_model(request, obj, form, change)
+    
+
     list_display = ('username', 'email', 'is_staff')
     
     fieldsets = (
@@ -487,7 +495,7 @@ class BugFiltro(admin.SimpleListFilter):
         if self.value():
             return queryset.filter(id_bug__id_bug=self.value())
         return queryset
-    
+   
 #TODO cambiar forma de asignar un caso de bug a reporteBug
 #TODO asignar bugs que esten relacionados con el proyecto
 @admin.register(ReporteBug)
@@ -588,6 +596,7 @@ class ReporteBugAdmin(general):
     
     def has_delete_permission(self, request,obj=None):
         return False
+
     
     def response_change(self, request, obj):
         if '_save' in request.POST:
@@ -623,6 +632,7 @@ class ReporteBugAdmin(general):
         return super(BugAdmin, self.instance).formfield_for_dbfield(db_field, request, **kwargs)
 
     """
+
 class IdProyectoFilter(admin.SimpleListFilter):
     title = 'Proyecto'
     parameter_name = 'id_proyecto'
@@ -678,10 +688,10 @@ class EstadoBugFilter(admin.SimpleListFilter):
             return queryset.filter(id_bug__estado=Bug.ESTADOS_CHOICES[2][0]) 
 
 
-
 @admin.register(Avances)
 class AvancesAdmin(general):
     @admin.display(ordering='id_bug__proyecto', description='Proyecto')
+
     def titulo_reporte(self, obj):
         return obj.titulo
 
@@ -824,6 +834,7 @@ class ReasignacionBugAdmin(general):
             return qs.filter(id_programador_inicial=programador)
         else:
             return qs.filter(estado=Reasignacion.ESTADOS_CHOICES[0][0])
+
     
     def get_form(self, request, obj=None, **kwargs):
         if obj:

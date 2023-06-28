@@ -190,11 +190,13 @@
   </ul>
   {%autoescape off%}
   <div class="graph">
-    {%if plot_div %}
+
     <h2>Gráfico de reportes asignados</h2>
+    {%if plot_div %}
     {{plot_div|safe}}
     {%else%}
-    <h2>No hay información para mostrar</h2>
+    <p>No hay datos para mostrar</p>
+
     {%endif%}
   </div>
   {%endautoescape%}
