@@ -1,14 +1,15 @@
-from typing import Optional
 from django.contrib import admin
 from django.contrib.auth.models import User, Group
-from django.http.request import HttpRequest
 from django.http import HttpResponseRedirect
+from django.http.request import HttpRequest
 from .models import *
-from django.db.models import Count
-from django import forms
-from django.urls import reverse, path
-from django.shortcuts import redirect
+from django.urls import reverse
 from django.forms import ModelChoiceField
+
+from django.contrib import messages
+from django.contrib.auth.admin import UserAdmin
+from django.utils.translation import gettext, gettext_lazy as _
+
 from django.utils.html import format_html
 from django.forms import BaseInlineFormSet
 from django.contrib.admin.views.decorators import staff_member_required
@@ -17,23 +18,52 @@ from django.contrib.admin.widgets import ForeignKeyRawIdWidget
 from django.views.generic.edit import CreateView
 
 
+
 # Register your models here.
 
 
 admin.site.unregister(User)
 admin.site.unregister(Group)
 
-def notificar(user, type, nuevo_estado):
-    notificacion = Notificaciones.objects.create(id_user=user)
+
+def notificar(obj,change=False):
+    obj_type = type(obj)
     
-    if type == ReporteBug:
-        pass
+    if obj_type == ReporteBug:
+        Notificaciones.objects.create(
+            id_user     = obj.id_usuario.id_user,
+            descripcion = 'Ticket {0.id_reporte}: su reporte ha sido {0.estado}'.format(obj),
+        )
     
-    if type == Bug:
-        pass
+    elif obj_type == Bug:
+        if not change:
+            Notificaciones.objects.create(
+                id_user     = obj.id_programador.id_user,
+                descripcion = 'Caso {0.id_bug}: nuevo caso asignado'.format(obj),
+            )
+        
+        tickets_relacionados = ReporteBug.objects.all().filter(id_bug=obj.id_bug)
+        
+        for ticket in tickets_relacionados:
+            Notificaciones.objects.create(
+                id_user     = ticket.id_usuario.id_user,
+                descripcion = 'Caso {0.id_bug}: estado del caso cambio a {0.estado}'.format(obj),
+            )
     
-    if type == Reasignacion:
-        pass    
+    elif obj_type == Reasignacion:
+        Notificaciones.objects.create(
+            id_user     = obj.id_programador_inicial.id_user,
+            descripcion = 'Caso {0.id_bug.id_bug}: estado de reasignacion cambio a {0.estado}'.format(obj),
+        )
+        
+        if obj.id_programador_final:
+            notificacion_programador_final = Notificaciones.objects.create(
+                id_user     =obj.id_programador_final.id_user,
+                descripcion ='Caso {0.id_bug.id_bug}: nuevo caso asignado'.format(obj),
+            )
+            
+            notificacion_programador_final.save()    
+
 
 class general(admin.ModelAdmin):
     def render_change_form(self, request, context, add, change, form_url='', obj=None):
@@ -48,26 +78,21 @@ class general(admin.ModelAdmin):
 #TODO ver tema de no poder editar usuarios
 #al crear usuarios tengan por defecto is_staff=True, especificar que al registrarse desde la pagina se tiene que especificar is_staff=False
 @admin.register(User)
-class UserAdmin(general):
+class UserAdmin(UserAdmin):
     def has_change_permissions(self, request, obj=None):
         return False
     
     list_display = ('username', 'email', 'is_staff')
     
     fieldsets = (
-        ('Información de Usuario', {
-            "fields": (
-                'username', 'password',
-            ),
+        (None, {'fields': ('username', 'password')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
+        (_('Permissions'), {
+            'fields': ('is_active', 'is_staff',),
         }),
-        ('Información Personal', {
-            "fields": (
-                'first_name', 'last_name', 'is_staff'
-            )
-        })
     )
     
-     
+ 
 
 @admin.register(Usuario)
 class UsuarioAdmin(general):
@@ -298,7 +323,8 @@ class IdProyectoBugFilter(admin.SimpleListFilter):
 
     
 
-#TODO definir que fields dejar en readonly
+#TODO definir que fields dejar en readonly (id_proyecto si logro pasara información de reporteBug a Bug)
+#TODO ver forma de pasar información de reporteBug a Bug(necesario para que se puedan filtar los programadores)
 @admin.register(Bug)
 class BugAdmin(general):
     def get_queryset(self, request):
@@ -307,8 +333,15 @@ class BugAdmin(general):
             qs = qs.filter(id_programador__id_user=request.user)
         return qs
     def get_form(self, request, obj=None, **kwargs):
+        self.instance = None## eso hace que funcione por ahora
         if obj:
             self.instance = obj
+
+            
+        #signal with the value of id_proyecto
+            
+        return super(BugAdmin, self).get_form(request, obj, **kwargs)
+
 
         return super(BugAdmin, self).get_form(request, obj, **kwargs)
 
@@ -327,7 +360,30 @@ class BugAdmin(general):
 
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
+   
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        notificar(obj, change)
     
+    def has_delete_permission(self, request,obj=None):
+        return False
+    
+    def response_change(self, request, obj):
+        if '_save' in request.POST:
+            redirect_url = "admin:{}_{}_changelist".format(self.opts.app_label, self.opts.model_name)
+            
+            return HttpResponseRedirect(reverse(redirect_url))
+        elif '_solucionado' in request.POST and not request.user.is_superuser:
+            obj.estado = Bug.ESTADOS_CHOICES[2][0]
+            obj.save()
+            
+            notificar(obj)
+            
+            
+            redirect_url = "admin:{}_{}_changelist".format(self.opts.app_label, self.opts.model_name)
+            
+            return HttpResponseRedirect(reverse(redirect_url))
+ 
 
     def titulo_bug(self, obj):
         return obj.titulo
@@ -467,6 +523,13 @@ class BugFiltro(admin.SimpleListFilter):
 
 @admin.register(ReporteBug)
 class ReporteBugAdmin(general):
+    def get_form(self, request, obj=None, **kwargs):
+        self.instance = None
+        if obj:
+            self.instance = obj
+            
+        return super(ReporteBugAdmin, self).get_form(request, obj, **kwargs)
+
     
     list_display = ('id_reporte', 'titulo', 'fecha_reporte',
                     'id_proyecto', 'estado', 'id_bug')
@@ -500,6 +563,7 @@ class ReporteBugAdmin(general):
     reporte_ticket.short_description = 'Descripción'
     usuario_ticket.short_description = 'Usuario'
 
+
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         if not request.user.is_superuser and request.user.is_staff:
@@ -508,9 +572,14 @@ class ReporteBugAdmin(general):
 
     def save_model(self, request, obj, form, change):
         if obj.id_bug:
+            aux = obj.estado
             obj.estado = ReporteBug.ESTADOS_CHOICES[1][0]
-
+            
+            if aux != obj.estado:
+                notificar(obj)
+            
         super().save_model(request, obj, form, change)
+        
 
     def get_list_display(self, request):
         if not request.user.is_superuser and request.user.is_staff:
@@ -550,19 +619,40 @@ class ReporteBugAdmin(general):
         return False
     
     def response_change(self, request, obj):
-        if '_continue' in request.POST:
-            return HttpResponseRedirect(obj.get_admin_url())
+        if '_save' in request.POST:
+            redirect_url = "admin:{}_{}_changelist".format(self.opts.app_label, self.opts.model_name)
+            
+            return HttpResponseRedirect(reverse(redirect_url))
         elif '_desaprobar' in request.POST:
             obj.estado = ReporteBug.ESTADOS_CHOICES[2][0]
             obj.save()
             
+            notificar(obj)
+            
+            
             redirect_url = "admin:{}_{}_changelist".format(self.opts.app_label, self.opts.model_name)
             
             return HttpResponseRedirect(reverse(redirect_url))
+        
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if self.instance:
+            if db_field.name == 'id_bug':
+                kwargs['queryset'] = Bug.objects.filter(id_proyecto=self.instance.id_proyecto)
+      
+                
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+    """  
+    def formfield_for_dbfield(self, db_field, request, **kwargs):
+        if db_field.name == "id_bug":
+            widget = super(BugAdmin, self.instance).formfield_for_dbfield(db_field, request, **kwargs).widget
+            widget.template_name = 'admin/reportebug/widgets/related_widget_wrapper_with_id.html'
+            widget.attrs.update({'id_proyecto': 1})
+        
+            return db_field.formfield(widget=widget)
+        return super(BugAdmin, self.instance).formfield_for_dbfield(db_field, request, **kwargs)
 
 
-# Clase para obtener proyectos asociados al programador
-
+    """
 
 
 class IdProyectoFilter(admin.SimpleListFilter):
@@ -752,7 +842,6 @@ class ReasignacionProgramadorForm(forms.ModelForm):
 def is_superuser(user):
     return user.is_superuser
 
-
 @admin.register(Notificaciones)
 class NotificacionesAdmin(general):
     def has_change_permission(self, request,obj=None):
@@ -760,6 +849,9 @@ class NotificacionesAdmin(general):
     
     def has_delete_permission(self, request,obj=None):
         return False
+    
+    list_display = ('id_notificacion', 'descripcion', 'id_user')
+    
     
 
 @admin.register(Reasignacion)
@@ -840,9 +932,17 @@ class ReasignacionBugAdmin(general):
                     bug.id_programador = obj.id_programador_final
                     bug.save()
                     obj.estado = Reasignacion.ESTADOS_CHOICES[1][0]
+                    
+                    notificar(obj)
+
                 except Bug.DoesNotExist:
                     pass
-        super().save_model(request, obj, form, change)
+        
+        
+             
+        obj = super().save_model(request, obj, form, change)
+        
+        
 
 
     def get_list_display(self, request):
@@ -892,11 +992,16 @@ class ReasignacionBugAdmin(general):
         return False
     
     def response_change(self, request, obj):
-        if '_continue' in request.POST:
-            return HttpResponseRedirect(obj.get_admin_url())
+        if '_save' in request.POST:
+            redirect_url = "admin:{}_{}_changelist".format(self.opts.app_label, self.opts.model_name)
+            
+            return HttpResponseRedirect(reverse(redirect_url))
+        
         elif '_desaprobar' in request.POST:
             obj.estado = Reasignacion.ESTADOS_CHOICES[2][0]
             obj.save()
+            
+            notificar(obj)
             
             redirect_url = "admin:{}_{}_changelist".format(self.opts.app_label, self.opts.model_name)
             
