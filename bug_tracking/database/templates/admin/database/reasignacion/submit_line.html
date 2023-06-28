@@ -38,7 +38,9 @@
 
     {% block extra-actions %}
     <div class="form-group">
-        <input type="submit" class="btn {{ jazzmin_ui.button_classes.danger }} form-control" value="{% trans 'Desaprobar' %}" name="_desaprobar">
+        {% if user.is_superuser %}
+            <input type="submit" class="btn {{ jazzmin_ui.button_classes.danger }} form-control" value="{% trans 'Desaprobar' %}" name="_desaprobar">
+        {% endif %}
     </div>
     {% endblock %}
 
