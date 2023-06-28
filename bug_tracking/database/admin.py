@@ -73,6 +73,11 @@ class UserAdmin(UserAdmin):
     def has_change_permissions(self, request, obj=None):
         return False
     
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.is_staff = True
+            super().save_model(request, obj, form, change)
+    
     list_display = ('username', 'email', 'is_staff')
     
     fieldsets = (

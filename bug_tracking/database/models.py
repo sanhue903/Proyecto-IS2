@@ -35,7 +35,7 @@ class Programador(models.Model):
 
 @receiver(post_save, sender=User)
 def crear_perfil_usuario_empleado(sender, instance, created, **kwargs):
-    if len(instance.groups.all()) == 0:
+    if created:
         if not instance.is_staff:
             Usuario.objects.create(id_user=instance)
             return
@@ -45,6 +45,7 @@ def crear_perfil_usuario_empleado(sender, instance, created, **kwargs):
             
             grupo = Group.objects.get(name='empleados')
             grupo.user_set.add(instance)
+    
             
 
 
