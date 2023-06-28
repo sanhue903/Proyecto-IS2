@@ -6,7 +6,7 @@
   {%if request.user.is_authenticated%}
   <div class="text" style="text-align: center;">Bienvenido {{request.user.username | title}}</div>
 
-  {%if not request.user.is_sta
+  {%if not request.user.is_staff%}
   <ul class="box-info">
     <li>
       <i class='bx bxs-calendar-check'></i>
@@ -118,60 +118,6 @@
       {%endif%}
     </div>
   </footer>
-
-=
-            <!-- <tr>
-              <td>No hay errores disponibles</p>
-            </tr> -->
-            
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-  <div class="container-table">
-    <div class="table-data" style="margin-bottom: 2em;">
-      <div class="order">
-        <div class="head">
-          <h3>Tus reportes enviados</h3>
-          
-          <a href="www.google.cl"><i class='bx bx-search'></i></a>
-          <i class='bx bx-filter'></i>
-        </div>
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Título</th>
-              <th>Fecha</th>
-              <th>Proyecto</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% if reportes_usuario %}
-            <tr>
-              {% for ReporteBug in reportes_usuario %}
-              <td>
-                <p>{{ ReporteBug.id_reporte }}</p>
-                <img src={%static "images/logo.png"%}>
-              </td>
-              <td>{{ ReporteBug.titulo | truncatechars:90 }}</td>
-              <td>{{ ReporteBug.fecha_reporte }}</td>
-              <td>{{ ReporteBug.id_proyecto.nombre_proyecto }}</td>
-            </tr>
-              {%endfor%}
-            {%else%}
-            <tr>
-              <td>No hay errores disponibles</p>
-            </tr>
-            {%endif%}
-            
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
 
   {%else%}
   <ul class="box-info">

@@ -202,7 +202,7 @@ class ReporteBug(models.Model):
         # 
         default=ESTADOS_CHOICES[0][0], 
         choices=ESTADOS_CHOICES, 
-
+    )
 
     estado = models.CharField(
         max_length=50,
