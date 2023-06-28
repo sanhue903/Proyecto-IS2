@@ -10,13 +10,72 @@ import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "bug_tracking.settings")
 application = get_wsgi_application()
 
-# Importar los modelos
-#from django.contrib.auth.models import User
+
+from django.contrib.auth.models import User
 
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
         Group.objects.filter(name='empleados').delete()
+
+
+        programadores_group = Group(name='empleados')
+        programadores_group.save()
+
+        # añadir permisos para editar objetos del modelo Avances
+        avances_type = ContentType.objects.get_for_model(Avances)
+
+        add_permission = Permission.objects.get(
+            codename="add_avances", content_type=avances_type)
+        change_permission = Permission.objects.get(
+            codename="change_avances", content_type=avances_type)
+        delete_permission = Permission.objects.get(
+            codename="delete_avances", content_type=avances_type)
+
+        programadores_group.permissions.add(
+            add_permission, change_permission, delete_permission)
+
+        programadores_group.save()
+        # anadir permiso de reasignacion
+
+        reasignacion_type = ContentType.objects.get_for_model(Reasignacion)
+        add_permission_reasignacion = Permission.objects.get(
+            codename="add_reasignacion", content_type=reasignacion_type)
+        view_permission = Permission.objects.get(
+            codename="view_reasignacion", content_type=reasignacion_type)
+        programadores_group.permissions.add(
+            add_permission_reasignacion, view_permission)
+        programadores_group.save()
+
+        # Añadir permiso para ver objetos del modelo ReporteBug
+        reportebug_type = ContentType.objects.get_for_model(ReporteBug)
+        view_permission = Permission.objects.get(
+            codename="view_reportebug", content_type=reportebug_type)
+
+        programadores_group.permissions.add(view_permission)
+
+        programadores_group.save()
+
+        # Añadir permiso para ver objetos del modelo Bug
+        bug_type = ContentType.objects.get_for_model(Bug)
+        view_permission = Permission.objects.get(
+            codename="view_bug", content_type=bug_type)
+
+        programadores_group.permissions.add(view_permission)
+
+        programadores_group.save()
+
+        # crear grupo usuario
+        Group.objects.filter(name='clientes').delete()
+
+        usuarios_group = Group(name='clientes')
+        usuarios_group.save()
+        # añadir permiso reportebug
+        reportebug_type = ContentType.objects.get_for_model(ReporteBug)
+        add_permission = Permission.objects.get(
+            codename="add_reportebug", content_type=reportebug_type)
+        usuarios_group.permissions.add(add_permission)
+        usuarios_group.save()
         
         programadores_group = Group(name='empleados')
         programadores_group.save()
@@ -175,8 +234,5 @@ class Command(BaseCommand):
         reasignacion2.save()
         
         self.stdout.write(self.style.SUCCESS('La base de datos se ha llenado correctamente.'))
-        
-       
-        
         
 
