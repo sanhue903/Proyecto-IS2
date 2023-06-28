@@ -3,9 +3,9 @@ from django.core.exceptions import ValidationError
 import os
 import uuid
 from django.contrib.auth.models import User, Group
-from django.db.models.signals import pre_save, post_save
+from django.db.models.signals import pre_save, post_save, pre_init
 from django.dispatch import receiver
-from django.contrib import messages
+
 # ver datetime para las fechas
 
 
@@ -39,7 +39,7 @@ class Programador(models.Model):
 
 @receiver(post_save, sender=User)
 def crear_perfil_usuario_empleado(sender, instance, created, **kwargs):
-    if created:
+    if len(instance.groups.all()) == 0:
         if not instance.is_staff:
             Usuario.objects.create(id_user=instance)
             return
@@ -75,6 +75,7 @@ class Proyecto(models.Model):
         return self.nombre_proyecto
 
 
+
 class Cargo(models.Model):
     id_programador = models.ForeignKey(
         Programador,
@@ -93,6 +94,7 @@ class Cargo(models.Model):
         blank=False,
         verbose_name='cargo del proyecto',
     )
+
 
 
 class Bug(models.Model):
@@ -114,7 +116,7 @@ class Bug(models.Model):
     )
 
     id_bug = models.AutoField(primary_key=True)
-    # TODO cambiar nombre de titulo
+    
     titulo = models.CharField(
         max_length=255,
         blank=False,
@@ -159,6 +161,9 @@ class Bug(models.Model):
 
     def __str__(self):
         return self.titulo
+@receiver(pre_init, sender=Bug)
+def pasar_proyecto(sender, args, **kwargs):
+    kwargs
 
 
 class ReporteBug(models.Model):
